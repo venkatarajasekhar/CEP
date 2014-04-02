@@ -21,7 +21,6 @@ begin
         for I in N-2 downto 0  loop
             INTREG(I) <= INTREG(I+1) after 10 ns;
         end loop;
-        INPUT <= INTREG(0) xor INTREG(1) after 10 ns;
         INTREG(N-1) <= INPUT after 10 ns;
       end if;
     end if;
