@@ -8,7 +8,7 @@ delete wave *
 add wave -height 30 sim:/PSDO_RNDM_GEN/*
 
 # value time, value time (after the actual time value)
-force CLK_RNDM 1 0, 0 50ns -r 100ns
+force CLK_RNDM 0 0, 1 50ns -r 100ns
 
 # 1: reset
 force RESET_RNDM 1 0
