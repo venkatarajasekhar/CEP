@@ -44,17 +44,18 @@ begin
         INPUT_SRG_1 <= OUTPUT_TMP(7) xor OUTPUT_TMP(3) xor OUTPUT_TMP(2) xor OUTPUT_TMP(1) after 10 ns;
         INPUT_SRG_2 <= OUTPUT_TMP(9) xor OUTPUT_TMP(10) xor OUTPUT_TMP(11) xor OUTPUT_TMP(15) after 10 ns;
       
+				OUTPUT_RNDM <= OUTPUT_TMP after 10 ns; 
       end if;
   end process xor_session;
   
-  reg_out: process(NLOAD_RNDM, OUTPUT_TMP)
-    begin
-      if(NLOAD_RNDM = '1') then
-        OUTPUT_RNDM <= (others => '1') after 10 ns;
-      else
-        OUTPUT_RNDM <= OUTPUT_TMP after 10 ns; 
-      end if;
-  end process reg_out;
+  --reg_out: process(NLOAD_RNDM, OUTPUT_TMP)
+  --  begin
+  --    if(NLOAD_RNDM = '1') then
+  --      OUTPUT_RNDM <= (others => '1') after 10 ns;
+  --    else
+  --      OUTPUT_RNDM <= OUTPUT_TMP after 10 ns; 
+  --    end if;
+  --end process reg_out;
 
 end BEHAVIOUR;
 
