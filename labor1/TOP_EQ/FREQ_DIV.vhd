@@ -1,5 +1,5 @@
 entity FREQ_DIV is
-  generic(CYCLE: natural := 250000); -- 250000 = 25Mhz -> 100Hz
+  generic(CYCLE: natural);
   port(	CLK_FREQ: in bit;
 	      OUTPUT_FREQ: out bit);
 end FREQ_DIV;
