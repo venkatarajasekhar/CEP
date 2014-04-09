@@ -11,7 +11,7 @@ begin
 	  variable COUNTER: INTEGER := 0;
   begin
     if(CLK_FREQ = '1' and CLK_FREQ'event) then	
-      if(COUNTER = CYCLE-1) then 
+      if(COUNTER = CYCLE-1) then
         OUTPUT_FREQ <= '1' after 10 ns;
 				COUNTER := 0;
 
