@@ -18,7 +18,6 @@ end TOP_EQ;
 architecture BEHAVIOUR of TOP_EQ is
   signal INT_FREQ_DIV_1_OUT: bit;
   signal INT_FREQ_DIV_2_OUT: bit;
-  signal INT_EDGE_DCTR_1_OUT: bit;
   signal INT_PSDO_RNDM_GEN_1_OUT: bit_vector(15 downto 0);
 
   component FREQ_DIV is
@@ -51,22 +50,15 @@ architecture BEHAVIOUR of TOP_EQ is
 begin
     
   FREQ_DIV_1 : FREQ_DIV
-  generic map(CYCLE => 4)
+  generic map(CYCLE => 250000)
   port map( CLK_FREQ => CLK,
             OUTPUT_FREQ => INT_FREQ_DIV_1_OUT
   );
   
   FREQ_DIV_2 : FREQ_DIV
-  generic map(CYCLE => 2)
-  port map( CLK_FREQ => INT_EDGE_DCTR_1_OUT,
+  generic map(CYCLE => 25000000)
+  port map( CLK_FREQ => CLK,
             OUTPUT_FREQ => INT_FREQ_DIV_2_OUT
-  );
-  
-  EDGE_DCTR_1 : EDGE_DCTR
-  port map( CLK_EDGE_DCTR => CLK,
-            RESET_EDGE_DCTR => RESET,
-            INPUT_EDGE_DCTR => INT_FREQ_DIV_1_OUT,
-            OUTPUT_EDGE_DCTR => INT_EDGE_DCTR_1_OUT
   );
   
   PSDO_RNDM_GEN_1 : PSDO_RNDM_GEN
@@ -77,7 +69,7 @@ begin
   );
   
   SVN_SEG_DISP_1 : SVN_SEG_DISP
-  port map( SVN_SEG_CLK => INT_EDGE_DCTR_1_OUT,
+  port map( SVN_SEG_CLK => INT_FREQ_DIV_1_OUT,
             SVN_SEG_VALUE => INT_PSDO_RNDM_GEN_1_OUT,
             SVN_SEG_ANODE => ANODE,
             SVN_SEG_CATHODE => CATHODE
