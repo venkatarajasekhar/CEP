@@ -8,7 +8,7 @@ delete wave *
 add wave -height 30 sim:/SVN_SEG_DISP/*
 
 # value time, value time (after the actual time value)
-force SVN_SEG_CLK 0 0, 1 150ns -r 300ns
+force CLK 0 0, 1 150ns -r 300ns
 
 
 # Value of SVN SEG DISP

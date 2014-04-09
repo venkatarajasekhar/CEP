@@ -30,4 +30,6 @@ NET TEST1 LOC = F13;
 NET TEST2 LOC = E13;
 NET TEST3 LOC = B12;
 
+NET TEST_OSZI LOC = C10;
+
 #D: inout std_ulogic_vector(15 downto 0);

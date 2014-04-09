@@ -1,16 +1,21 @@
-entity TOP_EQ_TB is 
-generic(N: natural := 50);
-end TOP_EQ_TB;
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
 
-architecture BEHAVIOUR of TOP_EQ_TB is
+
+entity TOP_EQ_TB_STDL is 
+generic(N: natural := 50);
+end TOP_EQ_TB_STDL;
+
+architecture BEHAVIOUR of TOP_EQ_TB_STDL is
 
 signal TB_NEX: STD_LOGIC;
 signal TB_NOE: STD_LOGIC;
 signal TB_NWE: STD_LOGIC;
 signal TB_CLK: STD_LOGIC;
 signal TB_RESET: STD_LOGIC;
-signal TB_ANODE: STD_LOGIC_vector(3 downto 0);
-signal TB_CATHODE: STD_LOGIC_vector(7 downto 0);
+signal TB_ANODE: STD_LOGIC_VECTOR(3 downto 0);
+signal TB_CATHODE: STD_LOGIC_VECTOR(7 downto 0);
 signal TB_TEST1: STD_LOGIC;
 signal TB_TEST2: STD_LOGIC;
 signal TB_TEST3: STD_LOGIC;
@@ -30,11 +35,11 @@ component TOP_EQ is
         TEST2: out STD_LOGIC;
         TEST3: out STD_LOGIC);
 end component;
-
+for all : TOP_EQ use entity work.TOP_EQ(Structure);
 
 begin
     
-    TOP_EQ_TB : TOP_EQ
+    TOP_EQ_TB_I : TOP_EQ
     port map(
     NEX => TB_NEX,
     NOE => TB_NOE,
@@ -60,12 +65,15 @@ begin
     end loop; 
 end process;
 
+
+  
 stimuli: process
 begin    
-  wait for 1000 ns; 
+  
   TB_RESET <= '1';
   wait for 220 ns;    
   TB_RESET <= '0';
+  wait for 10000 ns; 
 end process stimuli;
 
 end BEHAVIOUR;
