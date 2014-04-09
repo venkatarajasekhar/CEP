@@ -50,13 +50,13 @@ architecture BEHAVIOUR of TOP_EQ is
 begin
     
   FREQ_DIV_1 : FREQ_DIV
-  generic map(CYCLE => 250000)
+  generic map(CYCLE => 125000) --125000
   port map( CLK_FREQ => CLK,
             OUTPUT_FREQ => INT_FREQ_DIV_1_OUT
   );
   
   FREQ_DIV_2 : FREQ_DIV
-  generic map(CYCLE => 25000000)
+  generic map(CYCLE => 25000000) --25000000
   port map( CLK_FREQ => CLK,
             OUTPUT_FREQ => INT_FREQ_DIV_2_OUT
   );

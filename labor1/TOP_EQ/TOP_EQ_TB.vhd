@@ -64,7 +64,7 @@ stimuli: process
 begin    
   wait for 1000 ns; 
   TB_RESET <= '1';
-  wait for 110 ns;    
+  wait for 220 ns;    
   TB_RESET <= '0';
 end process stimuli;
 

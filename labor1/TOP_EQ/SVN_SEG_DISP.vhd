@@ -42,10 +42,10 @@ begin
       when "0101" => SVN_SEG_CATHODE <= "10010010";  -- 5
       when "0110" => SVN_SEG_CATHODE <= "10000010";  -- 6
       when "0111" => SVN_SEG_CATHODE <= "11111000";  -- 7
-      when "1000" => SVN_SEG_CATHODE <= "11111111";  -- 8
+      when "1000" => SVN_SEG_CATHODE <= "10000000";  -- 8
       when "1001" => SVN_SEG_CATHODE <= "10010000";  -- 9
       when "1010" => SVN_SEG_CATHODE <= "10001000";  -- A
-      when "1011" => SVN_SEG_CATHODE <= "11000011";  -- b
+      when "1011" => SVN_SEG_CATHODE <= "10000011";  -- b
       when "1100" => SVN_SEG_CATHODE <= "11000110";  -- C
       when "1101" => SVN_SEG_CATHODE <= "10100001";  -- d
       when "1110" => SVN_SEG_CATHODE <= "10000110";  -- E

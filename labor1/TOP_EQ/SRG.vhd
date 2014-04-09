@@ -15,7 +15,7 @@ begin
    p1: process(CLK)
    begin
       if(CLK = '1' and CLK'event) then
-         if(RESET = '1') then
+         if(RESET = '0') then
             INTREG <= (others => '1') after 10 ns;
          elsif(NLOAD = '1') then
             for I in N-2 downto 0 loop
@@ -24,17 +24,19 @@ begin
 
             INTREG(N-1) <= INPUT after 10 ns;
          end if;
+         
+         OUTPUT <= INTREG after 10 ns;
       end if;
    end process p1;
 
-   p2: process(NLOAD, INTREG)
-   begin
-      if NLOAD = '1' then
-         OUTPUT <= (others => '1') after 10 ns;
-      else
-         OUTPUT <= INTREG after 10 ns;
-      end if;
-   end process p2;
+   --p2: process(NLOAD, INTREG)
+   --begin
+   --  if NLOAD = '1' then
+   --   OUTPUT <= (others => '1') after 10 ns;
+   -- else
+   --OUTPUT <= INTREG after 10 ns;
+   -- end if;
+   -- end process p2;
 
 end BEHAVIOUR;
 
