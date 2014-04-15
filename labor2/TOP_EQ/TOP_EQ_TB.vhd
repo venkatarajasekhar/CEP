@@ -1,3 +1,7 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+
 entity TOP_EQ_TB is 
 generic(N: natural := 50);
 end TOP_EQ_TB;
