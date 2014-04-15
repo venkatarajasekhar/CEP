@@ -22,6 +22,12 @@ architecture BEHAVIOUR of TOP_EQ is
   signal INT_FREQ_DIV_2_OUT: STD_LOGIC;
   signal INT_PSDO_RNDM_GEN_1_OUT: STD_LOGIC_vector(15 downto 0);
 
+  signal INT_CLK_SYN: STD_LOGIC;  -- internes clk signal, 350mhz
+  signal INT_CLK_PE: STD_LOGIC;  -- internes clk signal, 100hz
+  signal INT_TRISTATE_CTRL: STD_LOGIC;  -- internes signal zur tristate steuerung
+  
+  signal INT_NEX_CS: STD_LOGIC;  -- internes signal, doppelt abgetaktet
+
   component FREQ_DIV is
     generic (CYCLE : integer);
     port(	CLK: in STD_LOGIC;
@@ -82,13 +88,43 @@ begin
             SVN_SEG_CATHODE => CATHODE
   );
   
-  TEST: process(NEX, NOE, NWE)
-  begin
-      TEST1 <= NEX and NOE after 10 ns;
-      TEST2 <= NWE after 10 ns;
-      TEST3 <= NOE after 10 ns;
-  end process TEST;
+  --TEST: process(NEX, NOE, NWE)
+  --begin
+  --    TEST1 <= NEX and NOE after 10 ns;
+  --    TEST2 <= NWE after 10 ns;
+  --    TEST3 <= NOE after 10 ns;
+  --end process TEST;
   
+  NEX_NOE: process(NEX, NOE)
+		variable NEX_CS: STD_LOGIC;
+    variable NOE_CS: STD_LOGIC;
+    variable NOE_CS_2: STD_LOGIC;
+  begin
+    if(INT_CLK_SYN'event and INT_CLK_SYN = '1') then
+      if(RESET = '1') then
+        NEX_CS := '0';
+        NOE_CS := '0';
+        NOE_CS_2 := '0';
+        INT_NEX_CS <= '0' after 10 ns;
+      else
+        -- erste stufe 
+        NEX_CS := NEX;
+        NOE_CS := NOE;
+        
+        -- zweite stufe
+        INT_NEX_CS <= NEX_CS after 10 ns;
+        NOE_CS_2 := NOE_CS;
+      end if;
+    end if;
+
+    -- dritte stufe
+    INT_TRISTATE_CTRL <= INT_NEX_CS or NOE_CS_2 after 10 ns;
+
+  end process NEX_NOE;
+
+
+
+
   OSZI: process(CLK)
   begin
       TEST_OSZI <= CLK after 10 ns;
