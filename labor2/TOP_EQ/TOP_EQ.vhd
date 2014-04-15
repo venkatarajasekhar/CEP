@@ -27,6 +27,7 @@ architecture BEHAVIOUR of TOP_EQ is
   signal INT_TRISTATE_CTRL: STD_LOGIC;  -- internes signal zur tristate steuerung
   
   signal INT_NEX_CS: STD_LOGIC;  -- internes signal, doppelt abgetaktet
+  signal INT_NWE_CS: STD_LOGIC;  -- internes signal, doppelt abgetaktet + pulse-shorter
 
   component FREQ_DIV is
     generic (CYCLE : integer);
@@ -95,7 +96,7 @@ begin
   --    TEST3 <= NOE after 10 ns;
   --end process TEST;
   
-  NEX_NOE: process(NEX, NOE)
+  NEX_NOE_p: process(NEX, NOE)
 		variable NEX_CS: STD_LOGIC;
     variable NOE_CS: STD_LOGIC;
     variable NOE_CS_2: STD_LOGIC;
@@ -120,7 +121,30 @@ begin
     -- dritte stufe
     INT_TRISTATE_CTRL <= INT_NEX_CS or NOE_CS_2 after 10 ns;
 
-  end process NEX_NOE;
+  end process NEX_NOE_p;
+
+  NWE_p: process(NWE)
+    variable NWE_CS: STD_LOGIC;
+    variable NWE_CS_2: STD_LOGIC;
+    variable NWE_CS_3: STD_LOGIC;
+  begin
+    if(INT_CLK_SYN'event and INT_CLK_SYN = '1') then
+      if(RESET = '1') then
+        NWE_CS := '0';
+        NWE_CS_2 := '0';
+        NWE_CS_3 := '0';
+      else
+        NWE_CS := NWE;  -- 1 stufe 
+        NWE_CS_2 := NWE_CS;  -- 2 stufe 
+        NWE_CS_3 := NWE_CS_2;  -- 3 stufe 
+     
+      end if;
+    end if;
+    
+    -- 4 stufe
+    INT_NWE_CS <= NWE_CS_3 and not NWE_CS_2 after 10 ns;
+
+  end process NWE_p;
 
 
 
