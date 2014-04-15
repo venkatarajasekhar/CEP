@@ -28,6 +28,7 @@ architecture BEHAVIOUR of TOP_EQ is
   
   signal INT_NEX_CS: STD_LOGIC;  -- internes signal, doppelt abgetaktet
   signal INT_NWE_CS: STD_LOGIC;  -- internes signal, doppelt abgetaktet + pulse-shorter
+  signal INT_START: STD_LOGIC;  -- internes signal, zum starten des equalizers 
 
   component FREQ_DIV is
     generic (CYCLE : integer);
@@ -146,7 +147,39 @@ begin
 
   end process NWE_p;
 
+  NWE_NEX_p: process(INT_NEX_CS, INT_NWE_CS)
+    variable EN: STD_LOGIC;
+    variable PS_INT: STD_LOGIC;
+  begin
 
+    -- erste stufe
+    if(INT_CLK_SYN'event and INT_CLK_SYN = '1') then
+      if(RESET = '1') then
+        EN := '0';
+      else
+       EN := INT_NWE_CS;
+      end if;
+    end if;
+
+    --zweite stufe
+    if(EN'event and EN = '1') then
+      if(INT_START = '1') then
+        PS_INT := '0';
+      else
+        PS_INT := '1';
+      end if;
+    end if;
+ 
+    --dritte stufe
+    if(INT_CLK_PE'event and INT_CLK_PE = '1') then
+      if(RESET = '1') then
+        INT_START <= '0' after 10 ns;
+      else
+        INT_START <= PS_INT after 10 ns;
+      end if;
+    end if;
+
+  end process NWE_NEX_p;
 
 
   OSZI: process(CLK)
