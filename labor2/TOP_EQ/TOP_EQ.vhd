@@ -6,11 +6,12 @@ entity TOP_EQ is
   port( NEX: in STD_LOGIC;
         NOE: in STD_LOGIC;
         NWE: in STD_LOGIC;
-        --D: inout std_ulogic_vector(15 downto 0);
+        DATA: inout STD_ULOGIC_VECTOR(15 downto 0);
         CLK: in STD_LOGIC;
         RESET: in STD_LOGIC;
         ANODE: out STD_LOGIC_vector(3 downto 0);
         CATHODE: out STD_LOGIC_vector(7 downto 0);
+        RDY: out STD_LOGIC;
         TEST1: out STD_LOGIC;
         TEST2: out STD_LOGIC;
         TEST3: out STD_LOGIC;
@@ -32,6 +33,12 @@ architecture BEHAVIOUR of TOP_EQ is
   signal INT_P3: STD_LOGIC;     -- internes Signal EN, zum process 4 als takt
   signal INT_P4: STD_LOGIC;     -- internes signal verbindung zwischen P4 und P5
   signal INT_P5: STD_LOGIC;  -- internes signal, zum starten des equalizers
+  
+  --EQUALIZER
+  signal INT_W: STD_ULOGIC_VECTOR(15 downto 0);
+  signal INT_Y: STD_ULOGIC_VECTOR(15 downto 0);
+  signal INT_DATA: STD_ULOGIC_VECTOR(15 downto 0);
+  
   
   component FREQ_DIV is
     generic (CYCLE : integer);
@@ -60,6 +67,13 @@ architecture BEHAVIOUR of TOP_EQ is
           NLOAD_RNDM: in STD_LOGIC;
           RESET_RNDM: in STD_LOGIC;
           OUTPUT_RNDM: out STD_LOGIC_vector(15 downto 0));
+  end component;
+  
+  component EQUALIZER is
+  port( CLK_PE: in STD_LOGIC;
+        Y: in STD_ULOGIC_VECTOR(15 downto 0);
+        W: out STD_ULOGIC_VECTOR(15 downto 0);
+        RDY: out STD_LOGIC);
   end component;
 
 begin
@@ -91,6 +105,13 @@ begin
             SVN_SEG_VALUE => INT_PSDO_RNDM_GEN_1_OUT,
             SVN_SEG_ANODE => ANODE,
             SVN_SEG_CATHODE => CATHODE
+  );
+  
+  EQUAL :  EQUALIZER
+  port map( CLK_PE => INT_CLK_PE,
+            Y => INT_Y,
+            W => INT_W,
+            RDY => RDY
   );
   
   --TEST: process(NEX, NOE, NWE)
@@ -182,11 +203,46 @@ begin
     end if;        
   end process process_5;
 
+
+  process_6:process(INT_CLK_SYN)
+      variable v1: STD_ULOGIC_VECTOR(15 downto 0);
+      variable v2: STD_ULOGIC_VECTOR(15 downto 0);
+  begin
+    if(INT_CLK_SYN'event and INT_CLK_SYN = '1') then
+      if(RESET = '1') then
+        v1 := (others => '0');
+        v2 := (others => '0');
+        INT_Y <= (others => '0');
+      else
+        v1 := INT_DATA;
+        v2 := v1;
+        if(INT_P3 = '1') then 
+           INT_Y <= v2 after 10 ns;
+        end if;
+      end if;
+    end if;        
+  end process process_6;
+  
+  
   OSZI: process(CLK)
   begin
       TEST_OSZI <= CLK after 10 ns;
   end process OSZI;
   
   INT_P1_P2 <= INT_P1 and not INT_P2 after 10 ns;
+  
+  
+  -- Anfang Tri-State
+  WRITE: process(INT_TRISTATE_CTRL, INT_W)
+  begin
+    if(INT_TRISTATE_CTRL = '1') then
+      DATA <= INT_W after 10 ns;
+    else
+      DATA <= (others => 'Z') after 10 ns;     
+    end if;
+  end process WRITE;
+  
+  READ: INT_DATA <= DATA after 10 ns; 
+  -- Ende Tri-State
 
 end BEHAVIOUR;
