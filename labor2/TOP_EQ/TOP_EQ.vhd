@@ -26,10 +26,13 @@ architecture BEHAVIOUR of TOP_EQ is
   signal INT_CLK_PE: STD_LOGIC;  -- internes clk signal, 100hz
   signal INT_TRISTATE_CTRL: STD_LOGIC;  -- internes signal zur tristate steuerung
   
-  signal INT_NEX_CS: STD_LOGIC;  -- internes signal, doppelt abgetaktet
-  signal INT_NWE_CS: STD_LOGIC;  -- internes signal, doppelt abgetaktet + pulse-shorter
-  signal INT_START: STD_LOGIC;  -- internes signal, zum starten des equalizers 
-
+  signal INT_P2: STD_LOGIC;  -- internes signal, doppelt abgetaktet
+  signal INT_P1: STD_LOGIC;  -- internes signal, doppelt abgetaktet + pulse-shorter
+  signal INT_P1_P2: STD_LOGIC;  -- internes Signal, verundung NWE und !NEX
+  signal INT_P3: STD_LOGIC;     -- internes Signal EN, zum process 4 als takt
+  signal INT_P4: STD_LOGIC;     -- internes signal verbindung zwischen P4 und P5
+  signal INT_P5: STD_LOGIC;  -- internes signal, zum starten des equalizers
+  
   component FREQ_DIV is
     generic (CYCLE : integer);
     port(	CLK: in STD_LOGIC;
@@ -96,35 +99,8 @@ begin
   --    TEST2 <= NWE after 10 ns;
   --    TEST3 <= NOE after 10 ns;
   --end process TEST;
-  
-  NEX_NOE_p: process(NEX, NOE)
-		variable NEX_CS: STD_LOGIC;
-    variable NOE_CS: STD_LOGIC;
-    variable NOE_CS_2: STD_LOGIC;
-  begin
-    if(INT_CLK_SYN'event and INT_CLK_SYN = '1') then
-      if(RESET = '1') then
-        NEX_CS := '0';
-        NOE_CS := '0';
-        NOE_CS_2 := '0';
-        INT_NEX_CS <= '0' after 10 ns;
-      else
-        -- erste stufe 
-        NEX_CS := NEX;
-        NOE_CS := NOE;
-        
-        -- zweite stufe
-        INT_NEX_CS <= NEX_CS after 10 ns;
-        NOE_CS_2 := NOE_CS;
-      end if;
-    end if;
 
-    -- dritte stufe
-    INT_TRISTATE_CTRL <= INT_NEX_CS or NOE_CS_2 after 10 ns;
-
-  end process NEX_NOE_p;
-
-  NWE_p: process(NWE)
+  process_1: process(INT_CLK_SYN)
     variable NWE_CS: STD_LOGIC;
     variable NWE_CS_2: STD_LOGIC;
     variable NWE_CS_3: STD_LOGIC;
@@ -143,48 +119,74 @@ begin
     end if;
     
     -- 4 stufe
-    INT_NWE_CS <= NWE_CS_3 and not NWE_CS_2 after 10 ns;
+    INT_P1 <= NWE_CS_3 and not NWE_CS_2 after 10 ns;
+  end process process_1;
 
-  end process NWE_p;
-
-  NWE_NEX_p: process(INT_NEX_CS, INT_NWE_CS)
-    variable EN: STD_LOGIC;
-    variable PS_INT: STD_LOGIC;
+  process_2: process(INT_CLK_SYN)
+	 variable NEX_CS: STD_LOGIC;
+    variable NOE_CS: STD_LOGIC;
+    variable NOE_CS_2: STD_LOGIC;
   begin
-
-    -- erste stufe
     if(INT_CLK_SYN'event and INT_CLK_SYN = '1') then
       if(RESET = '1') then
-        EN := '0';
+        NEX_CS := '0';
+        NOE_CS := '0';
+        NOE_CS_2 := '0';
+        INT_P2 <= '0' after 10 ns;
       else
-       EN := INT_NWE_CS;
+        -- erste stufe 
+        NEX_CS := NEX;
+        NOE_CS := NOE;
+        
+        -- zweite stufe
+        INT_P2 <= NEX_CS after 10 ns;
+        NOE_CS_2 := NOE_CS;
       end if;
     end if;
 
-    --zweite stufe
-    if(EN'event and EN = '1') then
-      if(INT_START = '1') then
-        PS_INT := '0';
+    -- dritte stufe
+    INT_TRISTATE_CTRL <= INT_P2 or NOE_CS_2 after 10 ns;
+
+  end process process_2;
+
+  process_3: process(INT_CLK_SYN)
+  begin
+    if(INT_CLK_SYN'event and INT_CLK_SYN = '1') then
+      if(RESET = '1') then
+        INT_P3 <= '0' after 10 ns;
       else
-        PS_INT := '1';
+        INT_P3 <= INT_P1_P2 after 10 ns;
       end if;
     end if;
- 
-    --dritte stufe
+  end process process_3;
+
+  process_4:process(INT_P3)
+  begin
+    if(INT_P3'event and INT_P3 = '1') then
+      if(INT_P5 = '1') then
+        INT_P4 <= '0' after 10 ns;
+      else
+        INT_P4 <= '1' after 10 ns;
+      end if;
+    end if;
+  end process process_4;
+  
+  process_5:process(INT_CLK_PE)
+  begin
     if(INT_CLK_PE'event and INT_CLK_PE = '1') then
       if(RESET = '1') then
-        INT_START <= '0' after 10 ns;
+        INT_P5 <= '0' after 10 ns;
       else
-        INT_START <= PS_INT after 10 ns;
+        INT_P5 <= INT_P4 after 10 ns;
       end if;
-    end if;
-
-  end process NWE_NEX_p;
-
+    end if;        
+  end process process_5;
 
   OSZI: process(CLK)
   begin
       TEST_OSZI <= CLK after 10 ns;
   end process OSZI;
+  
+  INT_P1_P2 <= INT_P1 and not INT_P2 after 10 ns;
 
 end BEHAVIOUR;
