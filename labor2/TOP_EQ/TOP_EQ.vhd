@@ -71,6 +71,7 @@ architecture BEHAVIOUR of TOP_EQ is
   
   component EQUALIZER is
   port( CLK_PE: in STD_LOGIC;
+        RESET: in STD_LOGIC;
         Y: in STD_ULOGIC_VECTOR(15 downto 0);
         W: out STD_ULOGIC_VECTOR(15 downto 0);
         RDY: out STD_LOGIC);
@@ -109,6 +110,7 @@ begin
   
   EQUAL :  EQUALIZER
   port map( CLK_PE => INT_CLK_PE,
+            RESET => RESET,
             Y => INT_Y,
             W => INT_W,
             RDY => RDY
