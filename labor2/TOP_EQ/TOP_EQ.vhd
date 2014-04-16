@@ -23,21 +23,21 @@ architecture BEHAVIOUR of TOP_EQ is
   signal INT_FREQ_DIV_2_OUT: STD_LOGIC;
   signal INT_PSDO_RNDM_GEN_1_OUT: STD_LOGIC_vector(15 downto 0);
 
-  signal INT_CLK_SYN: STD_LOGIC;  -- internes clk signal, 350mhz
-  signal INT_CLK_PE: STD_LOGIC;  -- internes clk signal, 100hz
-  signal INT_TRISTATE_CTRL: STD_LOGIC;  -- internes signal zur tristate steuerung
+  signal INT_CLK_SYN: STD_LOGIC := '0';  -- internes clk signal, 350mhz
+  signal INT_CLK_PE: STD_LOGIC := '0';  -- internes clk signal, 100hz
+  signal INT_TRISTATE_CTRL: STD_LOGIC := '0';  -- internes signal zur tristate steuerung
   
-  signal INT_P2: STD_LOGIC;  -- internes signal, doppelt abgetaktet
-  signal INT_P1: STD_LOGIC;  -- internes signal, doppelt abgetaktet + pulse-shorter
-  signal INT_P1_P2: STD_LOGIC;  -- internes Signal, verundung NWE und !NEX
-  signal INT_P3: STD_LOGIC;     -- internes Signal EN, zum process 4 als takt
-  signal INT_P4: STD_LOGIC;     -- internes signal verbindung zwischen P4 und P5
-  signal INT_P5: STD_LOGIC;  -- internes signal, zum starten des equalizers
+  signal INT_P2: STD_LOGIC := '1';  -- internes signal, doppelt abgetaktet
+  signal INT_P1: STD_LOGIC := '1';  -- internes signal, doppelt abgetaktet + pulse-shorter
+  signal INT_P1_P2: STD_LOGIC := '1';  -- internes Signal, verundung NWE und !NEX
+  signal INT_P3: STD_LOGIC := '1';     -- internes Signal EN, zum process 4 als takt
+  signal INT_P4: STD_LOGIC := '1';     -- internes signal verbindung zwischen P4 und P5
+  signal INT_P5: STD_LOGIC := '1';  -- internes signal, zum starten des equalizers
   
   --EQUALIZER
-  signal INT_W: STD_ULOGIC_VECTOR(15 downto 0);
-  signal INT_Y: STD_ULOGIC_VECTOR(15 downto 0);
-  signal INT_DATA: STD_ULOGIC_VECTOR(15 downto 0);
+  signal INT_W: STD_ULOGIC_VECTOR(15 downto 0) := (others => '0');
+  signal INT_Y: STD_ULOGIC_VECTOR(15 downto 0) := (others => '0');
+  signal INT_DATA: STD_ULOGIC_VECTOR(15 downto 0) := (others => '0');
   
   
   component FREQ_DIV is
@@ -122,15 +122,15 @@ begin
   --end process TEST;
 
   process_1: process(INT_CLK_SYN)
-    variable NWE_CS: STD_LOGIC;
-    variable NWE_CS_2: STD_LOGIC;
-    variable NWE_CS_3: STD_LOGIC;
+    variable NWE_CS: STD_LOGIC := '1';
+    variable NWE_CS_2: STD_LOGIC := '1';
+    variable NWE_CS_3: STD_LOGIC := '1';
   begin
     if(INT_CLK_SYN'event and INT_CLK_SYN = '1') then
       if(RESET = '1') then
-        NWE_CS := '0';
-        NWE_CS_2 := '0';
-        NWE_CS_3 := '0';
+        NWE_CS := '1';
+        NWE_CS_2 := '1';
+        NWE_CS_3 := '1';
       else
         NWE_CS := NWE;  -- 1 stufe 
         NWE_CS_2 := NWE_CS;  -- 2 stufe 
@@ -144,16 +144,16 @@ begin
   end process process_1;
 
   process_2: process(INT_CLK_SYN)
-	 variable NEX_CS: STD_LOGIC;
-    variable NOE_CS: STD_LOGIC;
-    variable NOE_CS_2: STD_LOGIC;
+	 variable NEX_CS: STD_LOGIC := '1';
+    variable NOE_CS: STD_LOGIC := '1';
+    variable NOE_CS_2: STD_LOGIC := '1';
   begin
     if(INT_CLK_SYN'event and INT_CLK_SYN = '1') then
       if(RESET = '1') then
-        NEX_CS := '0';
-        NOE_CS := '0';
-        NOE_CS_2 := '0';
-        INT_P2 <= '0' after 10 ns;
+        NEX_CS := '1';
+        NOE_CS := '1';
+        NOE_CS_2 := '1';
+        INT_P2 <= '1' after 10 ns;
       else
         -- erste stufe 
         NEX_CS := NEX;
@@ -174,7 +174,7 @@ begin
   begin
     if(INT_CLK_SYN'event and INT_CLK_SYN = '1') then
       if(RESET = '1') then
-        INT_P3 <= '0' after 10 ns;
+        INT_P3 <= '1' after 10 ns;
       else
         INT_P3 <= INT_P1_P2 after 10 ns;
       end if;
@@ -185,9 +185,9 @@ begin
   begin
     if(INT_P3'event and INT_P3 = '1') then
       if(INT_P5 = '1') then
-        INT_P4 <= '0' after 10 ns;
-      else
         INT_P4 <= '1' after 10 ns;
+      else
+        INT_P4 <= '0' after 10 ns;
       end if;
     end if;
   end process process_4;
@@ -196,17 +196,16 @@ begin
   begin
     if(INT_CLK_PE'event and INT_CLK_PE = '1') then
       if(RESET = '1') then
-        INT_P5 <= '0' after 10 ns;
+        INT_P5 <= '1' after 10 ns;
       else
         INT_P5 <= INT_P4 after 10 ns;
       end if;
     end if;        
   end process process_5;
 
-
   process_6:process(INT_CLK_SYN)
-      variable v1: STD_ULOGIC_VECTOR(15 downto 0);
-      variable v2: STD_ULOGIC_VECTOR(15 downto 0);
+      variable v1: STD_ULOGIC_VECTOR(15 downto 0) := (others => '0');
+      variable v2: STD_ULOGIC_VECTOR(15 downto 0) := (others => '0');
   begin
     if(INT_CLK_SYN'event and INT_CLK_SYN = '1') then
       if(RESET = '1') then
