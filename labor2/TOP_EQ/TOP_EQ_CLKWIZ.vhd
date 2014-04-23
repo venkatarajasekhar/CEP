@@ -9,13 +9,8 @@ entity TOP_EQ_CLKWIZ is
         DATA: inout STD_ULOGIC_VECTOR(15 downto 0);
         CLK: in STD_LOGIC;
         RESET: in STD_LOGIC;
-        --ANODE: out STD_LOGIC_vector(3 downto 0);
-        --CATHODE: out STD_LOGIC_vector(7 downto 0);
-        RDY: out STD_LOGIC;
-        --TEST1: out STD_LOGIC;
-        --TEST2: out STD_LOGIC;
-        --TEST3: out STD_LOGIC;
-        TEST_OSZI: out STD_LOGIC);
+        RDY: out STD_LOGIC --equalizer ausgang
+        );
 end TOP_EQ_CLKWIZ;
 
 architecture BEHAVIOUR of TOP_EQ_CLKWIZ is
@@ -237,10 +232,10 @@ begin
     end if;        
   end process process_6;
  
-  OSZI: process(CLK)
-  begin
-    TEST_OSZI <= CLK after 10 ns;
-  end process OSZI;
+  --OSZI: process(CLK)
+  --begin
+  --  TEST_OSZI <= CLK after 10 ns;
+  --end process OSZI;
   
   INT_P1_P2 <= INT_P1 and not INT_P2 after 10 ns;
   
