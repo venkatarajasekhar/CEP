@@ -9,6 +9,8 @@ entity TOP_EQ_CLKWIZ is
         DATA: inout STD_LOGIC_VECTOR(15 downto 0);
         CLK: in STD_LOGIC;
         RESET: in STD_LOGIC;
+        --ANODE: out STD_LOGIC_vector(3 downto 0);
+        --CATHODE: out STD_LOGIC_vector(7 downto 0);
         RDY: out STD_LOGIC; --equalizer ausgang
         LOCKED: in STD_LOGIC
         );
