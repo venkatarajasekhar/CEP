@@ -6,10 +6,11 @@ entity TOP_EQ_CLKWIZ is
   port( NEX: in STD_LOGIC;
         NOE: in STD_LOGIC;
         NWE: in STD_LOGIC;
-        DATA: inout STD_ULOGIC_VECTOR(15 downto 0);
+        DATA: inout STD_LOGIC_VECTOR(15 downto 0);
         CLK: in STD_LOGIC;
         RESET: in STD_LOGIC;
-        RDY: out STD_LOGIC --equalizer ausgang
+        RDY: out STD_LOGIC; --equalizer ausgang
+        LOCKED: in STD_LOGIC
         );
 end TOP_EQ_CLKWIZ;
 
@@ -18,10 +19,10 @@ architecture BEHAVIOUR of TOP_EQ_CLKWIZ is
   --signal INT_FREQ_DIV_2_OUT: STD_LOGIC;
   --signal INT_PSDO_RNDM_GEN_1_OUT: STD_LOGIC_vector(15 downto 0);
 
-  signal INT_CLK_SYN: STD_LOGIC := '0';  -- internes clk signal, 350MHz
-  signal INT_CLK_PE: STD_LOGIC := '0';  -- internes clk signal, 100MHz
-  signal INT_LOCKED: STD_LOGIC := '0';  -- internes lock signal des clock-wizards
-  signal INT_TRISTATE_CTRL: STD_LOGIC := '0';  -- internes signal zur tristate steuerung
+  signal INT_CLK_SYN: STD_LOGIC;  -- internes clk signal, 350MHz
+  signal INT_CLK_PE: STD_LOGIC;  -- internes clk signal, 100MHz
+  signal INT_LOCKED: STD_LOGIC;  -- internes lock signal des clock-wizards
+  signal INT_TRISTATE_CTRL: STD_LOGIC;  -- internes signal zur tristate steuerung
   
   signal INT_P1: STD_LOGIC := '1';  -- internes signal, doppelt abgetaktet + pulse-shorter
   signal INT_P2: STD_LOGIC := '1';  -- internes signal, doppelt abgetaktet
@@ -31,9 +32,9 @@ architecture BEHAVIOUR of TOP_EQ_CLKWIZ is
   signal INT_P5: STD_LOGIC := '1';  -- internes signal, zum starten des equalizers
   
   --EQUALIZER
-  signal INT_W: STD_ULOGIC_VECTOR(15 downto 0) := (others => '0');
-  signal INT_Y: STD_ULOGIC_VECTOR(15 downto 0) := (others => '0');
-  signal INT_DATA: STD_ULOGIC_VECTOR(15 downto 0) := (others => '0');
+  signal INT_W: STD_LOGIC_VECTOR(15 downto 0) := (others => '0');
+  signal INT_Y: STD_LOGIC_VECTOR(15 downto 0) := (others => '0');
+  signal INT_DATA: STD_LOGIC_VECTOR(15 downto 0) := (others => '0');
   
   --component FREQ_DIV is
   --  generic (CYCLE : integer);
@@ -68,8 +69,8 @@ architecture BEHAVIOUR of TOP_EQ_CLKWIZ is
   port( CLK_PE: in STD_LOGIC;
         RESET: in STD_LOGIC;
         LOCKED: in STD_LOGIC;
-        Y: in STD_ULOGIC_VECTOR(15 downto 0);
-        W: out STD_ULOGIC_VECTOR(15 downto 0);
+        Y: in STD_LOGIC_VECTOR(15 downto 0);
+        W: out STD_LOGIC_VECTOR(15 downto 0);
         RDY: out STD_LOGIC);
   end component;
   
@@ -215,16 +216,16 @@ begin
   end process process_5;
 
   process_6:process(INT_CLK_SYN)
-    variable v1: STD_ULOGIC_VECTOR(15 downto 0) := (others => '0');
-    variable v2: STD_ULOGIC_VECTOR(15 downto 0) := (others => '0');
+    variable v1: STD_LOGIC_VECTOR(15 downto 0) := (others => '0'); --weg
+    variable v2: STD_LOGIC_VECTOR(15 downto 0) := (others => '0'); --weg
   begin
     if(RESET = '1' OR INT_LOCKED = '1') then
       v1 := (others => '0');
       v2 := (others => '0');
       INT_Y <= (others => '0');
     elsif(INT_CLK_SYN'event and INT_CLK_SYN = '1') then
-      v1 := INT_DATA;
-      v2 := v1;
+      v1 := INT_DATA; --DATA                              erst lesen , dann schreiben gedächnis, erst schreiben, dann lesen -> draht
+      v2 := v1;                                          
        
       if(INT_P3 = '1') then 
         INT_Y <= v2 after 10 ns;
@@ -243,9 +244,9 @@ begin
   WRITE: process(INT_TRISTATE_CTRL, INT_W)
   begin
     if(INT_TRISTATE_CTRL = '1') then
-      DATA <= INT_W after 10 ns;
+       DATA <= (others => 'Z') after 10 ns;    -- empfaenger
     else
-      DATA <= (others => 'Z') after 10 ns;     
+      DATA <= INT_W after 10 ns;       -- sender
     end if;
   end process WRITE;
   
