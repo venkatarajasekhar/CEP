@@ -141,17 +141,18 @@ begin
     variable NWE_CS_2: STD_LOGIC := '1';
     variable NWE_CS_3: STD_LOGIC := '1';
   begin
-    if(INT_CLK_SYN'event and INT_CLK_SYN = '1') then
-      if(RESET = '1') then
-        NWE_CS := '1';
-        NWE_CS_2 := '1';
-        NWE_CS_3 := '1';
-      else
-        NWE_CS := NWE;  -- 1 stufe 
-        NWE_CS_2 := NWE_CS;  -- 2 stufe 
-        NWE_CS_3 := NWE_CS_2;  -- 3 stufe 
-     
-      end if;
+    if(RESET = '1' OR INT_LOCKED = '1') then
+      
+      NWE_CS := '1';
+      NWE_CS_2 := '1';
+      NWE_CS_3 := '1';
+    
+    elsif(INT_CLK_SYN'event and INT_CLK_SYN = '1') then      
+    
+      NWE_CS := NWE;  -- 1 stufe 
+      NWE_CS_2 := NWE_CS;  -- 2 stufe 
+      NWE_CS_3 := NWE_CS_2;  -- 3 stufe
+       
     end if;
     
     -- 4 stufe
@@ -163,21 +164,22 @@ begin
     variable NOE_CS: STD_LOGIC := '1';
     variable NOE_CS_2: STD_LOGIC := '1';
   begin
-    if(INT_CLK_SYN'event and INT_CLK_SYN = '1') then
-      if(RESET = '1') then
-        NEX_CS := '1';
-        NOE_CS := '1';
-        NOE_CS_2 := '1';
-        INT_P2 <= '1' after 10 ns;
-      else
-        -- erste stufe 
-        NEX_CS := NEX;
-        NOE_CS := NOE;
+    if(RESET = '1' OR INT_LOCKED = '1') then
         
-        -- zweite stufe
-        INT_P2 <= NEX_CS after 10 ns;
-        NOE_CS_2 := NOE_CS;
-      end if;
+      NEX_CS := '1';
+      NOE_CS := '1';
+      NOE_CS_2 := '1';
+      INT_P2 <= '1' after 10 ns;
+      
+    elsif(INT_CLK_SYN'event and INT_CLK_SYN = '1') then
+        
+      -- erste stufe 
+      NEX_CS := NEX;
+      NOE_CS := NOE;
+        
+      -- zweite stufe
+      INT_P2 <= NEX_CS after 10 ns;
+      NOE_CS_2 := NOE_CS;
     end if;
 
     -- dritte stufe
@@ -187,59 +189,55 @@ begin
 
   process_3: process(INT_CLK_SYN)
   begin
-    if(INT_CLK_SYN'event and INT_CLK_SYN = '1') then
-      if(RESET = '1') then
-        INT_P3 <= '1' after 10 ns;
-      else
-        INT_P3 <= INT_P1_P2 after 10 ns;
-      end if;
+    if(RESET = '1' OR INT_LOCKED = '1') then
+    
+      INT_P3 <= '1' after 10 ns;
+    
+    elsif(INT_CLK_SYN'event and INT_CLK_SYN = '1') then
+         
+      INT_P3 <= INT_P1_P2 after 10 ns;
     end if;
   end process process_3;
 
   process_4:process(INT_P3)
   begin
-    if(INT_P3'event and INT_P3 = '1') then
-      if(INT_P5 = '1') then
-        INT_P4 <= '1' after 10 ns;
-      else
-        INT_P4 <= '0' after 10 ns;
-      end if;
+    if(INT_P5 = '1' OR INT_LOCKED = '1') then
+      INT_P4 <= '1' after 10 ns;
+    elsif(INT_P3'event and INT_P3 = '1') then
+      INT_P4 <= '0' after 10 ns;
     end if;
   end process process_4;
   
   process_5:process(INT_CLK_PE)
   begin
-    if(INT_CLK_PE'event and INT_CLK_PE = '1') then
-      if(RESET = '1') then
-        INT_P5 <= '1' after 10 ns;
-      else
-        INT_P5 <= INT_P4 after 10 ns;
-      end if;
+    if(RESET = '1' OR INT_LOCKED = '1') then
+      INT_P5 <= '1' after 10 ns;
+    elsif(INT_CLK_PE'event and INT_CLK_PE = '1') then
+      INT_P5 <= INT_P4 after 10 ns;
     end if;        
   end process process_5;
 
   process_6:process(INT_CLK_SYN)
-      variable v1: STD_ULOGIC_VECTOR(15 downto 0) := (others => '0');
-      variable v2: STD_ULOGIC_VECTOR(15 downto 0) := (others => '0');
+    variable v1: STD_ULOGIC_VECTOR(15 downto 0) := (others => '0');
+    variable v2: STD_ULOGIC_VECTOR(15 downto 0) := (others => '0');
   begin
-    if(INT_CLK_SYN'event and INT_CLK_SYN = '1') then
-      if(RESET = '1') then
-        v1 := (others => '0');
-        v2 := (others => '0');
-        INT_Y <= (others => '0');
-      else
-        v1 := INT_DATA;
-        v2 := v1;
-        if(INT_P3 = '1') then 
-           INT_Y <= v2 after 10 ns;
-        end if;
+    if(RESET = '1' OR INT_LOCKED = '1') then
+      v1 := (others => '0');
+      v2 := (others => '0');
+      INT_Y <= (others => '0');
+    elsif(INT_CLK_SYN'event and INT_CLK_SYN = '1') then
+      v1 := INT_DATA;
+      v2 := v1;
+       
+      if(INT_P3 = '1') then 
+        INT_Y <= v2 after 10 ns;
       end if;
     end if;        
   end process process_6;
  
   OSZI: process(CLK)
   begin
-      TEST_OSZI <= CLK after 10 ns;
+    TEST_OSZI <= CLK after 10 ns;
   end process OSZI;
   
   INT_P1_P2 <= INT_P1 and not INT_P2 after 10 ns;
