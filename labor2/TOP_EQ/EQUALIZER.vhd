@@ -43,8 +43,6 @@ begin
           end if;
 
         STEPS := STEPS + 1;
-
-      end if;
     end if;
   end process Akku;
 
