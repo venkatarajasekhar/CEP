@@ -23,8 +23,9 @@ architecture BEHAVIOUR of TOP_EQ_CLKWIZ is
   --signal INT_FREQ_DIV_2_OUT: STD_LOGIC;
   --signal INT_PSDO_RNDM_GEN_1_OUT: STD_LOGIC_vector(15 downto 0);
 
-  signal INT_CLK_SYN: STD_LOGIC := '0';  -- internes clk signal, 350mhz
-  signal INT_CLK_PE: STD_LOGIC := '0';  -- internes clk signal, 175Mhz
+  signal INT_CLK_SYN: STD_LOGIC := '0';  -- internes clk signal, 350MHz
+  signal INT_CLK_PE: STD_LOGIC := '0';  -- internes clk signal, 100MHz
+  signal INT_LOCKED: STD_LOGIC := '0';  -- internes lock signal des clock-wizards
   signal INT_TRISTATE_CTRL: STD_LOGIC := '0';  -- internes signal zur tristate steuerung
   
   signal INT_P1: STD_LOGIC := '1';  -- internes signal, doppelt abgetaktet + pulse-shorter
@@ -76,16 +77,15 @@ architecture BEHAVIOUR of TOP_EQ_CLKWIZ is
         RDY: out STD_LOGIC);
   end component;
   
-  component clk_wiz_v1_8 is
-  port(-- Clock in ports
-        CLK_IN1           : in     std_logic;
-       -- Clock out ports
-        CLK_OUT1          : out    std_logic;
-        CLK_OUT2          : out    std_logic;
-       -- Status and control signals
-  LOCKED            : out    std_logic
- );
-end component;
+  component CLK_WIZ_100_350 is
+  port( -- Clock in ports
+        CLK_IN1: in STD_LOGIC;
+        -- Clock out ports
+        CLK_OUT1: out STD_LOGIC;
+        CLK_OUT2: out STD_LOGIC;
+        -- Status and control signals
+        LOCKED : out STD_LOGIC);
+  end component;
 
 begin
     
@@ -124,6 +124,16 @@ begin
             Y => INT_Y,
             W => INT_W,
             RDY => RDY
+  );
+  
+  CLKWIZ : CLK_WIZ_100_350
+  port map(  -- Clock in ports
+             CLK_IN1 => CLK,
+             -- Clock out ports
+             CLK_OUT1 => INT_CLK_PE,
+             CLK_OUT2 => INT_CLK_SYN,
+             -- Status and control signals
+             LOCKED => INT_LOCKED
   );
  
   process_1: process(INT_CLK_SYN)
