@@ -1,8 +1,14 @@
+-- alte top_eq
+-- neue top_eq wurde erstellt
+-- variablen durch signale ersetzt
+-- prozess und singalnamen geaendert
+-- reset low-aktiv wegen den buttons...
+
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.STD_LOGIC_UNSIGNED.ALL;
 
-entity TOP_EQ_CLKWIZ is
+entity TOP_EQ_OLD is
   port( NEX: in STD_LOGIC;
         NOE: in STD_LOGIC;
         NWE: in STD_LOGIC;
@@ -14,9 +20,9 @@ entity TOP_EQ_CLKWIZ is
         RDY: out STD_LOGIC; --equalizer ausgang
         LOCKED: in STD_LOGIC
         );
-end TOP_EQ_CLKWIZ;
+end TOP_EQ_OLD;
 
-architecture BEHAVIOUR of TOP_EQ_CLKWIZ is
+architecture BEHAVIOUR of TOP_EQ_OLD is
   --signal INT_FREQ_DIV_1_OUT: STD_LOGIC;
   --signal INT_FREQ_DIV_2_OUT: STD_LOGIC;
   --signal INT_PSDO_RNDM_GEN_1_OUT: STD_LOGIC_vector(15 downto 0);

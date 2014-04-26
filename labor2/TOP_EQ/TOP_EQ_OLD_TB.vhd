@@ -3,13 +3,13 @@ use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.STD_LOGIC_UNSIGNED.ALL;
 
 
-entity TOP_EQ_CLKWIZ_TB is 
+entity TOP_EQ_OLD_TB is 
 generic(PERIODE170MHZHALBE: time:= 2.941176471 ns; -- parameter 1/2fclk (170MHZ)   -->WAIT FOR
         PERIODE25MHZHALBE: time:= 20 ns; -- parameter 1/2fclk (25MHZ)              -->CLK_PROCESS
         N: natural := 50);
-end TOP_EQ_CLKWIZ_TB;
+end TOP_EQ_OLD_TB;
 
-architecture BEHAVIOUR of TOP_EQ_CLKWIZ_TB is
+architecture BEHAVIOUR of TOP_EQ_OLD_TB is
   signal TB_NEX: STD_LOGIC;
   signal TB_NOE: STD_LOGIC;
   signal TB_NWE: STD_LOGIC;
@@ -55,15 +55,6 @@ begin
 	         LOCKED => TB_LOCKED);   
 	         
 	    
-	    
-CLK_WIZ_170_I : CLK_WIZ_170
-  port map( -- Clock in ports
-            CLK_IN1 => TB_CLK,
-            -- Clock out ports
-            CLK_OUT1 => CLK_OUT1,
-            -- Status and control signals
-            LOCKED => TB_LOCKED);
-
 CLOCK: process
 begin    
   for I in N-1 downto 0 loop        
