@@ -12,7 +12,7 @@ entity TOP_EQ is
         --ANODE: out STD_LOGIC_vector(3 downto 0);
         --CATHODE: out STD_LOGIC_vector(7 downto 0);
         RDY: out STD_LOGIC; --equalizer ausgang
-        LOCKED: in STD_LOGIC
+        LOCKED: out STD_LOGIC
         );
 end TOP_EQ;
 
@@ -189,6 +189,7 @@ end process INPUT;
 --KOMBINATORISCHE LOGIK
 INT_TRISTATE <= INT_NEX2 OR INT_NOE2 after 1 ns;
 INT_EN_0 <= not INT_NEX2 and INT_NWE_SHORT after 1 ns;
+LOCKED <= INT_LOCKED after 1 ns;
 
 -- von hier nur nch tri-state code
 -- read/write aus sicht der top-eq
