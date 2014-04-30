@@ -49,10 +49,10 @@ begin
   CLOCK: process
   begin    
     for I in N-1 downto 0 loop        
-      TB_CLK <= '0';
+      TB_CLK <= '0' after 1 ns;
       wait for PERIODE25MHZHALBE; 
      
-      TB_CLK <= '1';
+      TB_CLK <= '1' after 1 ns;
       wait for PERIODE25MHZHALBE; 
     
     end loop; 
@@ -61,9 +61,9 @@ begin
   RESET: process
   begin    
     -- zwei 170er clock perioden pegel deaktivieren
-    TB_RESET <= '0';                                 -- Reset low-ative
+    TB_RESET <= '0' after 1 ns;                      -- Reset low-ative
     wait for (PERIODE170MHZHALBE * 2 * 2);    
-    TB_RESET <= '1';
+    TB_RESET <= '1' after 1 ns;
     wait;                                            -- keine veraenderung nach unbedingtem wait
   end process RESET;
 
@@ -75,9 +75,9 @@ begin
   
     -- initialisieren, damit man nicht mit schlechten gedaechtnis die inkrementierung startet
     NUM := 1;
-    TB_NWE <= '1'; 
-    TB_NEX <= '1';
-    TB_NOE <= '1';
+    TB_NWE <= '1' after 1 ns; 
+    TB_NEX <= '1' after 1 ns;
+    TB_NOE <= '1' after 1 ns;
     -- data spur auf Z setzen 
     TB_DATA <= (others => 'Z') after 1 ns;            -- sende signal 
   
@@ -88,30 +88,37 @@ begin
 
       -- deaktivierter zustand
       counter := counter + 1;                         -- inkrementer unter stimuli fuer den akkumulator
-      TB_NWE <= '1';                                    
-      TB_NEX <= '1'; 
+      TB_NWE <= '1' after 1 ns;                                    
+      TB_NEX <= '1' after 1 ns; 
 
       TB_DATA <= ( others => 'Z') after 1 ns;         -- mikro-Controler keine sender
       wait for (PERIODE170MHZHALBE * 2 * 2);          -- 2 CLK pause zwischen transfers
    
-      TB_NEX <= '0';
+      TB_NEX <= '0' after 1 ns;
       wait for (PERIODE170MHZHALBE * 2 * 2);          -- ADDSET +1  (2* 170)
 
-      TB_NWE <= '0';                                  -- daten raus
-      TB_DATA <= std_logic_vector(to_unsigned(counter, 16));                            -- parallel zu write-enable, werden die daten gesetzt, ansonsten 'Z'
-      --TB_DATA <= to_unsigned(counter, 16);                            -- parallel zu write-enable, werden die daten gesetzt, ansonsten 'Z'
+      TB_NWE <= '0' after 1 ns;                       -- daten raus
+      TB_DATA <= std_logic_vector(to_unsigned(counter, 16)) after 1 ns; -- parallel zu write-enable, werden die daten gesetzt, ansonsten 'Z'
       wait for (PERIODE170MHZHALBE * 2 * 2);          -- (DATAST + 1) -1 --> weil das write-enable eine clk vorher auf high geschaltet wird, damit die daten richtig alegen (doku)
 
-      TB_NWE <= '1'; 
+      TB_NWE <= '1' after 1 ns; 
       wait for (PERIODE170MHZHALBE * 2 *1); 
 
       NUM := NUM +1;
 
     end loop;
 
+    -- ausgabe der addierten werte
+    TB_DATA <= ( others => 'Z') after 1 ns;
+    wait for (PERIODE170MHZHALBE * 2 * 2);
+
+    TB_NOE <= '0';
+    wait for (PERIODE170MHZHALBE * 2 * 6);
+
     -- sicherheitshalber deaktivieren
-    TB_NWE <= '1';
-    TB_NEX <= '1';
+    TB_NWE <= '1' after 1 ns;
+    TB_NEX <= '1' after 1 ns;
+  --  TB_NOE <= '1' after 1 ns;
     TB_DATA <= (others =>'Z') after 1 ns;
     wait;                                              -- unbedingter halt nach N whitw-vorgänge
 

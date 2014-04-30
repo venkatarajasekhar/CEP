@@ -172,7 +172,7 @@ end process PULSE2;
 
 INPUT: process(INT_CLK_SYN)
 begin
-  if(RESET = '0' OR INT_LOCKED = '1') then
+  if(RESET = '0' OR INT_LOCKED = '0') then
     INT_DATA_2 <= (others => '0') after 1 ns;
     INT_DATA_3 <= (others => '0') after 1 ns;
     INT_Y <= (others => '0') after 1 ns;
