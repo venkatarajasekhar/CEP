@@ -21,7 +21,7 @@ begin
 	 variable RES: INTEGER := 0;
     variable STEPS: INTEGER := 0;
   begin
-    if(RESET = '1' or LOCKED = '1') then
+    if(RESET = '0' or LOCKED = '0') then
         W <= (others => '0') after 1 ns;
         RDY <= '0' after 1 ns;
         RES := 0;
