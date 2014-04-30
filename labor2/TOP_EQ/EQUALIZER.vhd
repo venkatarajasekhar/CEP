@@ -22,22 +22,22 @@ begin
     variable STEPS: INTEGER := 0;
   begin
     if(RESET = '1' or LOCKED = '1') then
-        W <= (others => '0') after 10 ns;
-        RDY <= '0' after 10 ns;
+        W <= (others => '0') after 1 ns;
+        RDY <= '0' after 1 ns;
         RES := 0;
         STEPS := 0;
     elsif(CLK_PE'event and CLK_PE = '1') then
      
         if(STEPS = 0) then
-          RDY <= '0' after 10 ns;
+          RDY <= '0' after 1 ns;
         end if;
 
           RES := RES + TO_Integer(unsigned(Y));
 
-          W <= std_logic_vector(to_unsigned(RES, 16)) after 10 ns;
+          W <= std_logic_vector(to_unsigned(RES, 16)) after 1 ns;
 
           if(STEPS = COUNT) then
-            RDY <= '1' after 10 ns;
+            RDY <= '1' after 1 ns;
             RES := 0;
             STEPS := 0;
           end if;
