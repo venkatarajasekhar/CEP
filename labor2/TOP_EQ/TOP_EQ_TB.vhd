@@ -77,6 +77,7 @@ begin
     NUM := 1;
     TB_NWE <= '1'; 
     TB_NEX <= '1';
+    TB_NOE <= '1';
     -- data spur auf Z setzen 
     TB_DATA <= (others => 'Z') after 1 ns;            -- sende signal 
   
@@ -89,6 +90,7 @@ begin
       counter := counter + 1;                         -- inkrementer unter stimuli fuer den akkumulator
       TB_NWE <= '1';                                    
       TB_NEX <= '1'; 
+
       TB_DATA <= ( others => 'Z') after 1 ns;         -- mikro-Controler keine sender
       wait for (PERIODE170MHZHALBE * 2 * 2);          -- 2 CLK pause zwischen transfers
    
