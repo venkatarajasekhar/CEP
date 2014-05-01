@@ -108,7 +108,11 @@ begin
 
     end loop;
 
+
+
     -- ausgabe der addierten werte
+    wait for (PERIODE170MHZHALBE * 2);
+
     TB_DATA <= ( others => 'Z') after 1 ns;
     wait for (PERIODE170MHZHALBE * 2 * 2);
 
