@@ -57,9 +57,11 @@ signal INT_TRISTATE: STD_LOGIC;
 signal INT_EN_0:STD_LOGIC;
 
 component EQUALIZER is
+  generic(COUNT: natural);
   port( CLK_PE: in STD_LOGIC;
         RESET: in STD_LOGIC;
         LOCKED: in STD_LOGIC;
+        START: in STD_LOGIC;
         Y: in STD_LOGIC_VECTOR(15 downto 0);
         W: out STD_LOGIC_VECTOR(15 downto 0);
         RDY: out STD_LOGIC);
@@ -78,9 +80,11 @@ component EQUALIZER is
 begin
 
 EQUAL : EQUALIZER
+  generic map(COUNT => 128)
   port map( CLK_PE => INT_CLK_PE,
             RESET => RESET,
             LOCKED => INT_LOCKED,
+            START => INT_START,
             Y => INT_Y,
             W => INT_W,
             RDY => RDY
@@ -95,8 +99,6 @@ CLKWIZ : CLK_WIZ_100_350
              -- Status and control signals
              LOCKED => INT_LOCKED
   );
-
-
 
 WRITE_EN: process(INT_CLK_SYN)
 begin
@@ -161,7 +163,7 @@ begin
   end if;
 end process PULSE1;
 
-PULSE2: process(INT_CLK_PE)
+PULSE2: process(INT_CLK_PE) --
 begin
   if(RESET = '0' OR INT_LOCKED = '0') then
     INT_START <= '0' after 1 ns;
