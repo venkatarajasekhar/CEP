@@ -168,7 +168,7 @@ begin
   if(RESET = '0' OR INT_LOCKED = '0') then
     INT_START <= '0' after 1 ns;
   elsif(INT_CLK_PE'event and INT_CLK_PE = '1') then
-    INT_START <= INT_EN_PULSE after 1 ns;
+    INT_START <= INT_PE_PULSE after 1 ns;
   end if;        
 end process PULSE2;
 
