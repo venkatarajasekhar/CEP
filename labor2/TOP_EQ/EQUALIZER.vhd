@@ -18,7 +18,7 @@ end EQUALIZER;
 architecture BEHAVIOUR OF EQUALIZER is
 begin
 
-  Akku: process(CLK_PE)
+  Akku: process(CLK_PE, RESET, INT_LOCKED)
 	  variable RES: INTEGER := 0;
     variable STEPS: INTEGER := 0;
   begin
@@ -27,7 +27,7 @@ begin
       RDY <= '0' after 1 ns;
       RES := 0;
       STEPS := 0;
-    elsif(START = '0') then
+    elsif(START = '1') then
       if(CLK_PE'event and CLK_PE = '1') then
         if(STEPS = 0) then
           RDY <= '0' after 1 ns;
