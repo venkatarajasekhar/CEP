@@ -100,7 +100,7 @@ CLKWIZ : CLK_WIZ_100_350
              LOCKED => INT_LOCKED
   );
 
-WRITE_EN: process(INT_CLK_SYN)
+WRITE_EN: process(INT_CLK_SYN, RESET, INT_LOCKED)
 begin
   if(RESET = '0' OR INT_LOCKED = '0') then
       
@@ -119,7 +119,7 @@ begin
     INT_NWE_SHORT <= INT_NWE3 and not INT_NWE2 after 1 ns;
 end process WRITE_EN;
 
-CHIP_EN: process(INT_CLK_SYN)
+CHIP_EN: process(INT_CLK_SYN, RESET, INT_LOCKED)
 begin
   if(RESET = '0' OR INT_LOCKED = '0') then
     INT_NEX1 <= '1' after 1 ns;
@@ -131,7 +131,7 @@ begin
   end if; 
 end process CHIP_EN;
 
-OUTPUT_EN: process(INT_CLK_SYN)
+OUTPUT_EN: process(INT_CLK_SYN, RESET, INT_LOCKED)
 begin
   if(RESET = '0' OR INT_LOCKED = '0') then
      INT_NOE1 <= '1' after 1 ns;
@@ -143,10 +143,10 @@ begin
   end if; 
 end process OUTPUT_EN;
 
-ENABLE: process(INT_CLK_SYN)
+ENABLE: process(INT_CLK_SYN, RESET, INT_LOCKED)
 begin
   if(RESET = '0' OR INT_LOCKED = '0') then
-    INT_EN_PULSE <= '1' after 1 ns;
+    INT_EN_PULSE <= '0' after 1 ns;
     
   elsif(INT_CLK_SYN'event and INT_CLK_SYN = '1') then    
     INT_EN_PULSE <= INT_EN_0 after 1 ns;
@@ -154,7 +154,7 @@ begin
 end process ENABLE;
 
 -- nochmal wegen low-aktiv/nicht-low-aktiv logik frau behn fragen
-PULSE1: process(INT_EN_PULSE)
+PULSE1: process(INT_EN_PULSE, INT_START, INT_LOCKED)
 begin
   if(INT_START = '1' OR INT_LOCKED = '0') then 
     INT_PE_PULSE <= '0' after 1 ns;
@@ -163,7 +163,7 @@ begin
   end if;
 end process PULSE1;
 
-PULSE2: process(INT_CLK_PE) --
+PULSE2: process(INT_CLK_PE, RESET, INT_LOCKED) --
 begin
   if(RESET = '0' OR INT_LOCKED = '0') then
     INT_START <= '0' after 1 ns;
@@ -172,7 +172,7 @@ begin
   end if;        
 end process PULSE2;
 
-INPUT: process(INT_CLK_SYN)
+INPUT: process(INT_CLK_SYN, RESET, INT_LOCKED)
 begin
   if(RESET = '0' OR INT_LOCKED = '0') then
     INT_DATA_2 <= (others => '0') after 1 ns;
