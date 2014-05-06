@@ -182,7 +182,7 @@ begin
     INT_DATA_2 <= INT_DATA_1 after 1 ns;                           
     INT_DATA_3 <= INT_DATA_2 after 1 ns;             
       
-    if(INT_EN_PULSE = '0') then 
+    if(INT_EN_PULSE = '1') then 
       INT_Y <= INT_DATA_3 after 1 ns;
     end if;
   end if;        
