@@ -33,7 +33,7 @@ architecture BEHAVIOUR of TOP_EQ_TB is
           LOCKED: out STD_LOGIC);
   end component;
 
-  --for all : TOP_EQ_CLKWIZ use entity work.TOP_EQ_CLKWIZ(Structure);
+  for all : TOP_EQ use entity work.TOP_EQ(Structure);
 
 begin
   TOP_EQ_I : TOP_EQ

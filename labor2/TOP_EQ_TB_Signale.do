@@ -8,12 +8,12 @@ add wave -noupdate -format Logic -height 30 /top_eq_tb/tb_reset
 add wave -noupdate -format Logic -height 30 /top_eq_tb/tb_rdy
 add wave -noupdate -format Logic -height 30 /top_eq_tb/tb_locked
 add wave -noupdate -format Literal -height 30 /top_eq_tb/tb_data
-add wave -noupdate -format Literal -radix decimal /top_eq_tb/top_eq_i/equal/w
+#add wave -noupdate -format Literal -radix decimal /top_eq_tb/top_eq_i/equal/w
 add wave -noupdate -format Logic /top_eq_tb/top_eq_i/int_clk_syn
-add wave -noupdate -format Logic /top_eq_tb/top_eq_i/int_pe_pulse
-add wave -noupdate -format Logic /top_eq_tb/top_eq_i/equal/start
-add wave -noupdate -format Literal -radix decimal /top_eq_tb/top_eq_i/equal/y
-add wave -noupdate -format Logic /top_eq_tb/top_eq_i/int_en_pulse
+#add wave -noupdate -format Logic /top_eq_tb/top_eq_i/int_pe_pulse
+#add wave -noupdate -format Logic /top_eq_tb/top_eq_i/equal/start
+#add wave -noupdate -format Literal -radix decimal /top_eq_tb/top_eq_i/equal/y
+#add wave -noupdate -format Logic /top_eq_tb/top_eq_i/int_en_pulse
 add wave -noupdate -format Logic /top_eq_tb/top_eq_i/int_clk_pe
 TreeUpdate [SetDefaultTree]
 WaveRestoreCursors {{Cursor 1} {2499330 ps} 0}
