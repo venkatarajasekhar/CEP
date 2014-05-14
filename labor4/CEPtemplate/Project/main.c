@@ -5,6 +5,8 @@
 #include "tft.h"
 #include "usart.h"
 #include "buffer.h"
+#include "functiongen.h"
+#include "playground.h"
 #include "global.h"
 
 //#include "keypad.h"
@@ -20,8 +22,8 @@ volatile int event;
  */
  
  /*___________________________________PROTOTYPES____________________________________*/
- void TIM8_UP_TIM13_IRQHandler(void);
- void start_TIM8(void);
+void TIM8_UP_TIM13_IRQHandler(void);
+void start_TIM8(void);
  
  /*____________________________________Buffer_______________________________________*/
 buffer_t buf1;
@@ -30,6 +32,10 @@ buffer_t buf2;
 buffer_t* bgBuffer;
 buffer_t* isrBuffer;
 	
+int step = 0;
+int y = 0;
+int i = 0;
+		
 int main(void) {
 	
 	RCC_ClocksTypeDef RCC_Clocks;
@@ -47,16 +53,27 @@ int main(void) {
 	
 	bgBuffer = &buf1;																	//start with buf1
 	
+	
+	
 	while(1){
 			
 		GPIOI->ODR = (1<<6);														//WAIT-LED aus
+		
 		while(!is_empty(bgBuffer)) {										//wait until empty
-			//statusmeldung ausgeben 	
+			printf("waiting for buffer to get empty ..\n");fflush(stdout);	
 		}
 			
 		GPIOI->ODR = (1<<6);														//WAIT-LED an
 		while(!is_full(bgBuffer)) {
+			y = calc_sinus(OUTPUT_FREQ_HIGH, SAMPLE_FREQ, step);
 			//neuer wert einfügen
+			step++;
+		
+			i = 0;
+			while(i<10000000){
+			i++;
+			}
+			
 		}
 			
 		if(is_empty(isrBuffer) == 1) {									//was it the last value ?
@@ -66,8 +83,14 @@ int main(void) {
 				bgBuffer = &buf1;														//switch buffer
 			} 
 		}
-		
+
+	//	fp_test();
 	}
+	
+
+
+
+	
 }
 
 void TIM8_UP_TIM13_IRQHandler(void) {
@@ -93,7 +116,6 @@ void TIM8_UP_TIM13_IRQHandler(void) {
 			} 
 		}
 	}
-	
 }
 
  void start_TIM8(void){

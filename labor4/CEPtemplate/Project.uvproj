@@ -165,11 +165,11 @@
             <RunIndependent>0</RunIndependent>
             <UpdateFlashBeforeDebugging>1</UpdateFlashBeforeDebugging>
             <Capability>1</Capability>
-            <DriverSelection>4100</DriverSelection>
+            <DriverSelection>4096</DriverSelection>
           </Flash1>
           <bUseTDR>1</bUseTDR>
           <Flash2>BIN\UL2CM3.DLL</Flash2>
-          <Flash3></Flash3>
+          <Flash3>"" ()</Flash3>
           <Flash4></Flash4>
           <pFcarmOut></pFcarmOut>
           <pFcarmGrp></pFcarmGrp>
@@ -399,34 +399,54 @@
           <GroupName>Project</GroupName>
           <Files>
             <File>
+              <FileName>main.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Project\main.c</FilePath>
+            </File>
+            <File>
               <FileName>buffer.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\cep_drop\Project\Project\buffer.c</FilePath>
+              <FilePath>.\Project\buffer.c</FilePath>
             </File>
             <File>
               <FileName>buffer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\cep_drop\Project\Project\buffer.h</FilePath>
+              <FilePath>.\Project\buffer.h</FilePath>
             </File>
             <File>
               <FileName>global.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\cep_drop\Project\Project\global.h</FilePath>
-            </File>
-            <File>
-              <FileName>main.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\cep_drop\Project\Project\main.c</FilePath>
+              <FilePath>.\Project\global.h</FilePath>
             </File>
             <File>
               <FileName>keypad.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\cep_drop\Project\Project\keypad.c</FilePath>
+              <FilePath>.\Project\keypad.c</FilePath>
             </File>
             <File>
               <FileName>keypad.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\cep_drop\Project\Project\keypad.h</FilePath>
+              <FilePath>.\Project\keypad.h</FilePath>
+            </File>
+            <File>
+              <FileName>functiongen.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Project\functiongen.h</FilePath>
+            </File>
+            <File>
+              <FileName>functiongen.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Project\functiongen.c</FilePath>
+            </File>
+            <File>
+              <FileName>playground.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Project\playground.h</FilePath>
+            </File>
+            <File>
+              <FileName>playground.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Project\playground.c</FilePath>
             </File>
           </Files>
         </Group>

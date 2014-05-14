@@ -17,3 +17,5 @@
 .\build\main.o: .\Libraries\TiLib\usart.h
 .\build\main.o: Project\buffer.h
 .\build\main.o: Project\global.h
+.\build\main.o: Project\functiongen.h
+.\build\main.o: Project\playground.h
