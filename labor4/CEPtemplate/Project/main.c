@@ -68,9 +68,13 @@ int main(void) {
 			y = calc_sinus(OUTPUT_FREQ_HIGH, SAMPLE_FREQ, step);
 			//neuer wert einfügen
 			step++;
-		
+			
+			if(step == 10){
+				step = 0;
+			}
+			
 			i = 0;
-			while(i<10000000){
+			while(i<60000000){
 			i++;
 			}
 			

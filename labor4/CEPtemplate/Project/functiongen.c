@@ -62,12 +62,12 @@ static const int sawtooth_table[] = {
 uint16_t calc_sinus(int output_freq, int sample_freq, int step) {
 	
 	int tableSize = sizeof(sinus_table) / sizeof(int);
-	int idx = ((step * ((output_freq / sample_freq) * tableSize)) % tableSize) ;//<< 4;  
+	int idx = ((step * ((output_freq * tableSize) / sample_freq))% tableSize ) << 4; // 
 	idx += 5;
-	//idx = idx; >> 4;
+	idx = idx >> 4;
 	
        	
-	return idx;//sinus_table[idx];
+	return  sinus_table[idx];
 	
 
 }
