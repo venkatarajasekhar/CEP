@@ -1,5 +1,12 @@
 #include <stdint.h>
+#include "global.h"
 #include "functiongen.h"
+
+// kommt aus labor4.c
+extern int frequency;
+extern int graph_type;
+
+static unsigned int step = 0;
 
 static const int sinus_table[] = {
          0,   804,  1608,  2411,  3212,  4011,  4808,  5602,  6393,  7180,
@@ -30,7 +37,7 @@ static const int sinus_table[] = {
      -4808, -4011, -3212, -2411, -1608,  -804
 };
 
-static const int sawtooth_table[] = {
+static const int triangle_table[] = {
          0,   512,  1024,  1536,  2048,  2560,  3072,  3584,  4096,  4608,
       5120,  5632,  6144,  6656,  7168,  7680,  8192,  8704,  9216,  9728,
      10240, 10752, 11264, 11776, 12288, 12800, 13312, 13824, 14336, 14848,
@@ -59,27 +66,40 @@ static const int sawtooth_table[] = {
      -3072, -2560, -2048, -1536, -1024,  -512
 };
 
-uint16_t calc_sinus(int output_freq, int sample_freq, int step) {
-	
+// output_freq = 440hz ODER 5000hz
+// verlauf = sinus ODER saegezahn
+// amplitude = 1.0v mw1,5v ODER 0.5v mw1,5v
+
+uint16_t calc(void) {
 	int tableSize = sizeof(sinus_table) / sizeof(int);
-	int idx = ((step * ((output_freq * tableSize) / sample_freq))% tableSize ) << 4; // 
+	int idx = ((step * ((frequency * tableSize) / SAMPLE_FREQ))% tableSize ) << 4;
+
 	idx += 5;
 	idx = idx >> 4;
-	
-       	
-	return  sinus_table[idx];
-	
+	step++;
 
+	if(graph_type == TRIANGLE) {
+		return  sinus_table[idx];
+	}
+		
+	return  triangle_table[idx];
 }
 
-uint16_t calc_sawtooth(int output_freq, int sample_freq, int step) {
-	
-	int tableSize = sizeof(sinus_table) / sizeof(int);
-	int idx = ((step * ((output_freq/ sample_freq) * tableSize)) % tableSize) << 4;  
-	idx += 5;
-	idx = idx >> 4;
-	
-       	
-	return sawtooth_table[idx];
-	
-}
+//uint16_t calc_sinus(int output_freq, int sample_freq) {
+//	int tableSize = sizeof(sinus_table) / sizeof(int);
+//	int idx = ((step * ((SAMPLE_FREQ * tableSize) / sample_freq))% tableSize ) << 4;
+//	idx += 5;
+//	idx = idx >> 4;
+//	step++;
+//       	
+//	return  sinus_table[idx];
+//}
+
+//uint16_t calc_sawtooth(int output_freq, int sample_freq, int step) {
+//	int tableSize = sizeof(sinus_table) / sizeof(int);
+//	int idx = ((step * ((output_freq/ sample_freq) * tableSize)) % tableSize) << 4;  
+//	idx += 5;
+//	idx = idx >> 4;
+//	
+//	return triangle_table[idx];
+//}

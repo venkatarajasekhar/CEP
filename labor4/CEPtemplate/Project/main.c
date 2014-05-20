@@ -4,8 +4,8 @@
 #include "tests/dac_test.h"
 
 int main(void) {
-	//labor4();
-	dac_test();
+	labor4();
+	//dac_test();
 	
 	return EXIT_SUCCESS;
 }

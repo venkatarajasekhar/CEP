@@ -15,16 +15,19 @@
 void TIM8_UP_TIM13_IRQHandler(void);
 void start_TIM8(void);
  
-buffer_t buf1;
-buffer_t buf2;
-		
-buffer_t* bgBuffer;
-buffer_t* isrBuffer;
+static buffer_t buf1;
+static buffer_t buf2;
+static buffer_t* bgBuffer;
+static buffer_t* isrBuffer;
 
-volatile int event;
-int step = 0;
-int y = 0;
-int i = 0;
+static volatile int event;
+//static int y = 0;
+//static int i = 0;
+		
+int frequency = FREQUENCY_LOW;
+int graph_type = SINUS;
+int amplitude = AMPLITUDE_1V;
+int srefresh = SREFRESH_ON;
 		
 void labor4(void) {
 	RCC_ClocksTypeDef RCC_Clocks;
@@ -50,20 +53,22 @@ void labor4(void) {
 			
 		GPIOI->ODR = (1<<6);														//WAIT-LED an
 		while(!is_full(bgBuffer)) {
-			y = calc_sinus(OUTPUT_FREQ_HIGH, SAMPLE_FREQ, step);
-			//neuer wert einfügen
-			step++;
+			// knoepfe abfragen
 			
-			if(step == 10){
-				step = 0;
-			}
 			
-			i = 0;
-			while(i<60000000){
-			i++;
-			}
+			// calc aufrufen, wert in buffer einfuegen
+			add_val(bgBuffer, calc());
+			
+//			i = 0;
+//			while(i<60000000){
+//			i++;
+//			}
 			
 		}
+		
+		
+		
+		
 			
 		if(is_empty(isrBuffer) == 1) {									//was it the last value ?
 			if(bgBuffer == &buf1) {
@@ -114,4 +119,32 @@ void TIM8_UP_TIM13_IRQHandler(void) {
 //void SysTick_Handler(){
 //	event+=1;
 //	GPIOI->ODR ^= (1<<5);
+//}
+
+
+//void checkButtons(void){
+//if(!(S1 & S1_SBITS)){			//S1 ist gedrueckt
+//delta_P = DELTA_P_440HZ;
+//}
+//if(!(S2 & S2_SBITS)){			//S2 ist gedrueckt
+//delta_P = DELTA_P_5KHz;
+//}
+//if(!(S3 & S3_SBITS)){			//S3 ist gedrueckt
+//table = sinusTabelle;
+//}
+//if(!(S4 & S4_SBITS)){			//S4 ist gedrueckt
+//table = dreieckTabelle;
+//}
+//if(!(S5 & S5_SBITS)){			//S5 ist gedrueckt
+//b = BIG_AMPLITUDE_B;
+//}
+//if(!(S6 & S6_SBITS)){			//S6 ist gedrueckt
+//b = LITTLE_AMPLITUDE_B;
+//}
+//if(!(S7 & S7_SBITS)){			//S7 ist gedrueckt
+//display = 1;
+//}
+//if(!(S8 & S8_SBITS)){			//S8 ist gedrueckt
+//display = 0;
+//}
 //}
