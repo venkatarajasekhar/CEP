@@ -1,15 +1,4 @@
 .\build\dac_test.o: Project\tests\dac_test.c
-.\build\dac_test.o: .\Libraries\Device\stm32f4xx.h
-.\build\dac_test.o: C:\Keil\ARM\PACK\ARM\CMSIS\3.20.4\CMSIS\Include\core_cm4.h
+.\build\dac_test.o: Project\tests\../dac.h
 .\build\dac_test.o: C:\Keil\ARM\ARMCC\bin\..\include\stdint.h
-.\build\dac_test.o: C:\Keil\ARM\PACK\ARM\CMSIS\3.20.4\CMSIS\Include\core_cmInstr.h
-.\build\dac_test.o: C:\Keil\ARM\PACK\ARM\CMSIS\3.20.4\CMSIS\Include\core_cmFunc.h
-.\build\dac_test.o: C:\Keil\ARM\PACK\ARM\CMSIS\3.20.4\CMSIS\Include\core_cm4_simd.h
-.\build\dac_test.o: .\Libraries\Device\system_stm32f4xx.h
-.\build\dac_test.o: .\Libraries\Device\stm32f4xx_conf.h
-.\build\dac_test.o: .\Libraries\Device\RTE_Components.h
-.\build\dac_test.o: .\Libraries\StdPeriph_Driver\inc\misc.h
-.\build\dac_test.o: .\Libraries\Device\stm32f4xx.h
-.\build\dac_test.o: .\Libraries\StdPeriph_Driver\inc\stm32f4xx_rcc.h
-.\build\dac_test.o: .\Libraries\StdPeriph_Driver\inc\stm32f4xx_gpio.h
 .\build\dac_test.o: Project\tests\dac_test.h

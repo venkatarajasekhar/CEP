@@ -41,7 +41,12 @@ I (Project\functiongen.h)(0x537B6430)
 I (Project\labor4.h)(0x537B6849)
 F (.\Project\labor4.h)(0x537B6849)()
 F (.\Project\tests\dac_test.h)(0x537B6431)()
-F (.\Project\tests\dac_test.c)(0x537B67C6)(-c --cpu Cortex-M4.fp -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I.\Libraries\CMSIS\CM3\CoreSupport -I.\Libraries\StdPeriph_Driver\inc -I.\Libraries\Device -I.\Libraries\TiLib-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\PACK\ARM\CMSIS\3.20.4\CMSIS\Include-I Device\Include-DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER -o .\build\dac_test.o --omf_browse .\build\dac_test.crf --depend .\build\dac_test.d)
+F (.\Project\tests\dac_test.c)(0x537B8FF9)(-c --cpu Cortex-M4.fp -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I.\Libraries\CMSIS\CM3\CoreSupport -I.\Libraries\StdPeriph_Driver\inc -I.\Libraries\Device -I.\Libraries\TiLib-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\PACK\ARM\CMSIS\3.20.4\CMSIS\Include-I Device\Include-DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER -o .\build\dac_test.o --omf_browse .\build\dac_test.crf --depend .\build\dac_test.d)
+I (Project\tests\../dac.h)(0x537B8ED2)
+I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x5284D69A)
+I (Project\tests\dac_test.h)(0x537B6431)
+F (.\Project\dac.h)(0x537B8ED2)()
+F (.\Project\dac.c)(0x537B8FFD)(-c --cpu Cortex-M4.fp -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I.\Libraries\CMSIS\CM3\CoreSupport -I.\Libraries\StdPeriph_Driver\inc -I.\Libraries\Device -I.\Libraries\TiLib-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\PACK\ARM\CMSIS\3.20.4\CMSIS\Include-I Device\Include-DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER -o .\build\dac.o --omf_browse .\build\dac.crf --depend .\build\dac.d)
 I (.\Libraries\Device\stm32f4xx.h)(0x537B642F)
 I (C:\Keil\ARM\PACK\ARM\CMSIS\3.20.4\CMSIS\Include\core_cm4.h)(0x512C8EE2)
 I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x5284D69A)
@@ -54,7 +59,7 @@ I (.\Libraries\Device\RTE_Components.h)(0x537B642F)
 I (.\Libraries\StdPeriph_Driver\inc\misc.h)(0x537B642F)
 I (.\Libraries\StdPeriph_Driver\inc\stm32f4xx_rcc.h)(0x537B642F)
 I (.\Libraries\StdPeriph_Driver\inc\stm32f4xx_gpio.h)(0x537B642F)
-I (Project\tests\dac_test.h)(0x537B6431)
+I (Project\dac.h)(0x537B8ED2)
 F (.\Libraries\CMSIS\CM3\CoreSupport\core_cm3.c)(0x537B642F)(-c --cpu Cortex-M4.fp -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I.\Libraries\CMSIS\CM3\CoreSupport -I.\Libraries\StdPeriph_Driver\inc -I.\Libraries\Device -I.\Libraries\TiLib-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\PACK\ARM\CMSIS\3.20.4\CMSIS\Include-I Device\Include-DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER -o .\build\core_cm3.o --omf_browse .\build\core_cm3.crf --depend .\build\core_cm3.d)
 I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x5284D69A)
 F (.\Libraries\StdPeriph_Driver\src\misc.c)(0x537B642F)(-c --cpu Cortex-M4.fp -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I.\Libraries\CMSIS\CM3\CoreSupport -I.\Libraries\StdPeriph_Driver\inc -I.\Libraries\Device -I.\Libraries\TiLib-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\PACK\ARM\CMSIS\3.20.4\CMSIS\Include-I Device\Include-DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER -o .\build\misc.o --omf_browse .\build\misc.crf --depend .\build\misc.d)
