@@ -469,14 +469,14 @@
               <FilePath>.\Project\dac.c</FilePath>
             </File>
             <File>
-              <FileName>Peripherals.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Project\Peripherals.c</FilePath>
+              <FileName>peripherals.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Project\peripherals.h</FilePath>
             </File>
             <File>
-              <FileName>Peripherals.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\Project\Peripherals.h</FilePath>
+              <FileName>peripherals.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Project\peripherals.c</FilePath>
             </File>
           </Files>
         </Group>

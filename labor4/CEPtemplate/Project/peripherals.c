@@ -33,18 +33,6 @@ extern int srefresh;
 #define B7 (GPIOH->IDR & S6)
 #define B8 (GPIOH->IDR & S7)
 
-//LEDS
-#define LED0 0x01	
-#define LED1 0x02
-#define LED2 0x04	
-#define LED3 0x08	
-#define LED4 0x10		
-#define LED5 0x20		
-#define LED6 0x40		
-#define LED7 0x80		
-
-
-
 void read_buttons(void){
 
 	if(B1 == 0){						//is S1 pressed ? 			
