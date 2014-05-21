@@ -9,7 +9,7 @@ typedef struct {
 	unsigned int read_idx;
 	unsigned int write_idx;
 	unsigned int count;
-} buffer_t;
+} volatile buffer_t;
 
 buffer_t* create_buf(void);
 int add_val(buffer_t* buf, uint16_t val);
