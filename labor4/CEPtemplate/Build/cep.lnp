@@ -6,7 +6,7 @@
 ".\build\labor4.o"
 ".\build\dac_test.o"
 ".\build\dac.o"
-".\build\buttons.o"
+".\build\peripherals.o"
 ".\build\core_cm3.o"
 ".\build\misc.o"
 ".\build\stm32f4xx_gpio.o"

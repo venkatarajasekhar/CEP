@@ -121,30 +121,3 @@ void TIM8_UP_TIM13_IRQHandler(void) {
 //	GPIOI->ODR ^= (1<<5);
 //}
 
-
-//void checkButtons(void){
-//if(!(S1 & S1_SBITS)){			//S1 ist gedrueckt
-//delta_P = DELTA_P_440HZ;
-//}
-//if(!(S2 & S2_SBITS)){			//S2 ist gedrueckt
-//delta_P = DELTA_P_5KHz;
-//}
-//if(!(S3 & S3_SBITS)){			//S3 ist gedrueckt
-//table = sinusTabelle;
-//}
-//if(!(S4 & S4_SBITS)){			//S4 ist gedrueckt
-//table = dreieckTabelle;
-//}
-//if(!(S5 & S5_SBITS)){			//S5 ist gedrueckt
-//b = BIG_AMPLITUDE_B;
-//}
-//if(!(S6 & S6_SBITS)){			//S6 ist gedrueckt
-//b = LITTLE_AMPLITUDE_B;
-//}
-//if(!(S7 & S7_SBITS)){			//S7 ist gedrueckt
-//display = 1;
-//}
-//if(!(S8 & S8_SBITS)){			//S8 ist gedrueckt
-//display = 0;
-//}
-//}
