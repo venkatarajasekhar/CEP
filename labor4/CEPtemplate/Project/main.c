@@ -11,12 +11,10 @@ int main(void) {
 	initCEP_Board();
 	TFT_Init();
 	
-	while(1){
-	read_buttons();	
-	//labor4();
+
+	labor4();
 	//dac_test();
 		
-	}
 	return EXIT_SUCCESS;
 }
 

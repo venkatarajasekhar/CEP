@@ -2,13 +2,25 @@
 #include "global.h"
 #include "functiongen.h"
 
+#define TABLE_SIZE 256
+
 // kommt aus labor4.c
 extern int frequency;
 extern int graph_type;
+extern int amplitude;
 
-static unsigned int step = 0;
+//static unsigned int old_frequency = 0;
+static unsigned int idx = 0;
+//static unsigned int delta_idx = 0;
 
-static const int sinus_table[] = {
+static const int a =  (unsigned int)((MIDDLE_VALUE * DAC_MAX_VAL * 10) / (DAC_MAX_V * 10))* (1<< FIXPOINT_ARITH);
+
+static const int b_small =  (unsigned int)((0.5L/DAC_MAX_V * DAC_MAX_VAL)/(1 << 15) *  (1 << FIXPOINT_ARITH));
+//static const int b_big = (unsigned int)((1.0L/DAC_MAX_V * DAC_MAX_VAL)/(1 << 15) *  (1 << FIXPOINT_ARITH));
+
+
+
+static const int sinus_table[TABLE_SIZE] = {
          0,   804,  1608,  2411,  3212,  4011,  4808,  5602,  6393,  7180,
       7962,  8740,  9512, 10279, 11039, 11793, 12540, 13279, 14010, 14733,
      15447, 16151, 16846, 17531, 18205, 18868, 19520, 20160, 20788, 21403,
@@ -37,7 +49,7 @@ static const int sinus_table[] = {
      -4808, -4011, -3212, -2411, -1608,  -804
 };
 
-static const int triangle_table[] = {
+static const int triangle_table[TABLE_SIZE] = {
          0,   512,  1024,  1536,  2048,  2560,  3072,  3584,  4096,  4608,
       5120,  5632,  6144,  6656,  7168,  7680,  8192,  8704,  9216,  9728,
      10240, 10752, 11264, 11776, 12288, 12800, 13312, 13824, 14336, 14848,
@@ -68,38 +80,40 @@ static const int triangle_table[] = {
 
 // output_freq = 440hz ODER 5000hz
 // verlauf = sinus ODER saegezahn
-// amplitude = 1.0v mw1,5v ODER 0.5v mw1,5v
+// amplitude = 1.0v mw1.5v ODER 0.5v mw1.5v
 
 uint16_t calc(void) {
-	int tableSize = sizeof(sinus_table) / sizeof(int);
-	int idx = ((step * ((frequency * tableSize) / SAMPLE_FREQ))% tableSize ) << 4;
+//	int arr_val = 0;
+//	
+//	if(frequency != old_frequency) {
+//		//idx = ((step * ((frequency * TABLE_SIZE) / SAMPLE_FREQ))% TABLE_SIZE) << FIXPOINT_ARITH;
+//		delta_idx = (frequency * TABLE_SIZE) / SAMPLE_FREQ << FIXPOINT_ARITH; 
+//	}	
+//	
+//	idx += delta_idx % TABLE_SIZE;
 
-	idx += 5;
-	idx = idx >> 4;
-	step++;
+////	idx += 5;
+//	idx = idx >> FIXPOINT_ARITH;
 
+//	if(graph_type == TRIANGLE) {
+//		  arr_val = sinus_table[idx];
+//	} else {
+//		arr_val = triangle_table[idx]; 
+//	}	
+//	
+//	old_frequency = frequency;
+//	
+//	return (MIDDLE_VALUE << FIXPOINT_ARITH) + ((amplitude << FIXPOINT_ARITH) * arr_val);
+
+	uint16_t val = 0;
 	if(graph_type == TRIANGLE) {
-		return  sinus_table[idx];
-	}
-		
-	return  triangle_table[idx];
+		  val = sinus_table[idx ];
+	} else {
+		val = triangle_table[idx]; 
+	}	
+	
+	idx = (idx + 1) % TABLE_SIZE;
+	
+	return a + (b_small * val);
 }
 
-//uint16_t calc_sinus(int output_freq, int sample_freq) {
-//	int tableSize = sizeof(sinus_table) / sizeof(int);
-//	int idx = ((step * ((SAMPLE_FREQ * tableSize) / sample_freq))% tableSize ) << 4;
-//	idx += 5;
-//	idx = idx >> 4;
-//	step++;
-//       	
-//	return  sinus_table[idx];
-//}
-
-//uint16_t calc_sawtooth(int output_freq, int sample_freq, int step) {
-//	int tableSize = sizeof(sinus_table) / sizeof(int);
-//	int idx = ((step * ((output_freq/ sample_freq) * tableSize)) % tableSize) << 4;  
-//	idx += 5;
-//	idx = idx >> 4;
-//	
-//	return triangle_table[idx];
-//}

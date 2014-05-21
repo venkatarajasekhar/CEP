@@ -18,3 +18,4 @@
 .\build\labor4.o: Project\global.h
 .\build\labor4.o: Project\functiongen.h
 .\build\labor4.o: Project\labor4.h
+.\build\labor4.o: Project\peripherals.h

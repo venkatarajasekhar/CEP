@@ -13,7 +13,7 @@ typedef struct {
 
 buffer_t* create_buf(void);
 int add_val(buffer_t* buf, uint16_t val);
-int remove_val(buffer_t* buf, uint16_t* val);
+int remove_val(buffer_t* buf, volatile uint16_t* val);
 int is_empty(buffer_t* buf);
 int is_full(buffer_t* buf);
 
