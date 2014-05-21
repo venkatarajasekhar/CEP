@@ -14,7 +14,8 @@
 .\build\labor4.o: .\Libraries\TiLib\CE_Lib.h
 .\build\labor4.o: C:\Keil\ARM\ARMCC\bin\..\include\stdio.h
 .\build\labor4.o: .\Libraries\TiLib\tft.h
-.\build\labor4.o: Project\buffer.h
-.\build\labor4.o: Project\global.h
 .\build\labor4.o: Project\functiongen.h
+.\build\labor4.o: Project\global.h
 .\build\labor4.o: Project\labor4.h
+.\build\labor4.o: Project\peripherals.h
+.\build\labor4.o: Project\dac.h

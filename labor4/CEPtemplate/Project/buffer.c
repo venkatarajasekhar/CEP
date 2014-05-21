@@ -60,7 +60,7 @@ int add_val(buffer_t* buf, uint16_t val) {
  * param: existing buffer, pointer where value should be stored
  * return: success/failure
  */
-int remove_val(buffer_t* buf, uint16_t* val) {
+int remove_val(buffer_t* buf, volatile uint16_t* val) {
 	if(buf->count == 0) {
 
 #ifdef DEBUG
