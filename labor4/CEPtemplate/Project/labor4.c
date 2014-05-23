@@ -139,7 +139,7 @@ void TIM8_UP_TIM13_IRQHandler(void) {
 		resetLED(UNDERFLOW_LED);
 	
 		DAC->DHR12R1 = isrBuffer->data[idx_ISR];												//an DAC weiterleiten
-		ITM->PORT[10].u32 = isrBuffer->data[idx_ISR];
+		isrBuffer->data[idx_ISR];
 		idx_ISR += 1;
 		
 		if(idx_ISR >= BUFFER_SIZE){ 
