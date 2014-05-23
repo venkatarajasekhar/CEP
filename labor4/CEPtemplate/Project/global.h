@@ -7,8 +7,10 @@
 #define SAMPLE_FREQ 44100
 
 #define FIXPOINT_ARITH 16
+
 #define FREQUENCY_LOW 440
 #define FREQUENCY_HIGH 5000
+
 #define SINUS 1
 #define TRIANGLE 0
 #define AMPLITUDE_1V 1

@@ -17,3 +17,4 @@
 .\build\peripherals.o: .\Libraries\TiLib\tft.h
 .\build\peripherals.o: .\Libraries\TiLib\usart.h
 .\build\peripherals.o: Project\global.h
+.\build\peripherals.o: Project\functiongen.h

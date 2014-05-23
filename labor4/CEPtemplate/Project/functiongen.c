@@ -2,30 +2,28 @@
 #include "global.h"
 #include "functiongen.h"
 
-#define TABLE_SIZE 256
+
 
 // kommt aus labor4.c
 extern int frequency;
 extern int graph_type;
 extern int amplitude;
+extern int *tabelle;
 
-//static unsigned int old_frequency = 0;
-//static unsigned int idx = 0;
-//static unsigned int delta_idx = 0;
 int fi = 0;
 
 
-static const unsigned int DELTA_IDX_440 = (unsigned int) ((440.L/SAMPLE_FREQ * TABLE_SIZE) * (1<<FIXPOINT_ARITH));
-static const unsigned int DELTA_IDX_5000 = (unsigned int) ((5000.L/SAMPLE_FREQ * TABLE_SIZE) * (1<<FIXPOINT_ARITH));
+const unsigned int DELTA_IDX_440 = (unsigned int) ((440.L/SAMPLE_FREQ * TABLE_SIZE) * (1<<FIXPOINT_ARITH));
+const unsigned int DELTA_IDX_5000 = (unsigned int) ((5000.L/SAMPLE_FREQ * TABLE_SIZE) * (1<<FIXPOINT_ARITH));
 
-static const int a =  (unsigned int)(1.5L/3.3 /(DAC_MAX_VAL))* (1<< FIXPOINT_ARITH);
+const unsigned int SHIFTED_TABLE_SIZE =  TABLE_SIZE * (1<<FIXPOINT_ARITH);
+	
+const unsigned int a =  (unsigned int)(1.5L/3.3 /(DAC_MAX_VAL))* (1<< FIXPOINT_ARITH);
+const unsigned int b_small =  (unsigned int)((0.5L/DAC_MAX_V * DAC_MAX_VAL)/(1 << 15) *  (1 << FIXPOINT_ARITH));
+const unsigned int b_big = (unsigned int)((1.0L/DAC_MAX_V * DAC_MAX_VAL)/(1 << 15) *  (1 << FIXPOINT_ARITH));
 
-static const int b_small =  (unsigned int)((0.5L/DAC_MAX_V * DAC_MAX_VAL)/(1 << 15) *  (1 << FIXPOINT_ARITH));
-static const int b_big = (unsigned int)((1.0L/DAC_MAX_V * DAC_MAX_VAL)/(1 << 15) *  (1 << FIXPOINT_ARITH));
 
-
-
-static const int sinus_table[TABLE_SIZE] = {
+int sinus_table[TABLE_SIZE] = {
          0,   804,  1608,  2411,  3212,  4011,  4808,  5602,  6393,  7180,
       7962,  8740,  9512, 10279, 11039, 11793, 12540, 13279, 14010, 14733,
      15447, 16151, 16846, 17531, 18205, 18868, 19520, 20160, 20788, 21403,
@@ -54,7 +52,7 @@ static const int sinus_table[TABLE_SIZE] = {
      -4808, -4011, -3212, -2411, -1608,  -804
 };
 
-static const int triangle_table[TABLE_SIZE] = {
+int triangle_table[TABLE_SIZE] = {
          0,   512,  1024,  1536,  2048,  2560,  3072,  3584,  4096,  4608,
       5120,  5632,  6144,  6656,  7168,  7680,  8192,  8704,  9216,  9728,
      10240, 10752, 11264, 11776, 12288, 12800, 13312, 13824, 14336, 14848,
@@ -107,48 +105,12 @@ uint16_t calc(void) {
 		}
 		
 		if (frequency == FREQUENCY_HIGH){
-			fi = (fi + DELTA_IDX_440) % TABLE_SIZE;
+			fi = (fi + DELTA_IDX_440) % SHIFTED_TABLE_SIZE;
 		}else{
-			fi = (fi + DELTA_IDX_5000) % TABLE_SIZE;
+			fi = (fi + DELTA_IDX_5000) % SHIFTED_TABLE_SIZE;
 		}
 	
 		return ret;
 		
-////	int arr_val = 0;
-////	
-////	if(frequency != old_frequency) {
-////		//idx = ((step * ((frequency * TABLE_SIZE) / SAMPLE_FREQ))% TABLE_SIZE) << FIXPOINT_ARITH;
-////		delta_idx = (frequency * TABLE_SIZE) / SAMPLE_FREQ << FIXPOINT_ARITH; 
-////	}	
-////	
-////	idx += delta_idx % TABLE_SIZE;
-
-//////	idx += 5;
-////	idx = idx >> FIXPOINT_ARITH;
-
-////	if(graph_type == TRIANGLE) {
-////		  arr_val = sinus_table[idx];
-////	} else {
-////		arr_val = triangle_table[idx]; 
-////	}	
-////	
-////	old_frequency = frequency;
-////	
-////	return (MIDDLE_VALUE << FIXPOINT_ARITH) + ((amplitude << FIXPOINT_ARITH) * arr_val);
-
-//	uint16_t val = 0;
-//	if(graph_type == TRIANGLE) {
-//		  val = sinus_table[idx ];
-//	} else {
-//		val = triangle_table[idx]; 
-//	}	
-//	
-//	idx = (idx + 1) % TABLE_SIZE;
-//	
-//	if(amplitude == AMPLITUDE_1V) {
-//		return a + (b_big * val);
-//	}	
-//	
-//	return a + (b_small * val);
 }
 

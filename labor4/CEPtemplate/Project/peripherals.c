@@ -5,13 +5,14 @@
 #include "tft.h"
 #include "usart.h"
 #include "global.h"
+#include "functiongen.h"
 
 //kommt aus labor4.c
 extern int frequency;
 extern int graph_type;
 extern int amplitude;
 extern int srefresh;
-
+extern int *tabelle;
 
 //Buttons-Mask
 #define S0 (1<<9)			
@@ -36,22 +37,22 @@ extern int srefresh;
 void read_buttons(void){
 
 	if(B1 == 0){						//is S1 pressed ? 			
-		frequency = FREQUENCY_LOW;
+		frequency = DELTA_IDX_440;
 	}
 	if(B2 == 0){						//is S2 pressed ? 		
-		frequency = FREQUENCY_HIGH;
+		frequency = DELTA_IDX_5000;
 	}
 	if(B3 == 0){						//is S3 pressed ? 		
-		graph_type = SINUS;
+		tabelle = sinus_table;
 	}
 	if(B4 == 0){						//is S4 pressed ? 		
-		graph_type = TRIANGLE;
+		tabelle = triangle_table;
 	}
 	if(B5 == 0){						//is S5 pressed ? 		
-		amplitude = AMPLITUDE_1V;
+		amplitude = b_big;
 	}
 	if(B6 == 0){						//is S6 pressed ? 		
-		amplitude = AMPLITUDE_05V;
+		amplitude = b_small;
 	}
 	if(B7 == 0){						//is S7 pressed ? 		
 		srefresh = SREFRESH_ON;

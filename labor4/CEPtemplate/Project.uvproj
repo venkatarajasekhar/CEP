@@ -404,29 +404,9 @@
               <FilePath>.\Project\main.c</FilePath>
             </File>
             <File>
-              <FileName>buffer.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Project\buffer.c</FilePath>
-            </File>
-            <File>
-              <FileName>buffer.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\Project\buffer.h</FilePath>
-            </File>
-            <File>
               <FileName>global.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\Project\global.h</FilePath>
-            </File>
-            <File>
-              <FileName>keypad.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Project\keypad.c</FilePath>
-            </File>
-            <File>
-              <FileName>keypad.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\Project\keypad.h</FilePath>
             </File>
             <File>
               <FileName>functiongen.h</FileName>
@@ -447,16 +427,6 @@
               <FileName>labor4.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\Project\labor4.h</FilePath>
-            </File>
-            <File>
-              <FileName>dac_test.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\Project\tests\dac_test.h</FilePath>
-            </File>
-            <File>
-              <FileName>dac_test.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Project\tests\dac_test.c</FilePath>
             </File>
             <File>
               <FileName>dac.h</FileName>

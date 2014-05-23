@@ -1,10 +1,7 @@
 --cpu Cortex-M4.fp
 ".\build\main.o"
-".\build\buffer.o"
-".\build\keypad.o"
 ".\build\functiongen.o"
 ".\build\labor4.o"
-".\build\dac_test.o"
 ".\build\dac.o"
 ".\build\peripherals.o"
 ".\build\core_cm3.o"
