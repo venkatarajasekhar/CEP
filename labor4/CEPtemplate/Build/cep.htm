@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Build\cep.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Build\cep.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5.03 [Build 76]: Last Updated: Fri May 23 13:16:32 2014
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5.03 [Build 76]: Last Updated: Fri May 23 14:01:24 2014
 <BR><P>
 <H3>Maximum Stack Usage =        144 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -620,7 +620,8 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[71]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TFT_send_data
 </UL>
-<BR>[Called By]<UL><LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;labor4
+<BR>[Called By]<UL><LI><a href="#[8d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;read_buttons
+<LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;labor4
 </UL>
 
 <P><STRONG><a name="[6f]"></a>TFT_putc</STRONG> (Thumb, 30 bytes, Stack size 16 bytes, tft.o(i.TFT_putc))
@@ -637,7 +638,8 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[74]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strlen
 <LI><a href="#[71]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TFT_send_data
 </UL>
-<BR>[Called By]<UL><LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;labor4
+<BR>[Called By]<UL><LI><a href="#[8d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;read_buttons
+<LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;labor4
 </UL>
 
 <P><STRONG><a name="[71]"></a>TFT_send_data</STRONG> (Thumb, 292 bytes, Stack size 32 bytes, tft.o(i.TFT_send_data))
@@ -760,7 +762,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;initCEP_Board
 </UL>
 
-<P><STRONG><a name="[8b]"></a>labor4</STRONG> (Thumb, 378 bytes, Stack size 24 bytes, labor4.o(i.labor4))
+<P><STRONG><a name="[8b]"></a>labor4</STRONG> (Thumb, 360 bytes, Stack size 24 bytes, labor4.o(i.labor4))
 <BR><BR>[Stack]<UL><LI>Max Depth = 136<LI>Call Chain = labor4 &rArr; initCEP_Board &rArr; TFT_Init &rArr; TFT_cls &rArr; TFT_putc &rArr; TFT_send_data &rArr; I2C_CheckEvent
 </UL>
 <BR>[Calls]<UL><LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;setLED
@@ -786,8 +788,13 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> entry9a.o(.ARM.Collect$$$$0000000B)
 </UL>
-<P><STRONG><a name="[8d]"></a>read_buttons</STRONG> (Thumb, 138 bytes, Stack size 0 bytes, peripherals.o(i.read_buttons))
-<BR><BR>[Called By]<UL><LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;labor4
+<P><STRONG><a name="[8d]"></a>read_buttons</STRONG> (Thumb, 168 bytes, Stack size 8 bytes, peripherals.o(i.read_buttons))
+<BR><BR>[Stack]<UL><LI>Max Depth = 80<LI>Call Chain = read_buttons &rArr; TFT_gotoxy &rArr; TFT_send_data &rArr; I2C_CheckEvent
+</UL>
+<BR>[Calls]<UL><LI><a href="#[73]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TFT_puts
+<LI><a href="#[72]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TFT_gotoxy
+</UL>
+<BR>[Called By]<UL><LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;labor4
 </UL>
 
 <P><STRONG><a name="[7d]"></a>resetLED</STRONG> (Thumb, 132 bytes, Stack size 8 bytes, ce_lib.o(i.resetLED))

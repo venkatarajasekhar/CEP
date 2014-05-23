@@ -7,7 +7,7 @@ const unsigned int DELTA_IDX_5000 = (unsigned int) ((5000.L/SAMPLE_FREQ * TABLE_
 
 const unsigned int SHIFTED_TABLE_SIZE =  TABLE_SIZE * (1<<FIXPOINT_ARITH);
 	
-const unsigned int a =  (unsigned int)((1.5L/3.3 /(DAC_MAX_VAL))* (1<< FIXPOINT_ARITH));
+const unsigned int a =  (unsigned int)((1.5L/3.3 *DAC_MAX_VAL)* (1<< FIXPOINT_ARITH));
 const unsigned int b_small =  (unsigned int)((0.5L/DAC_MAX_V * DAC_MAX_VAL)/(1 << 15) *  (1 << FIXPOINT_ARITH));
 const unsigned int b_big = (unsigned int)((1.0L/DAC_MAX_V * DAC_MAX_VAL)/(1 << 15) *  (1 << FIXPOINT_ARITH));
 

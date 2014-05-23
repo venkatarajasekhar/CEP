@@ -74,6 +74,10 @@ void labor4(void) {
 	
 	TFT_cls();
 	
+		TFT_gotoxy(1,1);
+		TFT_puts("Frequenz:   440");
+		
+
 	
 	while(1){
 		
@@ -88,21 +92,17 @@ void labor4(void) {
 		
 		if(srefresh == SREFRESH_ON && (mseczaehlvar == SCREEN_UPDATE_CYCLE)){
 			ITM->PORT[8].u32 = 0;
-			TFT_gotoxy(1,1);
+			TFT_gotoxy(1,2);
 			TFT_puts("msec: ");
 			sprintf(msec_Buf, "%d" , msec);
 			TFT_puts(msec_Buf);
 			
-			TFT_gotoxy(1,2);
+			TFT_gotoxy(1,3);
 			TFT_puts("Anzahl Values: ");
 			sprintf(interupt_Buf, "%d" , interrupt_Counter);
 			TFT_puts(interupt_Buf);
-			
-			TFT_gotoxy(1,3);
-			TFT_puts("Frequenz: ");
-			sprintf(freq_Buf, "%d", frequency);
-			TFT_puts(freq_Buf);			
 			ITM->PORT[8].u32 = 1;
+			
 		}
 		
 		

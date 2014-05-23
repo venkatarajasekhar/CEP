@@ -36,10 +36,14 @@ extern int *tabelle;
 
 void read_buttons(void){
 
-	if(B1 == 0){						//is S1 pressed ? 			
+	if(B1 == 0){						//is S1 pressed ? 	
+		TFT_gotoxy(1,1);
+		TFT_puts("Frequenz:   440");
 		frequency = DELTA_IDX_440;
 	}
-	if(B2 == 0){						//is S2 pressed ? 		
+	if(B2 == 0){						//is S2 pressed ? 
+		TFT_gotoxy(1,1);
+		TFT_puts("Frequenz:  5000");
 		frequency = DELTA_IDX_5000;
 	}
 	if(B3 == 0){						//is S3 pressed ? 		
