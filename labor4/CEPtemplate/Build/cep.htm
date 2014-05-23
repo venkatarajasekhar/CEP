@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Build\cep.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Build\cep.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5.03 [Build 76]: Last Updated: Wed May 21 20:44:33 2014
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5.03 [Build 76]: Last Updated: Fri May 23 13:16:32 2014
 <BR><P>
 <H3>Maximum Stack Usage =        144 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -477,16 +477,16 @@ Global Symbols
 <P><STRONG><a name="[6b]"></a>GPIO_Init</STRONG> (Thumb, 144 bytes, Stack size 20 bytes, stm32f4xx_gpio.o(i.GPIO_Init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 20<LI>Call Chain = GPIO_Init
 </UL>
-<BR>[Called By]<UL><LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TFT_Init
-<LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Device_Init
+<BR>[Called By]<UL><LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Device_Init
+<LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TFT_Init
 <LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;initIO
 </UL>
 
 <P><STRONG><a name="[6a]"></a>GPIO_PinAFConfig</STRONG> (Thumb, 70 bytes, Stack size 20 bytes, stm32f4xx_gpio.o(i.GPIO_PinAFConfig))
 <BR><BR>[Stack]<UL><LI>Max Depth = 20<LI>Call Chain = GPIO_PinAFConfig
 </UL>
-<BR>[Called By]<UL><LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TFT_Init
-<LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Device_Init
+<BR>[Called By]<UL><LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Device_Init
+<LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TFT_Init
 </UL>
 
 <P><STRONG><a name="[90]"></a>GPIO_ResetBits</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, stm32f4xx_gpio.o(i.GPIO_ResetBits))
@@ -546,8 +546,8 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[68]"></a>RCC_AHB1PeriphClockCmd</STRONG> (Thumb, 26 bytes, Stack size 0 bytes, stm32f4xx_rcc.o(i.RCC_AHB1PeriphClockCmd))
-<BR><BR>[Called By]<UL><LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TFT_Init
-<LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Device_Init
+<BR><BR>[Called By]<UL><LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Device_Init
+<LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TFT_Init
 <LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;initIO
 </UL>
 
@@ -596,7 +596,6 @@ Global Symbols
 <LI><a href="#[6d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TFT_terminal_on
 </UL>
 <BR>[Called By]<UL><LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;initCEP_Board
-<LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
 <P><STRONG><a name="[6e]"></a>TFT_cls</STRONG> (Thumb, 10 bytes, Stack size 8 bytes, tft.o(i.TFT_cls))
@@ -735,8 +734,8 @@ Global Symbols
 
 <P><STRONG><a name="[9f]"></a>__scatterload_zeroinit</STRONG> (Thumb, 14 bytes, Stack size unknown bytes, handlers.o(i.__scatterload_zeroinit), UNUSED)
 
-<P><STRONG><a name="[8f]"></a>calc</STRONG> (Thumb, 116 bytes, Stack size 8 bytes, functiongen.o(i.calc))
-<BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = calc
+<P><STRONG><a name="[8f]"></a>fuelle_puffer</STRONG> (Thumb, 86 bytes, Stack size 20 bytes, labor4.o(i.fuelle_puffer))
+<BR><BR>[Stack]<UL><LI>Max Depth = 20<LI>Call Chain = fuelle_puffer
 </UL>
 <BR>[Called By]<UL><LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;labor4
 </UL>
@@ -744,13 +743,12 @@ Global Symbols
 <P><STRONG><a name="[88]"></a>initCEP_Board</STRONG> (Thumb, 20 bytes, Stack size 8 bytes, ce_lib.o(i.initCEP_Board))
 <BR><BR>[Stack]<UL><LI>Max Depth = 112<LI>Call Chain = initCEP_Board &rArr; TFT_Init &rArr; TFT_cls &rArr; TFT_putc &rArr; TFT_send_data &rArr; I2C_CheckEvent
 </UL>
-<BR>[Calls]<UL><LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TFT_Init
-<LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Device_Init
+<BR>[Calls]<UL><LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Device_Init
 <LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Buffer_Init
+<LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TFT_Init
 <LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;initIO
 </UL>
 <BR>[Called By]<UL><LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;labor4
-<LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
 <P><STRONG><a name="[89]"></a>initIO</STRONG> (Thumb, 188 bytes, Stack size 16 bytes, ce_lib.o(i.initIO))
@@ -762,31 +760,29 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;initCEP_Board
 </UL>
 
-<P><STRONG><a name="[8b]"></a>labor4</STRONG> (Thumb, 404 bytes, Stack size 24 bytes, labor4.o(i.labor4))
+<P><STRONG><a name="[8b]"></a>labor4</STRONG> (Thumb, 378 bytes, Stack size 24 bytes, labor4.o(i.labor4))
 <BR><BR>[Stack]<UL><LI>Max Depth = 136<LI>Call Chain = labor4 &rArr; initCEP_Board &rArr; TFT_Init &rArr; TFT_cls &rArr; TFT_putc &rArr; TFT_send_data &rArr; I2C_CheckEvent
 </UL>
 <BR>[Calls]<UL><LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;setLED
 <LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;resetLED
 <LI><a href="#[8d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;read_buttons
+<LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;initCEP_Board
 <LI><a href="#[73]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TFT_puts
 <LI><a href="#[72]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TFT_gotoxy
 <LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TFT_cursor_off
 <LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TFT_cls
 <LI><a href="#[64]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_GetClocksFreq
 <LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;start_TIM8_DAC
-<LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;calc
-<LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;initCEP_Board
+<LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;fuelle_puffer
 <LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2sprintf
 </UL>
 <BR>[Called By]<UL><LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[5c]"></a>main</STRONG> (Thumb, 18 bytes, Stack size 8 bytes, main.o(i.main))
+<P><STRONG><a name="[5c]"></a>main</STRONG> (Thumb, 10 bytes, Stack size 8 bytes, main.o(i.main))
 <BR><BR>[Stack]<UL><LI>Max Depth = 144<LI>Call Chain = main &rArr; labor4 &rArr; initCEP_Board &rArr; TFT_Init &rArr; TFT_cls &rArr; TFT_putc &rArr; TFT_send_data &rArr; I2C_CheckEvent
 </UL>
 <BR>[Calls]<UL><LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;labor4
-<LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;initCEP_Board
-<LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TFT_Init
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> entry9a.o(.ARM.Collect$$$$0000000B)
 </UL>

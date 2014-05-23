@@ -2,23 +2,12 @@
 #include "global.h"
 #include "functiongen.h"
 
-
-
-// kommt aus labor4.c
-extern int frequency;
-extern int graph_type;
-extern int amplitude;
-extern int *tabelle;
-
-int fi = 0;
-
-
 const unsigned int DELTA_IDX_440 = (unsigned int) ((440.L/SAMPLE_FREQ * TABLE_SIZE) * (1<<FIXPOINT_ARITH));
 const unsigned int DELTA_IDX_5000 = (unsigned int) ((5000.L/SAMPLE_FREQ * TABLE_SIZE) * (1<<FIXPOINT_ARITH));
 
 const unsigned int SHIFTED_TABLE_SIZE =  TABLE_SIZE * (1<<FIXPOINT_ARITH);
 	
-const unsigned int a =  (unsigned int)(1.5L/3.3 /(DAC_MAX_VAL))* (1<< FIXPOINT_ARITH);
+const unsigned int a =  (unsigned int)((1.5L/3.3 /(DAC_MAX_VAL))* (1<< FIXPOINT_ARITH));
 const unsigned int b_small =  (unsigned int)((0.5L/DAC_MAX_V * DAC_MAX_VAL)/(1 << 15) *  (1 << FIXPOINT_ARITH));
 const unsigned int b_big = (unsigned int)((1.0L/DAC_MAX_V * DAC_MAX_VAL)/(1 << 15) *  (1 << FIXPOINT_ARITH));
 
@@ -81,36 +70,4 @@ int triangle_table[TABLE_SIZE] = {
      -3072, -2560, -2048, -1536, -1024,  -512
 };
 
-// output_freq = 440hz ODER 5000hz
-// verlauf = sinus ODER saegezahn
-// amplitude = 1.0v mw1.5v ODER 0.5v mw1.5v
-
-uint16_t calc(void) {
-		unsigned int idx = 0;
-		int val = 0;
-		int ret = 0;
-	
-		idx = fi >> FIXPOINT_ARITH;
-	
-		if (graph_type == SINUS){
-			val = sinus_table[idx];
-		}else{
-			val = triangle_table[idx];
-		}
-		
-		if (amplitude == AMPLITUDE_1V){
-			ret = (a +  b_big * val) >> FIXPOINT_ARITH;
-		}else{
-			ret = (a +  b_small * val) >> FIXPOINT_ARITH;
-		}
-		
-		if (frequency == FREQUENCY_HIGH){
-			fi = (fi + DELTA_IDX_440) % SHIFTED_TABLE_SIZE;
-		}else{
-			fi = (fi + DELTA_IDX_5000) % SHIFTED_TABLE_SIZE;
-		}
-	
-		return ret;
-		
-}
 

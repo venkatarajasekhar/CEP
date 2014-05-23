@@ -8,10 +8,6 @@
 
 int main(void) {
 	
-	initCEP_Board();
-	TFT_Init();
-	
-
 	labor4();
 	//dac_test();
 		

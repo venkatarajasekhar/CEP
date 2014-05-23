@@ -6,33 +6,32 @@
 #include "global.h"
 #include "labor4.h"
 #include "peripherals.h"
-#include "dac.h"
 
 
 #define N_ARR 3808 		//168Mhz/44100HZ
 #define SCREEN_UPDATE_CYCLE 168000
-
-void TIM8_UP_TIM13_IRQHandler(void);
-void start_TIM8_DAC(void);
 
 typedef struct{
 	int isEmpty;
 	int data [BUFFER_SIZE];
 } buffer_t;
 
+void TIM8_UP_TIM13_IRQHandler(void);
+void start_TIM8_DAC(void);
+void fuelle_puffer(volatile buffer_t *buf);
+	
 
 
 volatile int idx_ISR = 0;
-static volatile int msec;
+volatile int msec;
 char msec_Buf[10];
 char interupt_Buf[10];
 char freq_Buf[20];
 
-int *tabelle = sinus_table;
 
 int interrupt_Counter = 0;
 int mseczaehlvar = 0;
-
+int fi = 0;
  
 volatile static buffer_t buf1;
 volatile static buffer_t buf2;
@@ -43,25 +42,25 @@ volatile static buffer_t* isrBuffer;
 
 
 unsigned int frequency;
-int graph_type = SINUS;
-int amplitude = AMPLITUDE_1V;
-int srefresh = SREFRESH_ON;
+int *tabelle = sinus_table;
+unsigned int amplitude;
+int srefresh = SREFRESH_OFF;
 
 
 void labor4(void) {
 		
 	RCC_ClocksTypeDef RCC_Clocks;
 	
-	int i = 0;
 	msec = 0;
 	
-	frequency= FREQUENCY_LOW;
-	amplitude = AMPLITUDE_1V;
+	//start with 5000Hz and Amplitude 1.0V (b_big)
+	frequency= DELTA_IDX_440;
+	amplitude = b_big;
 	
 	initCEP_Board();
 	start_TIM8_DAC();
 
-	/* SysTick end of count event each 10ms */
+	//SysTick end of count event each 10ms 
 	RCC_GetClocksFreq(&RCC_Clocks);
 	SysTick_Config(RCC_Clocks.HCLK_Frequency / 1000);
 
@@ -112,11 +111,7 @@ void labor4(void) {
 			resetLED(WAITING_LED);
 			
 			ITM->PORT[9].u32 = 0;	
-			for(i = 0; i < BUFFER_SIZE; i++){
-				bgBuffer->data[i] = calc();	// calc aufrufen, wert in buffer einfuegen
-			}				
-				
-			bgBuffer->isEmpty = 0;
+			fuelle_puffer(bgBuffer);	
 			ITM->PORT[9].u32 = 1;			
 		
 			// switch Buffer
@@ -179,4 +174,22 @@ void TIM8_UP_TIM13_IRQHandler(void) {
 void SysTick_Handler(){
 	msec++;
 }
+
+
+void fuelle_puffer(volatile buffer_t *buf){
+		int i;
+		unsigned int idx = 0;
+		int buf_input= 0;
+		int val = 0;
+	
+		for(i = 0; i < BUFFER_SIZE; i++){
+		idx = fi >> FIXPOINT_ARITH;
+		val = tabelle[idx];
+		buf_input = ( a +  amplitude * val) >> FIXPOINT_ARITH;
+		buf->data[i] = buf_input; //wert in buffer einfuegen		
+		fi = (fi + frequency) % SHIFTED_TABLE_SIZE;
+	}
+	buf->isEmpty = 0;
+}
+
 
