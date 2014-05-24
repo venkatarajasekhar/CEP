@@ -434,16 +434,6 @@
               <FileType>5</FileType>
               <FilePath>.\Project\spi.h</FilePath>
             </File>
-            <File>
-              <FileName>spi_mem.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\Project\spi_mem.h</FilePath>
-            </File>
-            <File>
-              <FileName>spi_mem.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Project\spi_mem.c</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>

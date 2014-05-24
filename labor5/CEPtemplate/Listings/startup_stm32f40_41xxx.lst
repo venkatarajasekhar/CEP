@@ -855,11 +855,11 @@ ARM Macro Assembler    Page 14
   432 0000001C                 END
               00000000 
               00000000 
-Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp --apcs=int
-erwork --depend=.\build\startup_stm32f40_41xxx.d -o.\build\startup_stm32f40_41x
-xx.o -IC:\Keil\ARM\RV31\INC -IC:\Keil\ARM\PACK\ARM\CMSIS\3.20.4\CMSIS\Include -
-IDevice\Include --predefine="__MICROLIB SETA 1" --list=.\listings\startup_stm32
-f40_41xxx.lst Libraries\Device\startup_stm32f40_41xxx.s
+Command Line: --debug --xref --cpu=Cortex-M4.fp --apcs=interwork --depend=.\bui
+ld\startup_stm32f40_41xxx.d -o.\build\startup_stm32f40_41xxx.o -IC:\Keil_v5\ARM
+\RV31\INC -IC:\Keil_v5\ARM\PACK\ARM\CMSIS\3.20.4\CMSIS\Include -IDevice\Include
+ --predefine="__EVAL SETA 1" --predefine="__MICROLIB SETA 1" --list=.\listings\
+startup_stm32f40_41xxx.lst Libraries\Device\startup_stm32f40_41xxx.s
 
 
 
@@ -1953,4 +1953,4 @@ Symbol: __main
       At line 184 in file Libraries\Device\startup_stm32f40_41xxx.s
 Comment: __main used once
 2 symbols
-443 symbols in table
+444 symbols in table
