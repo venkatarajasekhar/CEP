@@ -5,6 +5,8 @@ ARM Linker, 5.03 [Build 76] [MDK-ARM Professional]
 Section Cross References
 
     main.o(i.main) refers to labor5.o(i.labor5) for labor5
+    spi_mem.o(i.spi_mem_ReadByte) refers to spi.o(i.spi_writeByte) for spi_writeByte
+    spi_mem.o(i.spi_mem_ReadByte) refers to spi.o(i.spi_readByte) for spi_readByte
     spi_mem.o(i.spi_mem_ReadManufacturerID) refers to spi.o(i.spi_writeByte) for spi_writeByte
     spi_mem.o(i.spi_mem_ReadManufacturerID) refers to spi.o(i.spi_readByte) for spi_readByte
     stm32f4xx_gpio.o(i.GPIO_DeInit) refers to stm32f4xx_rcc.o(i.RCC_AHB1PeriphResetCmd) for RCC_AHB1PeriphResetCmd
@@ -147,7 +149,8 @@ Removing Unused input sections from the image.
     Removing spi.o(i.spi_writeByte), (76 bytes).
     Removing spi_mem.o(.rev16_text), (4 bytes).
     Removing spi_mem.o(.revsh_text), (4 bytes).
-    Removing spi_mem.o(i.spi_mem_ReadManufacturerID), (48 bytes).
+    Removing spi_mem.o(i.spi_mem_ReadByte), (48 bytes).
+    Removing spi_mem.o(i.spi_mem_ReadManufacturerID), (46 bytes).
     Removing core_cm3.o(.emb_text), (32 bytes).
     Removing misc.o(.rev16_text), (4 bytes).
     Removing misc.o(.revsh_text), (4 bytes).
@@ -368,7 +371,7 @@ Removing Unused input sections from the image.
     Removing tft.o(i.tft_delay), (16 bytes).
     Removing tft.o(.bss), (521 bytes).
 
-229 unused section(s) (total 10771 bytes) removed from the image.
+230 unused section(s) (total 10817 bytes) removed from the image.
 
 ==============================================================================
 
@@ -595,38 +598,38 @@ Memory Map of the image
 
     Base Addr    Size         Type   Attr      Idx    E Section Name        Object
 
-    0x08000000   0x00000188   Data   RO          821    RESET               startup_stm32f40_41xxx.o
-    0x08000188   0x00000000   Code   RO         1539  * .ARM.Collect$$$$00000000  mc_w.l(entry.o)
-    0x08000188   0x00000004   Code   RO         1544    .ARM.Collect$$$$00000001  mc_w.l(entry2.o)
-    0x0800018c   0x00000004   Code   RO         1547    .ARM.Collect$$$$00000004  mc_w.l(entry5.o)
-    0x08000190   0x00000000   Code   RO         1549    .ARM.Collect$$$$00000008  mc_w.l(entry7b.o)
-    0x08000190   0x00000000   Code   RO         1551    .ARM.Collect$$$$0000000A  mc_w.l(entry8b.o)
-    0x08000190   0x00000008   Code   RO         1552    .ARM.Collect$$$$0000000B  mc_w.l(entry9a.o)
-    0x08000198   0x00000000   Code   RO         1554    .ARM.Collect$$$$0000000D  mc_w.l(entry10a.o)
-    0x08000198   0x00000000   Code   RO         1556    .ARM.Collect$$$$0000000F  mc_w.l(entry11a.o)
-    0x08000198   0x00000004   Code   RO         1545    .ARM.Collect$$$$00002712  mc_w.l(entry2.o)
-    0x0800019c   0x00000024   Code   RO          822    .text               startup_stm32f40_41xxx.o
-    0x080001c0   0x00000024   Code   RO         1558    .text               mc_w.l(init.o)
-    0x080001e4   0x000000ec   Code   RO          828    i.SetSysClock       system_stm32f4xx.o
-    0x080002d0   0x00000068   Code   RO          830    i.SystemInit        system_stm32f4xx.o
-    0x08000338   0x000000a4   Code   RO         1166    i.USART6_IRQHandler  usart.o
-    0x080003dc   0x0000000e   Code   RO         1562    i.__scatterload_copy  mc_w.l(handlers.o)
-    0x080003ea   0x00000002   Code   RO         1563    i.__scatterload_null  mc_w.l(handlers.o)
-    0x080003ec   0x0000000e   Code   RO         1564    i.__scatterload_zeroinit  mc_w.l(handlers.o)
+    0x08000000   0x00000188   Data   RO          847    RESET               startup_stm32f40_41xxx.o
+    0x08000188   0x00000000   Code   RO         1565  * .ARM.Collect$$$$00000000  mc_w.l(entry.o)
+    0x08000188   0x00000004   Code   RO         1570    .ARM.Collect$$$$00000001  mc_w.l(entry2.o)
+    0x0800018c   0x00000004   Code   RO         1573    .ARM.Collect$$$$00000004  mc_w.l(entry5.o)
+    0x08000190   0x00000000   Code   RO         1575    .ARM.Collect$$$$00000008  mc_w.l(entry7b.o)
+    0x08000190   0x00000000   Code   RO         1577    .ARM.Collect$$$$0000000A  mc_w.l(entry8b.o)
+    0x08000190   0x00000008   Code   RO         1578    .ARM.Collect$$$$0000000B  mc_w.l(entry9a.o)
+    0x08000198   0x00000000   Code   RO         1580    .ARM.Collect$$$$0000000D  mc_w.l(entry10a.o)
+    0x08000198   0x00000000   Code   RO         1582    .ARM.Collect$$$$0000000F  mc_w.l(entry11a.o)
+    0x08000198   0x00000004   Code   RO         1571    .ARM.Collect$$$$00002712  mc_w.l(entry2.o)
+    0x0800019c   0x00000024   Code   RO          848    .text               startup_stm32f40_41xxx.o
+    0x080001c0   0x00000024   Code   RO         1584    .text               mc_w.l(init.o)
+    0x080001e4   0x000000ec   Code   RO          854    i.SetSysClock       system_stm32f4xx.o
+    0x080002d0   0x00000068   Code   RO          856    i.SystemInit        system_stm32f4xx.o
+    0x08000338   0x000000a4   Code   RO         1192    i.USART6_IRQHandler  usart.o
+    0x080003dc   0x0000000e   Code   RO         1588    i.__scatterload_copy  mc_w.l(handlers.o)
+    0x080003ea   0x00000002   Code   RO         1589    i.__scatterload_null  mc_w.l(handlers.o)
+    0x080003ec   0x0000000e   Code   RO         1590    i.__scatterload_zeroinit  mc_w.l(handlers.o)
     0x080003fa   0x00000002   Code   RO           27    i.labor5            labor5.o
     0x080003fc   0x0000000a   Code   RO            1    i.main              main.o
     0x08000406   0x00000002   PAD
-    0x08000408   0x00000020   Data   RO         1560    Region$$Table       anon$$obj.o
+    0x08000408   0x00000020   Data   RO         1586    Region$$Table       anon$$obj.o
 
 
     Execution Region RW_IRAM1 (Base: 0x20000000, Size: 0x00000618, Max: 0x00020000, ABSOLUTE)
 
     Base Addr    Size         Type   Attr      Idx    E Section Name        Object
 
-    0x20000000   0x00000004   Data   RW         1172    .data               usart.o
-    0x20000004   0x00000210   Zero   RW         1171    .bss                usart.o
+    0x20000000   0x00000004   Data   RW         1198    .data               usart.o
+    0x20000004   0x00000210   Zero   RW         1197    .bss                usart.o
     0x20000214   0x00000004   PAD
-    0x20000218   0x00000400   Zero   RW          819    STACK               startup_stm32f40_41xxx.o
+    0x20000218   0x00000400   Zero   RW          845    STACK               startup_stm32f40_41xxx.o
 
 
 ==============================================================================
