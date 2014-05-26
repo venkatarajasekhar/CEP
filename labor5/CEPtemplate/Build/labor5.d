@@ -1,10 +1,10 @@
 .\build\labor5.o: Project\labor5.c
 .\build\labor5.o: .\Libraries\Device\stm32f4xx.h
-.\build\labor5.o: C:\Keil_v5\ARM\PACK\ARM\CMSIS\3.20.4\CMSIS\Include\core_cm4.h
-.\build\labor5.o: C:\Keil_v5\ARM\ARMCC\bin\..\include\stdint.h
-.\build\labor5.o: C:\Keil_v5\ARM\PACK\ARM\CMSIS\3.20.4\CMSIS\Include\core_cmInstr.h
-.\build\labor5.o: C:\Keil_v5\ARM\PACK\ARM\CMSIS\3.20.4\CMSIS\Include\core_cmFunc.h
-.\build\labor5.o: C:\Keil_v5\ARM\PACK\ARM\CMSIS\3.20.4\CMSIS\Include\core_cm4_simd.h
+.\build\labor5.o: C:\Keil\ARM\PACK\ARM\CMSIS\3.20.4\CMSIS\Include\core_cm4.h
+.\build\labor5.o: C:\Keil\ARM\ARMCC\bin\..\include\stdint.h
+.\build\labor5.o: C:\Keil\ARM\PACK\ARM\CMSIS\3.20.4\CMSIS\Include\core_cmInstr.h
+.\build\labor5.o: C:\Keil\ARM\PACK\ARM\CMSIS\3.20.4\CMSIS\Include\core_cmFunc.h
+.\build\labor5.o: C:\Keil\ARM\PACK\ARM\CMSIS\3.20.4\CMSIS\Include\core_cm4_simd.h
 .\build\labor5.o: .\Libraries\Device\system_stm32f4xx.h
 .\build\labor5.o: .\Libraries\Device\stm32f4xx_conf.h
 .\build\labor5.o: .\Libraries\Device\RTE_Components.h
@@ -12,6 +12,6 @@
 .\build\labor5.o: .\Libraries\Device\stm32f4xx.h
 .\build\labor5.o: .\Libraries\StdPeriph_Driver\inc\stm32f4xx_rcc.h
 .\build\labor5.o: .\Libraries\TiLib\CE_Lib.h
-.\build\labor5.o: C:\Keil_v5\ARM\ARMCC\bin\..\include\stdio.h
+.\build\labor5.o: C:\Keil\ARM\ARMCC\bin\..\include\stdio.h
 .\build\labor5.o: Project\global.h
 .\build\labor5.o: Project\labor5.h
