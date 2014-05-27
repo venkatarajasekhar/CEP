@@ -1,6 +1,8 @@
 #include "stm32f4xx_spi.h"
 #include "spi.h"
 #include "global.h"
+#include <stm32f4xx_rcc.h>
+#include <stm32f4xx_gpio.h>
 
 static unsigned int init_done = 0;
 
@@ -8,8 +10,28 @@ static unsigned int init_done = 0;
  * inititialisieren von cr1 und cr2
  */
 static void spi_setup(void) {
+	GPIO_InitTypeDef gpio;
+	
+	
 	SPI3->CR1 = 0 | SPI_CR1_SPE | SPI_CR1_MSTR | SPI_CR1_CPOL | SPI_CR1_CPHA;
 	SPI3->CR2 = 0;
+	
+	//SPI enablen und es ist nicht auf AHB
+
+	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB, ENABLE);
+	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOG, ENABLE); 
+
+  gpio.GPIO_Mode = GPIO_Mode_OUT;
+  gpio.GPIO_OType = GPIO_OType_PP;
+  gpio.GPIO_PuPd = GPIO_PuPd_UP;
+  gpio.GPIO_Speed = GPIO_Speed_50MHz;
+
+	//GPIOG & GPIOB, pin9 und pin6 intitialisieren
+  gpio.GPIO_Pin = GPIO_Pin_9;
+  GPIO_Init(GPIOB, &gpio);
+
+  gpio.GPIO_Pin = GPIO_Pin_6;
+  GPIO_Init(GPIOG, &gpio);
 }
 
 /*
