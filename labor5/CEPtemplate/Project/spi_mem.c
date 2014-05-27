@@ -1,7 +1,9 @@
 #include <stm32f4xx.h>
+#include <stm32f4xx_rcc.h>
 #include "spi.h"
 #include "spi_mem.h"
 #include <stdio.h>
+
 
 // specific spi_mem commands
 #define READ_MANUFACTURER_ID 0x9f
@@ -110,6 +112,13 @@ unsigned int spi_mem_ReadManufacturerID(unsigned int chip_sel) {
 uint16_t spi_mem_ReadManufacturerID_Heitmann() {
 	uint16_t id = 0;
 	
+	// setup
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_SPI3, ENABLE);
+	
+	SPI3->CR1 = 0 | SPI_CR1_SPE | SPI_CR1_MSTR | SPI_CR1_CPOL | SPI_CR1_CPHA;
+	SPI3->CR2 = 0;
+	
+	// code aus skript
 	GPIOG->BSRRH = (1<<6);
 	
 	SPI3->DR = 0x9f;

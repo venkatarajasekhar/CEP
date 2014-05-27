@@ -33,7 +33,7 @@ I (.\Libraries\TiLib\CE_Lib.h)(0x53833EAA)
 I (C:\Keil\ARM\ARMCC\include\stdio.h)(0x5284D694)
 I (Project\global.h)(0x53837708)
 I (Project\labor5.h)(0x53837708)
-F (.\Project\spi.c)(0x5384BA0A)(-c --cpu Cortex-M4.fp -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I.\Libraries\CMSIS\CM3\CoreSupport -I.\Libraries\StdPeriph_Driver\inc -I.\Libraries\Device -I.\Libraries\TiLib-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\PACK\ARM\CMSIS\3.20.4\CMSIS\Include-I Device\Include-DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER -o .\build\spi.o --omf_browse .\build\spi.crf --depend .\build\spi.d)
+F (.\Project\spi.c)(0x5384C0FB)(-c --cpu Cortex-M4.fp -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I.\Libraries\CMSIS\CM3\CoreSupport -I.\Libraries\StdPeriph_Driver\inc -I.\Libraries\Device -I.\Libraries\TiLib-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\PACK\ARM\CMSIS\3.20.4\CMSIS\Include-I Device\Include-DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER -o .\build\spi.o --omf_browse .\build\spi.crf --depend .\build\spi.d)
 I (.\Libraries\StdPeriph_Driver\inc\stm32f4xx_spi.h)(0x53833EA9)
 I (.\Libraries\Device\stm32f4xx.h)(0x53833EA9)
 I (C:\Keil\ARM\PACK\ARM\CMSIS\3.20.4\CMSIS\Include\core_cm4.h)(0x512C8EE2)
@@ -45,11 +45,12 @@ I (.\Libraries\Device\system_stm32f4xx.h)(0x53833EA9)
 I (.\Libraries\Device\stm32f4xx_conf.h)(0x53833EA9)
 I (.\Libraries\Device\RTE_Components.h)(0x53833EA9)
 I (.\Libraries\StdPeriph_Driver\inc\misc.h)(0x53833EA9)
+I (.\Libraries\StdPeriph_Driver\inc\stm32f4xx_rcc.h)(0x53833EA9)
 I (Project\spi.h)(0x5384B9E8)
 I (Project\global.h)(0x53837708)
 F (.\Project\spi.h)(0x5384B9E8)()
 F (.\Project\spi_mem.h)(0x5384BBCD)()
-F (.\Project\spi_mem.c)(0x5384BB42)(-c --cpu Cortex-M4.fp -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I.\Libraries\CMSIS\CM3\CoreSupport -I.\Libraries\StdPeriph_Driver\inc -I.\Libraries\Device -I.\Libraries\TiLib-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\PACK\ARM\CMSIS\3.20.4\CMSIS\Include-I Device\Include-DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER -o .\build\spi_mem.o --omf_browse .\build\spi_mem.crf --depend .\build\spi_mem.d)
+F (.\Project\spi_mem.c)(0x5384C246)(-c --cpu Cortex-M4.fp -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I.\Libraries\CMSIS\CM3\CoreSupport -I.\Libraries\StdPeriph_Driver\inc -I.\Libraries\Device -I.\Libraries\TiLib-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\PACK\ARM\CMSIS\3.20.4\CMSIS\Include-I Device\Include-DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER -o .\build\spi_mem.o --omf_browse .\build\spi_mem.crf --depend .\build\spi_mem.d)
 I (.\Libraries\Device\stm32f4xx.h)(0x53833EA9)
 I (C:\Keil\ARM\PACK\ARM\CMSIS\3.20.4\CMSIS\Include\core_cm4.h)(0x512C8EE2)
 I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x5284D69A)
@@ -60,6 +61,7 @@ I (.\Libraries\Device\system_stm32f4xx.h)(0x53833EA9)
 I (.\Libraries\Device\stm32f4xx_conf.h)(0x53833EA9)
 I (.\Libraries\Device\RTE_Components.h)(0x53833EA9)
 I (.\Libraries\StdPeriph_Driver\inc\misc.h)(0x53833EA9)
+I (.\Libraries\StdPeriph_Driver\inc\stm32f4xx_rcc.h)(0x53833EA9)
 I (Project\spi.h)(0x5384B9E8)
 I (Project\spi_mem.h)(0x5384BBCD)
 I (C:\Keil\ARM\ARMCC\include\stdio.h)(0x5284D694)

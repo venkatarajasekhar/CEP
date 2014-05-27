@@ -1,4 +1,5 @@
 #include "stm32f4xx_spi.h"
+#include <stm32f4xx_rcc.h>
 #include "spi.h"
 #include "global.h"
 
@@ -8,6 +9,8 @@ static unsigned int init_done = 0;
  * inititialisieren von cr1 und cr2
  */
 static void spi_setup(void) {
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_SPI3, ENABLE);
+	
 	SPI3->CR1 = 0 | SPI_CR1_SPE | SPI_CR1_MSTR | SPI_CR1_CPOL | SPI_CR1_CPHA;
 	SPI3->CR2 = 0;
 }

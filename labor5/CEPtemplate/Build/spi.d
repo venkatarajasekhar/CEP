@@ -11,5 +11,6 @@
 .\build\spi.o: .\Libraries\Device\RTE_Components.h
 .\build\spi.o: .\Libraries\StdPeriph_Driver\inc\misc.h
 .\build\spi.o: .\Libraries\Device\stm32f4xx.h
+.\build\spi.o: .\Libraries\StdPeriph_Driver\inc\stm32f4xx_rcc.h
 .\build\spi.o: Project\spi.h
 .\build\spi.o: Project\global.h
