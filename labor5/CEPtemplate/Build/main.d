@@ -2,3 +2,16 @@
 .\build\main.o: C:\Keil\ARM\ARMCC\bin\..\include\stdio.h
 .\build\main.o: C:\Keil\ARM\ARMCC\bin\..\include\stdlib.h
 .\build\main.o: Project\labor5.h
+.\build\main.o: .\Libraries\TiLib\CE_Lib.h
+.\build\main.o: .\Libraries\Device\stm32f4xx.h
+.\build\main.o: C:\Keil\ARM\PACK\ARM\CMSIS\3.20.4\CMSIS\Include\core_cm4.h
+.\build\main.o: C:\Keil\ARM\ARMCC\bin\..\include\stdint.h
+.\build\main.o: C:\Keil\ARM\PACK\ARM\CMSIS\3.20.4\CMSIS\Include\core_cmInstr.h
+.\build\main.o: C:\Keil\ARM\PACK\ARM\CMSIS\3.20.4\CMSIS\Include\core_cmFunc.h
+.\build\main.o: C:\Keil\ARM\PACK\ARM\CMSIS\3.20.4\CMSIS\Include\core_cm4_simd.h
+.\build\main.o: .\Libraries\Device\system_stm32f4xx.h
+.\build\main.o: .\Libraries\Device\stm32f4xx_conf.h
+.\build\main.o: .\Libraries\Device\RTE_Components.h
+.\build\main.o: .\Libraries\StdPeriph_Driver\inc\misc.h
+.\build\main.o: .\Libraries\Device\stm32f4xx.h
+.\build\main.o: Project\tests/spi_mem_test.h

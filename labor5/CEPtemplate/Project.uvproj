@@ -438,6 +438,16 @@
               <FileType>1</FileType>
               <FilePath>.\Project\spi_mem.c</FilePath>
             </File>
+            <File>
+              <FileName>spi_mem_test.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Project\tests\spi_mem_test.h</FilePath>
+            </File>
+            <File>
+              <FileName>spi_mem_test.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Project\tests\spi_mem_test.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

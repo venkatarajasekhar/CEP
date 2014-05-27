@@ -1,7 +1,7 @@
 #include <stm32f4xx.h>
-#include <stdint.h>
 #include "spi.h"
 #include "spi_mem.h"
+#include <stdio.h>
 
 // specific spi_mem commands
 #define READ_MANUFACTURER_ID 0x9f
@@ -11,6 +11,7 @@
 #define CHIP_ERASE 0x60
 #define WRITE_ENABLE 0x06
 #define WRITE_DISABLE 0x04
+#define Read
 
 // status register
 #define NEW_SPRL_VALUE 0x80
@@ -98,7 +99,7 @@ unsigned int spi_mem_ReadManufacturerID(unsigned int chip_sel) {
 	unsigned int ret = 0;
 	
 	spi_writeByte(chip_sel, READ_MANUFACTURER_ID);
-	
+	printf("\ntestx");fflush(stdout);
 	ret = spi_readByte(chip_sel);								// manufaturer id
 	ret = ret & (spi_readByte(chip_sel) << 16);	// device id part 1
 	ret = ret & (spi_readByte(chip_sel) << 8);  // device id part 2
@@ -106,4 +107,29 @@ unsigned int spi_mem_ReadManufacturerID(unsigned int chip_sel) {
 	return ret;
 }
 
+uint16_t spi_mem_ReadManufacturerID_Heitmann() {
+	uint16_t id = 0;
+	
+	GPIOG->BSRRH = (1<<6);
+	
+	SPI3->DR = 0x9f;
+	while( (SPI3->SR & (1<<0)) == 0 );
+	id = SPI3->DR;
+		
+	SPI3->DR = 0;
+	while( (SPI3->SR & (1<<0)) == 0 );
+	id = SPI3->DR;
+	
+	SPI3->DR = 0;
+	while( (SPI3->SR & (1<<0)) == 0 );
+	id = (id<<8) | SPI3->DR;
+	
+	SPI3->DR = 0;
+	while( (SPI3->SR & (1<<0)) == 0 );
+	id = (id<<8) | SPI3->DR;
+	
+	GPIOG->BSRRL = (1<<6);
+	
+	return id;
+}
 
