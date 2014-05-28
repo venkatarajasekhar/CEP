@@ -28,6 +28,7 @@
 #define CmdReadArray 0x0b
 #define CmdBlockErase 0x52
 #define CmdPageProgram 0x02
+#define CmdReadManufacturerId 0x9f
 
 // status register
 #define BlockSize 256
@@ -91,7 +92,6 @@ static uint16_t spiFlashMemReadStatusRegister(unsigned int chip_sel) {
  * read status register until busy bit has been deleted
  */
 static void spiFlashMemWaitReady(unsigned int chip_sel) {
-    uint8_t reg_byte_1 = 0;
     uint8_t reg_byte_2 = 0;
 
     // chip-select
@@ -99,7 +99,7 @@ static void spiFlashMemWaitReady(unsigned int chip_sel) {
 
     do {
         spiTransfer(CmdReadStatusRegister);
-        reg_byte_1 = spiTransfer(DUMMY);
+        spiTransfer(DUMMY);
         reg_byte_2 = spiTransfer(DUMMY);
     } while((reg_byte_2 & StatusRegReady) != 0);
         
@@ -192,6 +192,26 @@ void spiFlashMemWrite(unsigned int chip_sel, uint32_t address, uint8_t* buffer) 
 	disable_SSEL(chip_sel);
     
     spiFlashMemWaitReady(chip_sel);
+}
+
+/*
+ * reads manufacturer id and chip
+ */
+uint32_t spiReadManufacturerId(unsigned int chip_sel) {
+    int res = 0;
+    
+    // chip-select
+	enable_SSEL(chip_sel);
+    
+    spiTransfer(CmdReadManufacturerId);
+    res = (spiTransfer(DUMMY) << 16);
+    res = (spiTransfer(DUMMY) << 8);
+    res = spiTransfer(DUMMY);
+    
+    // chip-unselect
+	disable_SSEL(chip_sel);
+    
+    return res;
 }
 
 /************************************************************ ab hier kann wohl geloescht werden *****************************************************************/

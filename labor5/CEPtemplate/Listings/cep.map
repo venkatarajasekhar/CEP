@@ -7,7 +7,6 @@ Section Cross References
     main.o(i.main) refers to ce_lib.o(i.initCEP_Board) for initCEP_Board
     main.o(i.main) refers to spi.o(i.spi_setup) for spi_setup
     main.o(i.main) refers to gpio.o(i.gpio_setup) for gpio_setup
-    main.o(i.main) refers to spi_mem_test.o(i.spi_mem_ReadManufacturerID_test) for spi_mem_ReadManufacturerID_test
     spi.o(i.spi_setup) refers to stm32f4xx_rcc.o(i.RCC_APB1PeriphClockCmd) for RCC_APB1PeriphClockCmd
     spi.o(i.spi_setup) refers to stm32f4xx_rcc.o(i.RCC_AHB1PeriphClockCmd) for RCC_AHB1PeriphClockCmd
     spi_mem.o(i.spiFLashMemGlobalUnprotect) refers to spi_mem.o(i.enable_SSEL) for enable_SSEL
@@ -30,10 +29,8 @@ Section Cross References
     spi_mem.o(i.spiFlashMemWrite) refers to spi_mem.o(i.enable_SSEL) for enable_SSEL
     spi_mem.o(i.spiFlashMemWrite) refers to spi_mem.o(i.disable_SSEL) for disable_SSEL
     spi_mem.o(i.spiFlashMemWrite) refers to spi_mem.o(i.spiFlashMemWaitReady) for spiFlashMemWaitReady
-    spi_mem_test.o(i.spi_mem_ReadManufacturerID_Heitmann_test) refers to printf8.o(i.__0printf$8) for __2printf
-    spi_mem_test.o(i.spi_mem_ReadManufacturerID_Heitmann_test) refers to retarget.o(.data) for __stdout
-    spi_mem_test.o(i.spi_mem_ReadManufacturerID_test) refers to printf8.o(i.__0printf$8) for __2printf
-    spi_mem_test.o(i.spi_mem_ReadManufacturerID_test) refers to retarget.o(.data) for __stdout
+    spi_mem.o(i.spiReadManufacturerId) refers to spi_mem.o(i.enable_SSEL) for enable_SSEL
+    spi_mem.o(i.spiReadManufacturerId) refers to spi_mem.o(i.disable_SSEL) for disable_SSEL
     gpio.o(i.gpio_setup) refers to stm32f4xx_gpio.o(i.GPIO_Init) for GPIO_Init
     gpio.o(i.gpio_setup) refers to stm32f4xx_rcc.o(i.RCC_APB1PeriphClockCmd) for RCC_APB1PeriphClockCmd
     stm32f4xx_gpio.o(i.GPIO_DeInit) refers to stm32f4xx_rcc.o(i.RCC_AHB1PeriphResetCmd) for RCC_AHB1PeriphResetCmd
@@ -153,242 +150,6 @@ Section Cross References
     entry.o(.ARM.Collect$$$$00000000) refers (Special) to entry9a.o(.ARM.Collect$$$$0000000B) for _main_init
     entry.o(.ARM.Collect$$$$00000000) refers (Special) to entry5.o(.ARM.Collect$$$$00000004) for _main_scatterload
     entry.o(.ARM.Collect$$$$00000000) refers (Special) to entry2.o(.ARM.Collect$$$$00000001) for _main_stk
-    printfb.o(i.__0fprintf$bare) refers to printfb.o(i._printf_core) for _printf_core
-    printfb.o(i.__0fprintf$bare) refers to retarget.o(i.fputc) for fputc
-    printfb.o(i.__0printf$bare) refers to printfb.o(i._printf_core) for _printf_core
-    printfb.o(i.__0printf$bare) refers to retarget.o(i.fputc) for fputc
-    printfb.o(i.__0printf$bare) refers to retarget.o(.data) for __stdout
-    printfb.o(i.__0snprintf$bare) refers to printfb.o(i._printf_core) for _printf_core
-    printfb.o(i.__0snprintf$bare) refers to printfb.o(i._snputc) for _snputc
-    printfb.o(i.__0sprintf$bare) refers to printfb.o(i._printf_core) for _printf_core
-    printfb.o(i.__0sprintf$bare) refers to printfb.o(i._sputc) for _sputc
-    printfb.o(i.__0vfprintf$bare) refers to printfb.o(i._printf_core) for _printf_core
-    printfb.o(i.__0vfprintf$bare) refers to retarget.o(i.fputc) for fputc
-    printfb.o(i.__0vprintf$bare) refers to printfb.o(i._printf_core) for _printf_core
-    printfb.o(i.__0vprintf$bare) refers to retarget.o(i.fputc) for fputc
-    printfb.o(i.__0vprintf$bare) refers to retarget.o(.data) for __stdout
-    printfb.o(i.__0vsnprintf$bare) refers to printfb.o(i._printf_core) for _printf_core
-    printfb.o(i.__0vsnprintf$bare) refers to printfb.o(i._snputc) for _snputc
-    printfb.o(i.__0vsprintf$bare) refers to printfb.o(i._printf_core) for _printf_core
-    printfb.o(i.__0vsprintf$bare) refers to printfb.o(i._sputc) for _sputc
-    printf0.o(i.__0fprintf$0) refers to printf0.o(i._printf_core) for _printf_core
-    printf0.o(i.__0fprintf$0) refers to retarget.o(i.fputc) for fputc
-    printf0.o(i.__0printf$0) refers to printf0.o(i._printf_core) for _printf_core
-    printf0.o(i.__0printf$0) refers to retarget.o(i.fputc) for fputc
-    printf0.o(i.__0printf$0) refers to retarget.o(.data) for __stdout
-    printf0.o(i.__0snprintf$0) refers to printf0.o(i._printf_core) for _printf_core
-    printf0.o(i.__0snprintf$0) refers to printf0.o(i._snputc) for _snputc
-    printf0.o(i.__0sprintf$0) refers to printf0.o(i._printf_core) for _printf_core
-    printf0.o(i.__0sprintf$0) refers to printf0.o(i._sputc) for _sputc
-    printf0.o(i.__0vfprintf$0) refers to printf0.o(i._printf_core) for _printf_core
-    printf0.o(i.__0vfprintf$0) refers to retarget.o(i.fputc) for fputc
-    printf0.o(i.__0vprintf$0) refers to printf0.o(i._printf_core) for _printf_core
-    printf0.o(i.__0vprintf$0) refers to retarget.o(i.fputc) for fputc
-    printf0.o(i.__0vprintf$0) refers to retarget.o(.data) for __stdout
-    printf0.o(i.__0vsnprintf$0) refers to printf0.o(i._printf_core) for _printf_core
-    printf0.o(i.__0vsnprintf$0) refers to printf0.o(i._snputc) for _snputc
-    printf0.o(i.__0vsprintf$0) refers to printf0.o(i._printf_core) for _printf_core
-    printf0.o(i.__0vsprintf$0) refers to printf0.o(i._sputc) for _sputc
-    printf1.o(i.__0fprintf$1) refers to printf1.o(i._printf_core) for _printf_core
-    printf1.o(i.__0fprintf$1) refers to retarget.o(i.fputc) for fputc
-    printf1.o(i.__0printf$1) refers to printf1.o(i._printf_core) for _printf_core
-    printf1.o(i.__0printf$1) refers to retarget.o(i.fputc) for fputc
-    printf1.o(i.__0printf$1) refers to retarget.o(.data) for __stdout
-    printf1.o(i.__0snprintf$1) refers to printf1.o(i._printf_core) for _printf_core
-    printf1.o(i.__0snprintf$1) refers to printf1.o(i._snputc) for _snputc
-    printf1.o(i.__0sprintf$1) refers to printf1.o(i._printf_core) for _printf_core
-    printf1.o(i.__0sprintf$1) refers to printf1.o(i._sputc) for _sputc
-    printf1.o(i.__0vfprintf$1) refers to printf1.o(i._printf_core) for _printf_core
-    printf1.o(i.__0vfprintf$1) refers to retarget.o(i.fputc) for fputc
-    printf1.o(i.__0vprintf$1) refers to printf1.o(i._printf_core) for _printf_core
-    printf1.o(i.__0vprintf$1) refers to retarget.o(i.fputc) for fputc
-    printf1.o(i.__0vprintf$1) refers to retarget.o(.data) for __stdout
-    printf1.o(i.__0vsnprintf$1) refers to printf1.o(i._printf_core) for _printf_core
-    printf1.o(i.__0vsnprintf$1) refers to printf1.o(i._snputc) for _snputc
-    printf1.o(i.__0vsprintf$1) refers to printf1.o(i._printf_core) for _printf_core
-    printf1.o(i.__0vsprintf$1) refers to printf1.o(i._sputc) for _sputc
-    printf1.o(i._printf_core) refers to uidiv.o(.text) for __aeabi_uidivmod
-    printf2.o(i.__0fprintf$2) refers to printf2.o(i._printf_core) for _printf_core
-    printf2.o(i.__0fprintf$2) refers to retarget.o(i.fputc) for fputc
-    printf2.o(i.__0printf$2) refers to printf2.o(i._printf_core) for _printf_core
-    printf2.o(i.__0printf$2) refers to retarget.o(i.fputc) for fputc
-    printf2.o(i.__0printf$2) refers to retarget.o(.data) for __stdout
-    printf2.o(i.__0snprintf$2) refers to printf2.o(i._printf_core) for _printf_core
-    printf2.o(i.__0snprintf$2) refers to printf2.o(i._snputc) for _snputc
-    printf2.o(i.__0sprintf$2) refers to printf2.o(i._printf_core) for _printf_core
-    printf2.o(i.__0sprintf$2) refers to printf2.o(i._sputc) for _sputc
-    printf2.o(i.__0vfprintf$2) refers to printf2.o(i._printf_core) for _printf_core
-    printf2.o(i.__0vfprintf$2) refers to retarget.o(i.fputc) for fputc
-    printf2.o(i.__0vprintf$2) refers to printf2.o(i._printf_core) for _printf_core
-    printf2.o(i.__0vprintf$2) refers to retarget.o(i.fputc) for fputc
-    printf2.o(i.__0vprintf$2) refers to retarget.o(.data) for __stdout
-    printf2.o(i.__0vsnprintf$2) refers to printf2.o(i._printf_core) for _printf_core
-    printf2.o(i.__0vsnprintf$2) refers to printf2.o(i._snputc) for _snputc
-    printf2.o(i.__0vsprintf$2) refers to printf2.o(i._printf_core) for _printf_core
-    printf2.o(i.__0vsprintf$2) refers to printf2.o(i._sputc) for _sputc
-    printf3.o(i.__0fprintf$3) refers to printf3.o(i._printf_core) for _printf_core
-    printf3.o(i.__0fprintf$3) refers to retarget.o(i.fputc) for fputc
-    printf3.o(i.__0printf$3) refers to printf3.o(i._printf_core) for _printf_core
-    printf3.o(i.__0printf$3) refers to retarget.o(i.fputc) for fputc
-    printf3.o(i.__0printf$3) refers to retarget.o(.data) for __stdout
-    printf3.o(i.__0snprintf$3) refers to printf3.o(i._printf_core) for _printf_core
-    printf3.o(i.__0snprintf$3) refers to printf3.o(i._snputc) for _snputc
-    printf3.o(i.__0sprintf$3) refers to printf3.o(i._printf_core) for _printf_core
-    printf3.o(i.__0sprintf$3) refers to printf3.o(i._sputc) for _sputc
-    printf3.o(i.__0vfprintf$3) refers to printf3.o(i._printf_core) for _printf_core
-    printf3.o(i.__0vfprintf$3) refers to retarget.o(i.fputc) for fputc
-    printf3.o(i.__0vprintf$3) refers to printf3.o(i._printf_core) for _printf_core
-    printf3.o(i.__0vprintf$3) refers to retarget.o(i.fputc) for fputc
-    printf3.o(i.__0vprintf$3) refers to retarget.o(.data) for __stdout
-    printf3.o(i.__0vsnprintf$3) refers to printf3.o(i._printf_core) for _printf_core
-    printf3.o(i.__0vsnprintf$3) refers to printf3.o(i._snputc) for _snputc
-    printf3.o(i.__0vsprintf$3) refers to printf3.o(i._printf_core) for _printf_core
-    printf3.o(i.__0vsprintf$3) refers to printf3.o(i._sputc) for _sputc
-    printf3.o(i._printf_core) refers to uidiv.o(.text) for __aeabi_uidivmod
-    printf4.o(i.__0fprintf$4) refers to printf4.o(i._printf_core) for _printf_core
-    printf4.o(i.__0fprintf$4) refers to retarget.o(i.fputc) for fputc
-    printf4.o(i.__0printf$4) refers to printf4.o(i._printf_core) for _printf_core
-    printf4.o(i.__0printf$4) refers to retarget.o(i.fputc) for fputc
-    printf4.o(i.__0printf$4) refers to retarget.o(.data) for __stdout
-    printf4.o(i.__0snprintf$4) refers to printf4.o(i._printf_core) for _printf_core
-    printf4.o(i.__0snprintf$4) refers to printf4.o(i._snputc) for _snputc
-    printf4.o(i.__0sprintf$4) refers to printf4.o(i._printf_core) for _printf_core
-    printf4.o(i.__0sprintf$4) refers to printf4.o(i._sputc) for _sputc
-    printf4.o(i.__0vfprintf$4) refers to printf4.o(i._printf_core) for _printf_core
-    printf4.o(i.__0vfprintf$4) refers to retarget.o(i.fputc) for fputc
-    printf4.o(i.__0vprintf$4) refers to printf4.o(i._printf_core) for _printf_core
-    printf4.o(i.__0vprintf$4) refers to retarget.o(i.fputc) for fputc
-    printf4.o(i.__0vprintf$4) refers to retarget.o(.data) for __stdout
-    printf4.o(i.__0vsnprintf$4) refers to printf4.o(i._printf_core) for _printf_core
-    printf4.o(i.__0vsnprintf$4) refers to printf4.o(i._snputc) for _snputc
-    printf4.o(i.__0vsprintf$4) refers to printf4.o(i._printf_core) for _printf_core
-    printf4.o(i.__0vsprintf$4) refers to printf4.o(i._sputc) for _sputc
-    printf4.o(i._printf_core) refers to uldiv.o(.text) for __aeabi_uldivmod
-    printf5.o(i.__0fprintf$5) refers to printf5.o(i._printf_core) for _printf_core
-    printf5.o(i.__0fprintf$5) refers to retarget.o(i.fputc) for fputc
-    printf5.o(i.__0printf$5) refers to printf5.o(i._printf_core) for _printf_core
-    printf5.o(i.__0printf$5) refers to retarget.o(i.fputc) for fputc
-    printf5.o(i.__0printf$5) refers to retarget.o(.data) for __stdout
-    printf5.o(i.__0snprintf$5) refers to printf5.o(i._printf_core) for _printf_core
-    printf5.o(i.__0snprintf$5) refers to printf5.o(i._snputc) for _snputc
-    printf5.o(i.__0sprintf$5) refers to printf5.o(i._printf_core) for _printf_core
-    printf5.o(i.__0sprintf$5) refers to printf5.o(i._sputc) for _sputc
-    printf5.o(i.__0vfprintf$5) refers to printf5.o(i._printf_core) for _printf_core
-    printf5.o(i.__0vfprintf$5) refers to retarget.o(i.fputc) for fputc
-    printf5.o(i.__0vprintf$5) refers to printf5.o(i._printf_core) for _printf_core
-    printf5.o(i.__0vprintf$5) refers to retarget.o(i.fputc) for fputc
-    printf5.o(i.__0vprintf$5) refers to retarget.o(.data) for __stdout
-    printf5.o(i.__0vsnprintf$5) refers to printf5.o(i._printf_core) for _printf_core
-    printf5.o(i.__0vsnprintf$5) refers to printf5.o(i._snputc) for _snputc
-    printf5.o(i.__0vsprintf$5) refers to printf5.o(i._printf_core) for _printf_core
-    printf5.o(i.__0vsprintf$5) refers to printf5.o(i._sputc) for _sputc
-    printf5.o(i._printf_core) refers to uldiv.o(.text) for __aeabi_uldivmod
-    printf6.o(i.__0fprintf$6) refers to printf6.o(i._printf_core) for _printf_core
-    printf6.o(i.__0fprintf$6) refers to retarget.o(i.fputc) for fputc
-    printf6.o(i.__0printf$6) refers to printf6.o(i._printf_core) for _printf_core
-    printf6.o(i.__0printf$6) refers to retarget.o(i.fputc) for fputc
-    printf6.o(i.__0printf$6) refers to retarget.o(.data) for __stdout
-    printf6.o(i.__0snprintf$6) refers to printf6.o(i._printf_core) for _printf_core
-    printf6.o(i.__0snprintf$6) refers to printf6.o(i._snputc) for _snputc
-    printf6.o(i.__0sprintf$6) refers to printf6.o(i._printf_core) for _printf_core
-    printf6.o(i.__0sprintf$6) refers to printf6.o(i._sputc) for _sputc
-    printf6.o(i.__0vfprintf$6) refers to printf6.o(i._printf_core) for _printf_core
-    printf6.o(i.__0vfprintf$6) refers to retarget.o(i.fputc) for fputc
-    printf6.o(i.__0vprintf$6) refers to printf6.o(i._printf_core) for _printf_core
-    printf6.o(i.__0vprintf$6) refers to retarget.o(i.fputc) for fputc
-    printf6.o(i.__0vprintf$6) refers to retarget.o(.data) for __stdout
-    printf6.o(i.__0vsnprintf$6) refers to printf6.o(i._printf_core) for _printf_core
-    printf6.o(i.__0vsnprintf$6) refers to printf6.o(i._snputc) for _snputc
-    printf6.o(i.__0vsprintf$6) refers to printf6.o(i._printf_core) for _printf_core
-    printf6.o(i.__0vsprintf$6) refers to printf6.o(i._sputc) for _sputc
-    printf6.o(i._printf_core) refers to printf6.o(i._printf_pre_padding) for _printf_pre_padding
-    printf6.o(i._printf_core) refers to uidiv.o(.text) for __aeabi_uidivmod
-    printf6.o(i._printf_core) refers to printf6.o(i._printf_post_padding) for _printf_post_padding
-    printf7.o(i.__0fprintf$7) refers to printf7.o(i._printf_core) for _printf_core
-    printf7.o(i.__0fprintf$7) refers to retarget.o(i.fputc) for fputc
-    printf7.o(i.__0printf$7) refers to printf7.o(i._printf_core) for _printf_core
-    printf7.o(i.__0printf$7) refers to retarget.o(i.fputc) for fputc
-    printf7.o(i.__0printf$7) refers to retarget.o(.data) for __stdout
-    printf7.o(i.__0snprintf$7) refers to printf7.o(i._printf_core) for _printf_core
-    printf7.o(i.__0snprintf$7) refers to printf7.o(i._snputc) for _snputc
-    printf7.o(i.__0sprintf$7) refers to printf7.o(i._printf_core) for _printf_core
-    printf7.o(i.__0sprintf$7) refers to printf7.o(i._sputc) for _sputc
-    printf7.o(i.__0vfprintf$7) refers to printf7.o(i._printf_core) for _printf_core
-    printf7.o(i.__0vfprintf$7) refers to retarget.o(i.fputc) for fputc
-    printf7.o(i.__0vprintf$7) refers to printf7.o(i._printf_core) for _printf_core
-    printf7.o(i.__0vprintf$7) refers to retarget.o(i.fputc) for fputc
-    printf7.o(i.__0vprintf$7) refers to retarget.o(.data) for __stdout
-    printf7.o(i.__0vsnprintf$7) refers to printf7.o(i._printf_core) for _printf_core
-    printf7.o(i.__0vsnprintf$7) refers to printf7.o(i._snputc) for _snputc
-    printf7.o(i.__0vsprintf$7) refers to printf7.o(i._printf_core) for _printf_core
-    printf7.o(i.__0vsprintf$7) refers to printf7.o(i._sputc) for _sputc
-    printf7.o(i._printf_core) refers to printf7.o(i._printf_pre_padding) for _printf_pre_padding
-    printf7.o(i._printf_core) refers to uldiv.o(.text) for __aeabi_uldivmod
-    printf7.o(i._printf_core) refers to printf7.o(i._printf_post_padding) for _printf_post_padding
-    printf8.o(i.__0fprintf$8) refers to printf8.o(i._printf_core) for _printf_core
-    printf8.o(i.__0fprintf$8) refers to retarget.o(i.fputc) for fputc
-    printf8.o(i.__0printf$8) refers to printf8.o(i._printf_core) for _printf_core
-    printf8.o(i.__0printf$8) refers to retarget.o(i.fputc) for fputc
-    printf8.o(i.__0printf$8) refers to retarget.o(.data) for __stdout
-    printf8.o(i.__0snprintf$8) refers to printf8.o(i._printf_core) for _printf_core
-    printf8.o(i.__0snprintf$8) refers to printf8.o(i._snputc) for _snputc
-    printf8.o(i.__0sprintf$8) refers to printf8.o(i._printf_core) for _printf_core
-    printf8.o(i.__0sprintf$8) refers to printf8.o(i._sputc) for _sputc
-    printf8.o(i.__0vfprintf$8) refers to printf8.o(i._printf_core) for _printf_core
-    printf8.o(i.__0vfprintf$8) refers to retarget.o(i.fputc) for fputc
-    printf8.o(i.__0vprintf$8) refers to printf8.o(i._printf_core) for _printf_core
-    printf8.o(i.__0vprintf$8) refers to retarget.o(i.fputc) for fputc
-    printf8.o(i.__0vprintf$8) refers to retarget.o(.data) for __stdout
-    printf8.o(i.__0vsnprintf$8) refers to printf8.o(i._printf_core) for _printf_core
-    printf8.o(i.__0vsnprintf$8) refers to printf8.o(i._snputc) for _snputc
-    printf8.o(i.__0vsprintf$8) refers to printf8.o(i._printf_core) for _printf_core
-    printf8.o(i.__0vsprintf$8) refers to printf8.o(i._sputc) for _sputc
-    printf8.o(i._printf_core) refers to printf8.o(i._printf_pre_padding) for _printf_pre_padding
-    printf8.o(i._printf_core) refers to uldiv.o(.text) for __aeabi_uldivmod
-    printf8.o(i._printf_core) refers to printf8.o(i._printf_post_padding) for _printf_post_padding
-    printfa.o(i.__0fprintf) refers (Special) to iusefp.o(.text) for __I$use$fp
-    printfa.o(i.__0fprintf) refers to printfa.o(i._printf_core) for _printf_core
-    printfa.o(i.__0fprintf) refers to retarget.o(i.fputc) for fputc
-    printfa.o(i.__0printf) refers (Special) to iusefp.o(.text) for __I$use$fp
-    printfa.o(i.__0printf) refers to printfa.o(i._printf_core) for _printf_core
-    printfa.o(i.__0printf) refers to retarget.o(i.fputc) for fputc
-    printfa.o(i.__0printf) refers to retarget.o(.data) for __stdout
-    printfa.o(i.__0snprintf) refers (Special) to iusefp.o(.text) for __I$use$fp
-    printfa.o(i.__0snprintf) refers to printfa.o(i._printf_core) for _printf_core
-    printfa.o(i.__0snprintf) refers to printfa.o(i._snputc) for _snputc
-    printfa.o(i.__0sprintf) refers (Special) to iusefp.o(.text) for __I$use$fp
-    printfa.o(i.__0sprintf) refers to printfa.o(i._printf_core) for _printf_core
-    printfa.o(i.__0sprintf) refers to printfa.o(i._sputc) for _sputc
-    printfa.o(i.__0vfprintf) refers (Special) to iusefp.o(.text) for __I$use$fp
-    printfa.o(i.__0vfprintf) refers to printfa.o(i._printf_core) for _printf_core
-    printfa.o(i.__0vfprintf) refers to retarget.o(i.fputc) for fputc
-    printfa.o(i.__0vprintf) refers (Special) to iusefp.o(.text) for __I$use$fp
-    printfa.o(i.__0vprintf) refers to printfa.o(i._printf_core) for _printf_core
-    printfa.o(i.__0vprintf) refers to retarget.o(i.fputc) for fputc
-    printfa.o(i.__0vprintf) refers to retarget.o(.data) for __stdout
-    printfa.o(i.__0vsnprintf) refers (Special) to iusefp.o(.text) for __I$use$fp
-    printfa.o(i.__0vsnprintf) refers to printfa.o(i._printf_core) for _printf_core
-    printfa.o(i.__0vsnprintf) refers to printfa.o(i._snputc) for _snputc
-    printfa.o(i.__0vsprintf) refers (Special) to iusefp.o(.text) for __I$use$fp
-    printfa.o(i.__0vsprintf) refers to printfa.o(i._printf_core) for _printf_core
-    printfa.o(i.__0vsprintf) refers to printfa.o(i._sputc) for _sputc
-    printfa.o(i._fp_digits) refers (Special) to iusefp.o(.text) for __I$use$fp
-    printfa.o(i._fp_digits) refers to dmul.o(.text) for __aeabi_dmul
-    printfa.o(i._fp_digits) refers to ddiv.o(.text) for __aeabi_ddiv
-    printfa.o(i._fp_digits) refers to cdrcmple.o(.text) for __aeabi_cdrcmple
-    printfa.o(i._fp_digits) refers to dadd.o(.text) for __aeabi_dadd
-    printfa.o(i._fp_digits) refers to dfixul.o(.text) for __aeabi_d2ulz
-    printfa.o(i._fp_digits) refers to uldiv.o(.text) for __aeabi_uldivmod
-    printfa.o(i._printf_core) refers (Special) to iusefp.o(.text) for __I$use$fp
-    printfa.o(i._printf_core) refers to printfa.o(i._printf_pre_padding) for _printf_pre_padding
-    printfa.o(i._printf_core) refers to uldiv.o(.text) for __aeabi_uldivmod
-    printfa.o(i._printf_core) refers to printfa.o(i._printf_post_padding) for _printf_post_padding
-    printfa.o(i._printf_core) refers to printfa.o(i._fp_digits) for _fp_digits
-    printfa.o(i._printf_core) refers to uidiv.o(.text) for __aeabi_uidivmod
-    printfa.o(i._printf_post_padding) refers (Special) to iusefp.o(.text) for __I$use$fp
-    printfa.o(i._printf_pre_padding) refers (Special) to iusefp.o(.text) for __I$use$fp
-    printfa.o(i._snputc) refers (Special) to iusefp.o(.text) for __I$use$fp
-    printfa.o(i._sputc) refers (Special) to iusefp.o(.text) for __I$use$fp
     entry2.o(.ARM.Collect$$$$00000001) refers to entry2.o(.ARM.Collect$$$$00002712) for __lit__00000000
     entry2.o(.ARM.Collect$$$$00002712) refers to startup_stm32f40_41xxx.o(STACK) for __initial_sp
     entry2.o(__vectab_stack_and_reset_area) refers to startup_stm32f40_41xxx.o(STACK) for __initial_sp
@@ -396,18 +157,7 @@ Section Cross References
     entry5.o(.ARM.Collect$$$$00000004) refers to init.o(.text) for __scatterload
     entry9a.o(.ARM.Collect$$$$0000000B) refers to main.o(i.main) for main
     entry9b.o(.ARM.Collect$$$$0000000C) refers to main.o(i.main) for main
-    uldiv.o(.text) refers to llushr.o(.text) for __aeabi_llsr
-    uldiv.o(.text) refers to llshl.o(.text) for __aeabi_llsl
-    dadd.o(.text) refers to llshl.o(.text) for __aeabi_llsl
-    dadd.o(.text) refers to llsshr.o(.text) for __aeabi_lasr
-    dadd.o(.text) refers to depilogue.o(.text) for _double_epilogue
-    dmul.o(.text) refers to depilogue.o(.text) for _double_epilogue
-    ddiv.o(.text) refers to depilogue.o(.text) for _double_round
-    dfixul.o(.text) refers to llushr.o(.text) for __aeabi_llsr
-    dfixul.o(.text) refers to llshl.o(.text) for __aeabi_llsl
     init.o(.text) refers to entry5.o(.ARM.Collect$$$$00000004) for __main_after_scatterload
-    depilogue.o(.text) refers to llshl.o(.text) for __aeabi_llsl
-    depilogue.o(.text) refers to llushr.o(.text) for __aeabi_llsr
 
 
 ==============================================================================
@@ -432,9 +182,9 @@ Removing Unused input sections from the image.
     Removing spi_mem.o(i.spiFlashMemRead), (74 bytes).
     Removing spi_mem.o(i.spiFlashMemReadStatusRegister), (48 bytes).
     Removing spi_mem.o(i.spiFlashMemSetWriteEnable), (24 bytes).
-    Removing spi_mem.o(i.spiFlashMemWaitReady), (52 bytes).
+    Removing spi_mem.o(i.spiFlashMemWaitReady), (48 bytes).
     Removing spi_mem.o(i.spiFlashMemWrite), (96 bytes).
-    Removing spi_mem_test.o(i.spi_mem_ReadManufacturerID_Heitmann_test), (92 bytes).
+    Removing spi_mem.o(i.spiReadManufacturerId), (52 bytes).
     Removing gpio.o(.rev16_text), (4 bytes).
     Removing gpio.o(.revsh_text), (4 bytes).
     Removing core_cm3.o(.emb_text), (32 bytes).
@@ -578,10 +328,13 @@ Removing Unused input sections from the image.
     Removing usart.o(.rev16_text), (4 bytes).
     Removing usart.o(.revsh_text), (4 bytes).
     Removing usart.o(i.USART_GetKey), (44 bytes).
+    Removing usart.o(i.USART_SendChar), (84 bytes).
     Removing retarget.o(i._sys_exit), (4 bytes).
     Removing retarget.o(i._ttywrch), (20 bytes).
     Removing retarget.o(i.ferror), (8 bytes).
     Removing retarget.o(i.fgetc), (32 bytes).
+    Removing retarget.o(i.fputc), (42 bytes).
+    Removing retarget.o(.data), (8 bytes).
     Removing tft.o(.rev16_text), (4 bytes).
     Removing tft.o(.revsh_text), (4 bytes).
     Removing tft.o(i.TFT_bargraph_color), (54 bytes).
@@ -621,14 +374,8 @@ Removing Unused input sections from the image.
     Removing tft.o(i.TFT_touch_area_font), (38 bytes).
     Removing tft.o(i.TFT_touch_area_font_color), (46 bytes).
     Removing tft.o(i.TFT_touch_area_frame), (46 bytes).
-    Removing dadd.o(.text), (334 bytes).
-    Removing dmul.o(.text), (228 bytes).
-    Removing ddiv.o(.text), (222 bytes).
-    Removing dfixul.o(.text), (48 bytes).
-    Removing cdrcmple.o(.text), (40 bytes).
-    Removing depilogue.o(.text), (190 bytes).
 
-213 unused section(s) (total 9232 bytes) removed from the image.
+210 unused section(s) (total 8260 bytes) removed from the image.
 
 ==============================================================================
 
@@ -636,86 +383,73 @@ Memory Map of the image
 
   Image Entry point : 0x00000000
 
-  Load Region LR_IROM1 (Base: 0x08000000, Size: 0x0000143c, Max: 0x00100000, ABSOLUTE)
+  Load Region LR_IROM1 (Base: 0x08000000, Size: 0x00000e34, Max: 0x00100000, ABSOLUTE)
 
-    Execution Region ER_IROM1 (Base: 0x08000000, Size: 0x00001420, Max: 0x00100000, ABSOLUTE)
-
-    Base Addr    Size         Type   Attr      Idx    E Section Name        Object
-
-    0x08000000   0x00000188   Data   RO          929    RESET               startup_stm32f40_41xxx.o
-    0x08000188   0x00000000   Code   RO         1644  * .ARM.Collect$$$$00000000  mc_w.l(entry.o)
-    0x08000188   0x00000004   Code   RO         1912    .ARM.Collect$$$$00000001  mc_w.l(entry2.o)
-    0x0800018c   0x00000004   Code   RO         1915    .ARM.Collect$$$$00000004  mc_w.l(entry5.o)
-    0x08000190   0x00000000   Code   RO         1917    .ARM.Collect$$$$00000008  mc_w.l(entry7b.o)
-    0x08000190   0x00000000   Code   RO         1919    .ARM.Collect$$$$0000000A  mc_w.l(entry8b.o)
-    0x08000190   0x00000008   Code   RO         1920    .ARM.Collect$$$$0000000B  mc_w.l(entry9a.o)
-    0x08000198   0x00000000   Code   RO         1922    .ARM.Collect$$$$0000000D  mc_w.l(entry10a.o)
-    0x08000198   0x00000000   Code   RO         1924    .ARM.Collect$$$$0000000F  mc_w.l(entry11a.o)
-    0x08000198   0x00000004   Code   RO         1913    .ARM.Collect$$$$00002712  mc_w.l(entry2.o)
-    0x0800019c   0x00000024   Code   RO          930    .text               startup_stm32f40_41xxx.o
-    0x080001c0   0x00000062   Code   RO         1928    .text               mc_w.l(uldiv.o)
-    0x08000222   0x00000002   PAD
-    0x08000224   0x00000024   Code   RO         1941    .text               mc_w.l(init.o)
-    0x08000248   0x0000001e   Code   RO         1943    .text               mc_w.l(llshl.o)
-    0x08000266   0x00000020   Code   RO         1945    .text               mc_w.l(llushr.o)
-    0x08000286   0x00000090   Code   RO          313    i.GPIO_Init         stm32f4xx_gpio.o
-    0x08000316   0x00000046   Code   RO          314    i.GPIO_PinAFConfig  stm32f4xx_gpio.o
-    0x0800035c   0x0000002a   Code   RO          990    i.I2C_CheckEvent    stm32f4xx_i2c.o
-    0x08000386   0x00000018   Code   RO          993    i.I2C_Cmd           stm32f4xx_i2c.o
-    0x0800039e   0x00000018   Code   RO         1001    i.I2C_GenerateSTART  stm32f4xx_i2c.o
-    0x080003b6   0x00000018   Code   RO         1002    i.I2C_GenerateSTOP  stm32f4xx_i2c.o
-    0x080003ce   0x00000002   PAD
-    0x080003d0   0x000000e8   Code   RO         1008    i.I2C_Init          stm32f4xx_i2c.o
-    0x080004b8   0x00000008   Code   RO         1013    i.I2C_ReceiveData   stm32f4xx_i2c.o
-    0x080004c0   0x00000010   Code   RO         1015    i.I2C_Send7bitAddress  stm32f4xx_i2c.o
-    0x080004d0   0x00000004   Code   RO         1016    i.I2C_SendData      stm32f4xx_i2c.o
-    0x080004d4   0x00000078   Code   RO          268    i.NVIC_Init         misc.o
-    0x0800054c   0x00000014   Code   RO          269    i.NVIC_PriorityGroupConfig  misc.o
-    0x08000560   0x00000020   Code   RO          410    i.RCC_AHB1PeriphClockCmd  stm32f4xx_rcc.o
-    0x08000580   0x00000020   Code   RO          419    i.RCC_APB1PeriphClockCmd  stm32f4xx_rcc.o
-    0x080005a0   0x00000020   Code   RO          421    i.RCC_APB1PeriphResetCmd  stm32f4xx_rcc.o
-    0x080005c0   0x00000020   Code   RO          422    i.RCC_APB2PeriphClockCmd  stm32f4xx_rcc.o
-    0x080005e0   0x000000e8   Code   RO          431    i.RCC_GetClocksFreq  stm32f4xx_rcc.o
-    0x080006c8   0x000000ec   Code   RO          936    i.SetSysClock       system_stm32f4xx.o
-    0x080007b4   0x00000068   Code   RO          938    i.SystemInit        system_stm32f4xx.o
-    0x0800081c   0x000000c4   Code   RO         1370    i.TFT_Init          tft.o
-    0x080008e0   0x0000000a   Code   RO         1379    i.TFT_cls           tft.o
-    0x080008ea   0x0000001e   Code   RO         1392    i.TFT_putc          tft.o
-    0x08000908   0x00000134   Code   RO         1395    i.TFT_send_data     tft.o
-    0x08000a3c   0x0000001e   Code   RO         1405    i.TFT_terminal_on   tft.o
-    0x08000a5a   0x00000002   PAD
-    0x08000a5c   0x000000a4   Code   RO         1274    i.USART6_IRQHandler  usart.o
-    0x08000b00   0x00000024   Code   RO         1275    i.USART_Buffer_Init  usart.o
-    0x08000b24   0x00000018   Code   RO          742    i.USART_Cmd         stm32f4xx_usart.o
-    0x08000b3c   0x000000d0   Code   RO         1276    i.USART_Device_Init  usart.o
-    0x08000c0c   0x000000d4   Code   RO          749    i.USART_Init        stm32f4xx_usart.o
-    0x08000ce0   0x00000016   Code   RO          755    i.USART_OverSampling8Cmd  stm32f4xx_usart.o
-    0x08000cf6   0x00000002   PAD
-    0x08000cf8   0x00000054   Code   RO         1278    i.USART_SendChar    usart.o
-    0x08000d4c   0x00000020   Code   RO         1858    i.__0printf$8       mc_w.l(printf8.o)
-    0x08000d6c   0x00000408   Code   RO         1865    i._printf_core      mc_w.l(printf8.o)
-    0x08001174   0x00000026   Code   RO         1866    i._printf_post_padding  mc_w.l(printf8.o)
-    0x0800119a   0x00000030   Code   RO         1867    i._printf_pre_padding  mc_w.l(printf8.o)
-    0x080011ca   0x0000002a   Code   RO         1323    i.fputc             retarget.o
-    0x080011f4   0x00000094   Code   RO          238    i.gpio_setup        gpio.o
-    0x08001288   0x00000014   Code   RO         1215    i.initCEP_Board     ce_lib.o
-    0x0800129c   0x000000d4   Code   RO         1216    i.initIO            ce_lib.o
-    0x08001370   0x00000014   Code   RO            3    i.main              main.o
-    0x08001384   0x0000005c   Code   RO          209    i.spi_mem_ReadManufacturerID_test  spi_mem_test.o
-    0x080013e0   0x00000030   Code   RO          104    i.spi_setup         spi.o
-    0x08001410   0x00000010   Code   RO         1412    i.tft_delay         tft.o
-    0x08001420   0x00000000   Data   RO         1951    Region$$Table       anon$$obj.o
-
-
-    Execution Region RW_IRAM1 (Base: 0x20000000, Size: 0x00000838, Max: 0x00020000, ABSOLUTE)
+    Execution Region ER_IROM1 (Base: 0x08000000, Size: 0x00000e20, Max: 0x00100000, ABSOLUTE)
 
     Base Addr    Size         Type   Attr      Idx    E Section Name        Object
 
-    0x20000000   0x00000010   Data   RW          462    .data               stm32f4xx_rcc.o
-    0x20000010   0x00000004   Data   RW         1280    .data               usart.o
-    0x20000014   0x00000008   Data   RW         1324    .data               retarget.o
-    0x2000001c   0x00000210   Zero   RW         1279    .bss                usart.o
-    0x2000022c   0x00000209   Zero   RW         1413    .bss                tft.o
-    0x20000435   0x00000003   PAD
-    0x20000438   0x00000400   Zero   RW          927    STACK               startup_stm32f40_41xxx.o
+    0x08000000   0x00000188   Data   RO          923    RESET               startup_stm32f40_41xxx.o
+    0x08000188   0x00000000   Code   RO         1638  * .ARM.Collect$$$$00000000  mc_w.l(entry.o)
+    0x08000188   0x00000004   Code   RO         1643    .ARM.Collect$$$$00000001  mc_w.l(entry2.o)
+    0x0800018c   0x00000004   Code   RO         1646    .ARM.Collect$$$$00000004  mc_w.l(entry5.o)
+    0x08000190   0x00000000   Code   RO         1648    .ARM.Collect$$$$00000008  mc_w.l(entry7b.o)
+    0x08000190   0x00000000   Code   RO         1650    .ARM.Collect$$$$0000000A  mc_w.l(entry8b.o)
+    0x08000190   0x00000008   Code   RO         1651    .ARM.Collect$$$$0000000B  mc_w.l(entry9a.o)
+    0x08000198   0x00000000   Code   RO         1653    .ARM.Collect$$$$0000000D  mc_w.l(entry10a.o)
+    0x08000198   0x00000000   Code   RO         1655    .ARM.Collect$$$$0000000F  mc_w.l(entry11a.o)
+    0x08000198   0x00000004   Code   RO         1644    .ARM.Collect$$$$00002712  mc_w.l(entry2.o)
+    0x0800019c   0x00000024   Code   RO          924    .text               startup_stm32f40_41xxx.o
+    0x080001c0   0x00000024   Code   RO         1657    .text               mc_w.l(init.o)
+    0x080001e4   0x00000090   Code   RO          307    i.GPIO_Init         stm32f4xx_gpio.o
+    0x08000274   0x00000046   Code   RO          308    i.GPIO_PinAFConfig  stm32f4xx_gpio.o
+    0x080002ba   0x0000002a   Code   RO          984    i.I2C_CheckEvent    stm32f4xx_i2c.o
+    0x080002e4   0x00000018   Code   RO          987    i.I2C_Cmd           stm32f4xx_i2c.o
+    0x080002fc   0x00000018   Code   RO          995    i.I2C_GenerateSTART  stm32f4xx_i2c.o
+    0x08000314   0x00000018   Code   RO          996    i.I2C_GenerateSTOP  stm32f4xx_i2c.o
+    0x0800032c   0x000000e8   Code   RO         1002    i.I2C_Init          stm32f4xx_i2c.o
+    0x08000414   0x00000008   Code   RO         1007    i.I2C_ReceiveData   stm32f4xx_i2c.o
+    0x0800041c   0x00000010   Code   RO         1009    i.I2C_Send7bitAddress  stm32f4xx_i2c.o
+    0x0800042c   0x00000004   Code   RO         1010    i.I2C_SendData      stm32f4xx_i2c.o
+    0x08000430   0x00000078   Code   RO          262    i.NVIC_Init         misc.o
+    0x080004a8   0x00000014   Code   RO          263    i.NVIC_PriorityGroupConfig  misc.o
+    0x080004bc   0x00000020   Code   RO          404    i.RCC_AHB1PeriphClockCmd  stm32f4xx_rcc.o
+    0x080004dc   0x00000020   Code   RO          413    i.RCC_APB1PeriphClockCmd  stm32f4xx_rcc.o
+    0x080004fc   0x00000020   Code   RO          415    i.RCC_APB1PeriphResetCmd  stm32f4xx_rcc.o
+    0x0800051c   0x00000020   Code   RO          416    i.RCC_APB2PeriphClockCmd  stm32f4xx_rcc.o
+    0x0800053c   0x000000e8   Code   RO          425    i.RCC_GetClocksFreq  stm32f4xx_rcc.o
+    0x08000624   0x000000ec   Code   RO          930    i.SetSysClock       system_stm32f4xx.o
+    0x08000710   0x00000068   Code   RO          932    i.SystemInit        system_stm32f4xx.o
+    0x08000778   0x000000c4   Code   RO         1364    i.TFT_Init          tft.o
+    0x0800083c   0x0000000a   Code   RO         1373    i.TFT_cls           tft.o
+    0x08000846   0x0000001e   Code   RO         1386    i.TFT_putc          tft.o
+    0x08000864   0x00000134   Code   RO         1389    i.TFT_send_data     tft.o
+    0x08000998   0x0000001e   Code   RO         1399    i.TFT_terminal_on   tft.o
+    0x080009b6   0x00000002   PAD
+    0x080009b8   0x000000a4   Code   RO         1268    i.USART6_IRQHandler  usart.o
+    0x08000a5c   0x00000024   Code   RO         1269    i.USART_Buffer_Init  usart.o
+    0x08000a80   0x00000018   Code   RO          736    i.USART_Cmd         stm32f4xx_usart.o
+    0x08000a98   0x000000d0   Code   RO         1270    i.USART_Device_Init  usart.o
+    0x08000b68   0x000000d4   Code   RO          743    i.USART_Init        stm32f4xx_usart.o
+    0x08000c3c   0x00000016   Code   RO          749    i.USART_OverSampling8Cmd  stm32f4xx_usart.o
+    0x08000c52   0x00000002   PAD
+    0x08000c54   0x00000094   Code   RO          232    i.gpio_setup        gpio.o
+    0x08000ce8   0x00000014   Code   RO         1209    i.initCEP_Board     ce_lib.o
+    0x08000cfc   0x000000d4   Code   RO         1210    i.initIO            ce_lib.o
+    0x08000dd0   0x00000010   Code   RO            3    i.main              main.o
+    0x08000de0   0x00000030   Code   RO          104    i.spi_setup         spi.o
+    0x08000e10   0x00000010   Code   RO         1406    i.tft_delay         tft.o
+    0x08000e20   0x00000000   Data   RO         1659    Region$$Table       anon$$obj.o
+
+
+    Execution Region RW_IRAM1 (Base: 0x20000000, Size: 0x00000830, Max: 0x00020000, ABSOLUTE)
+
+    Base Addr    Size         Type   Attr      Idx    E Section Name        Object
+
+    0x20000000   0x00000010   Data   RW          456    .data               stm32f4xx_rcc.o
+    0x20000010   0x00000004   Data   RW         1274    .data               usart.o
+    0x20000014   0x00000210   Zero   RW         1273    .bss                usart.o
+    0x20000224   0x00000209   Zero   RW         1407    .bss                tft.o
+    0x2000042d   0x00000003   PAD
+    0x20000430   0x00000400   Zero   RW          921    STACK               startup_stm32f40_41xxx.o
 

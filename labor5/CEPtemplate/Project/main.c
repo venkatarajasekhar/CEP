@@ -14,7 +14,7 @@ int main(void) {
 
 	//labor5();
 	
-	spi_mem_ReadManufacturerID_test();
+	//spi_mem_ReadManufacturerID_test();
 	//spi_mem_ReadManufacturerID_Heitmann_test();
 	
 	while(1){}
