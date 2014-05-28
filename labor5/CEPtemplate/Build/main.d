@@ -14,4 +14,6 @@
 .\build\main.o: .\Libraries\Device\RTE_Components.h
 .\build\main.o: .\Libraries\StdPeriph_Driver\inc\misc.h
 .\build\main.o: .\Libraries\Device\stm32f4xx.h
+.\build\main.o: Project\gpio.h
+.\build\main.o: Project\spi.h
 .\build\main.o: Project\tests/spi_mem_test.h

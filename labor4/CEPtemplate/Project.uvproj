@@ -429,16 +429,6 @@
               <FilePath>.\Project\labor4.h</FilePath>
             </File>
             <File>
-              <FileName>dac.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\Project\dac.h</FilePath>
-            </File>
-            <File>
-              <FileName>dac.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Project\dac.c</FilePath>
-            </File>
-            <File>
               <FileName>peripherals.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\Project\peripherals.h</FilePath>

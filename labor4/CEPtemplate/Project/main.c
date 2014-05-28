@@ -9,7 +9,6 @@
 int main(void) {
 	
 	labor4();
-	//dac_test();
 		
 	return EXIT_SUCCESS;
 }

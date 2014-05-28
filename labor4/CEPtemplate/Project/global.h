@@ -6,7 +6,6 @@
 
 #define FIXPOINT_ARITH 16
 
-
 #define SREFRESH_ON 1
 #define SREFRESH_OFF 0
 

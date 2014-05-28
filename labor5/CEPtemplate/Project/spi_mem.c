@@ -4,7 +4,6 @@
 #include "spi_mem.h"
 #include <stdio.h>
 
-
 // specific spi_mem commands
 #define READ_MANUFACTURER_ID 0x9f
 #define READ_ARRAY 0x0b
@@ -101,43 +100,48 @@ unsigned int spi_mem_ReadManufacturerID(unsigned int chip_sel) {
 	unsigned int ret = 0;
 	
 	spi_writeByte(chip_sel, READ_MANUFACTURER_ID);
-	printf("\ntestx");fflush(stdout);
-	ret = spi_readByte(chip_sel);								// manufaturer id
+
+	ret = spi_readByte(chip_sel);				// manufaturer id
 	ret = ret & (spi_readByte(chip_sel) << 16);	// device id part 1
 	ret = ret & (spi_readByte(chip_sel) << 8);  // device id part 2
 	
 	return ret;
 }
 
-uint16_t spi_mem_ReadManufacturerID_Heitmann() {
-	uint16_t id = 0;
+uint32_t spi_mem_ReadManufacturerID_Heitmann() {
+	uint32_t id = 0;
+	uint8_t factory_id = 0;
+	uint8_t dev_id1 = 0;
+	uint8_t dev_id2 = 0;
 	
 	// setup
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_SPI3, ENABLE);
 	
-	SPI3->CR1 = 0 | SPI_CR1_SPE | SPI_CR1_MSTR | SPI_CR1_CPOL | SPI_CR1_CPHA;
+	SPI3->CR1 = 0 | SPI_CR1_SPE | SPI_CR1_MSTR | SPI_CR1_CPOL | SPI_CR1_CPHA | (1<<8) | (1<<9);
 	SPI3->CR2 = 0;
 	
 	// code aus skript
-	GPIOG->BSRRH = (1<<6);
+	GPIOB->BSRRH = (1<<9);
 	
 	SPI3->DR = 0x9f;
 	while( (SPI3->SR & (1<<0)) == 0 );
-	id = SPI3->DR;
+	SPI3->DR;
 		
 	SPI3->DR = 0;
 	while( (SPI3->SR & (1<<0)) == 0 );
-	id = SPI3->DR;
+	factory_id = (uint8_t)SPI3->DR;
 	
 	SPI3->DR = 0;
 	while( (SPI3->SR & (1<<0)) == 0 );
-	id = (id<<8) | SPI3->DR;
+	dev_id1 = (uint8_t)SPI3->DR;
 	
 	SPI3->DR = 0;
 	while( (SPI3->SR & (1<<0)) == 0 );
-	id = (id<<8) | SPI3->DR;
+	dev_id2 = (uint8_t)SPI3->DR;
 	
-	GPIOG->BSRRL = (1<<6);
+	GPIOB->BSRRL = (1<<9);
+	
+	id = factory_id | (dev_id1<<8) | (dev_id2<<16);
 	
 	return id;
 }

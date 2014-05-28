@@ -110,7 +110,7 @@ void labor4(void) {
 		if(bgBuffer->isEmpty){
 			resetLED(WAITING_LED);
 			
-			ITM->PORT[9].u32 = 0;	
+			ITM->PORT[9].u32 = 0;		//zeit messen	
 			fuelle_puffer(bgBuffer);	
 			ITM->PORT[9].u32 = 1;			
 		
@@ -183,11 +183,11 @@ void fuelle_puffer(volatile buffer_t *buf){
 		int val = 0;
 	
 		for(i = 0; i < BUFFER_SIZE; i++){
-		idx = fi >> FIXPOINT_ARITH;
-		val = tabelle[idx];
-		buf_input = ( a +  amplitude * val) >> FIXPOINT_ARITH;
-		buf->data[i] = buf_input; //wert in buffer einfuegen		
-		fi = (fi + frequency) % SHIFTED_TABLE_SIZE;
+			idx = fi >> FIXPOINT_ARITH;			//index zuweisung
+			val = tabelle[idx];							//wert holen
+			buf_input = ( a +  amplitude * val) >> FIXPOINT_ARITH;		//berechnung der DA-Wandler N = a + b*N-stuetz
+			buf->data[i] = buf_input;				//wert in buffer einfuegen		
+			fi = (fi + frequency) % SHIFTED_TABLE_SIZE;			//next index berechnen
 	}
 	buf->isEmpty = 0;
 }

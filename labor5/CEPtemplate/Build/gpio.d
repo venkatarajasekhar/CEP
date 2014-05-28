@@ -1,0 +1,17 @@
+.\build\gpio.o: Project\gpio.c
+.\build\gpio.o: .\Libraries\Device\stm32f4xx.h
+.\build\gpio.o: C:\Keil\ARM\PACK\ARM\CMSIS\3.20.4\CMSIS\Include\core_cm4.h
+.\build\gpio.o: C:\Keil\ARM\ARMCC\bin\..\include\stdint.h
+.\build\gpio.o: C:\Keil\ARM\PACK\ARM\CMSIS\3.20.4\CMSIS\Include\core_cmInstr.h
+.\build\gpio.o: C:\Keil\ARM\PACK\ARM\CMSIS\3.20.4\CMSIS\Include\core_cmFunc.h
+.\build\gpio.o: C:\Keil\ARM\PACK\ARM\CMSIS\3.20.4\CMSIS\Include\core_cm4_simd.h
+.\build\gpio.o: .\Libraries\Device\system_stm32f4xx.h
+.\build\gpio.o: .\Libraries\Device\stm32f4xx_conf.h
+.\build\gpio.o: .\Libraries\Device\RTE_Components.h
+.\build\gpio.o: .\Libraries\StdPeriph_Driver\inc\misc.h
+.\build\gpio.o: .\Libraries\Device\stm32f4xx.h
+.\build\gpio.o: .\Libraries\StdPeriph_Driver\inc\stm32f4xx_rcc.h
+.\build\gpio.o: .\Libraries\StdPeriph_Driver\inc\stm32f4xx_gpio.h
+.\build\gpio.o: .\Libraries\StdPeriph_Driver\inc\stm32f4xx_spi.h
+.\build\gpio.o: Project\global.h
+.\build\gpio.o: Project\gpio.h
