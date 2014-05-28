@@ -4,6 +4,7 @@
 #include "global.h"
 #include <stm32f4xx_rcc.h>
 #include <stm32f4xx_gpio.h>
+#include <stdlib.h>
 
 //static unsigned int init_done = 0;
 
@@ -81,4 +82,13 @@ void spi_writeByte(unsigned int chip_sel, uint8_t byte) {
 	}	
 }
 
+/*
+ * sends/receives a single byte
+ */
+__inline uint8_t spiTransfer(uint8_t data) {
+    SPI3->DR = data;
+	while((SPI3->SR & SPI_SR_RXNE) == 0 ) {}
+	
+    return SPI3->DR;
+}    
 

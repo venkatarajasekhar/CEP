@@ -15,3 +15,4 @@
 .\build\spi.o: Project\spi.h
 .\build\spi.o: Project\global.h
 .\build\spi.o: .\Libraries\StdPeriph_Driver\inc\stm32f4xx_gpio.h
+.\build\spi.o: C:\Keil\ARM\ARMCC\bin\..\include\stdlib.h
