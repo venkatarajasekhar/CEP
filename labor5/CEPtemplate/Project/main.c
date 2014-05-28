@@ -8,6 +8,7 @@
 
 int main(void) {
 	initCEP_Board();
+	
 	spi_setup();
 	gpio_setup();
 

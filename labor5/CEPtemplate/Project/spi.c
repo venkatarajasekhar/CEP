@@ -2,6 +2,8 @@
 #include <stm32f4xx_rcc.h>
 #include "spi.h"
 #include "global.h"
+#include <stm32f4xx_rcc.h>
+#include <stm32f4xx_gpio.h>
 
 //static unsigned int init_done = 0;
 
@@ -17,7 +19,6 @@ void spi_setup(void) {
 
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB, ENABLE);
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOG, ENABLE);
-
 }
 
 /*
