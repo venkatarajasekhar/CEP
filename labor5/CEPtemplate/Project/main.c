@@ -9,13 +9,15 @@
 int main(void) {
 	initCEP_Board();
 	
-	spi_setup();
 	gpio_setup();
+	spi_setup();
 
 	//labor5();
 	
-	//spi_mem_ReadManufacturerID_test();
+	spi_mem_ReadManufacturerID_test();
 	//spi_mem_ReadManufacturerID_Heitmann_test();
+	
+	//spi_mem_spiFlashMemWriteRead_test();
 	
 	while(1){}
 		

@@ -41,16 +41,20 @@
 static void enable_SSEL(unsigned int chip_sel) {
     if(chip_sel == SPI_MEM1) {
 		SPI_MEM1_H;
+		//GPIOG->BSRRH = (1<<6);
 	} else {
 		SPI_MEM2_H;
+		//GPIOB->BSRRH = (1<<9);
 	}
 }
 
 static void disable_SSEL(unsigned int chip_sel) {
     if(chip_sel == SPI_MEM1) {
 		SPI_MEM1_L;
+		//GPIOG->BSRRL = (1<<6);
 	} else {
 		SPI_MEM2_L;
+		//GPIOB->BSRRL = (1<<9);
 	}
 }
 
@@ -71,22 +75,22 @@ static void spiFLashMemGlobalUnprotect(unsigned int chip_sel) {
 /*
  * unprotects all sectors
  */
-static uint16_t spiFlashMemReadStatusRegister(unsigned int chip_sel) {
-    uint8_t val1 = 0;
-    uint8_t val2 = 0;
-    
-    // chip-select
-	enable_SSEL(chip_sel);
-     
-    spiTransfer(CmdReadStatusRegister);
-    val1 = spiTransfer(DUMMY);
-    val2 = spiTransfer(DUMMY);
-    
-    // chip-unselect
-	disable_SSEL(chip_sel);
-    
-    return (val1 << 8) | val2; 
-}
+//static uint16_t spiFlashMemReadStatusRegister(unsigned int chip_sel) {
+//    uint8_t val1 = 0;
+//    uint8_t val2 = 0;
+//    
+//    // chip-select
+//	enable_SSEL(chip_sel);
+//     
+//    spiTransfer(CmdReadStatusRegister);
+//    val1 = spiTransfer(DUMMY);
+//    val2 = spiTransfer(DUMMY);
+//    
+//    // chip-unselect
+//	disable_SSEL(chip_sel);
+//    
+//    return (val1 << 8) | val2; 
+//}
 
 /*
  * read status register until busy bit has been deleted
@@ -205,8 +209,8 @@ uint32_t spiReadManufacturerId(unsigned int chip_sel) {
     
     spiTransfer(CmdReadManufacturerId);
     res = (spiTransfer(DUMMY) << 16);
-    res = (spiTransfer(DUMMY) << 8);
-    res = spiTransfer(DUMMY);
+    res |= (spiTransfer(DUMMY) << 8);
+    res |= spiTransfer(DUMMY);
     
     // chip-unselect
 	disable_SSEL(chip_sel);
@@ -284,41 +288,42 @@ uint32_t spiReadManufacturerId(unsigned int chip_sel) {
 //	return ret;
 //}
 
-//uint32_t spi_mem_ReadManufacturerID_Heitmann() {
-//	uint32_t id = 0;
-//	uint8_t factory_id = 0;
-//	uint8_t dev_id1 = 0;
-//	uint8_t dev_id2 = 0;
-//	
-//	// setup
-//	RCC_APB1PeriphClockCmd(RCC_APB1Periph_SPI3, ENABLE);
-//	
-//	SPI3->CR1 = 0 | SPI_CR1_SPE | SPI_CR1_MSTR | SPI_CR1_CPOL | SPI_CR1_CPHA | (1<<8) | (1<<9);
-//	SPI3->CR2 = 0;
-//	
-//	// code aus skript
-//	GPIOB->BSRRH = (1<<9);
-//	
-//	SPI3->DR = 0x9f;
-//	while( (SPI3->SR & (1<<0)) == 0 );
-//	SPI3->DR;
-//		
-//	SPI3->DR = 0;
-//	while( (SPI3->SR & (1<<0)) == 0 );
-//	factory_id = (uint8_t)SPI3->DR;
-//	
-//	SPI3->DR = 0;
-//	while( (SPI3->SR & (1<<0)) == 0 );
-//	dev_id1 = (uint8_t)SPI3->DR;
-//	
-//	SPI3->DR = 0;
-//	while( (SPI3->SR & (1<<0)) == 0 );
-//	dev_id2 = (uint8_t)SPI3->DR;
-//	
-//	GPIOB->BSRRL = (1<<9);
-//	
-//	id = factory_id | (dev_id1<<8) | (dev_id2<<16);
-//	
-//	return id;
-//}
+uint32_t spi_mem_ReadManufacturerID_Heitmann() {
+	uint32_t id = 0;
+	uint8_t factory_id = 0;
+	uint8_t dev_id1 = 0;
+	uint8_t dev_id2 = 0;
+	uint8_t dummy = 0; 
+	
+	// setup
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_SPI3, ENABLE);
+	
+	SPI3->CR1 = 0 | SPI_CR1_SPE | SPI_CR1_MSTR | SPI_CR1_CPOL | SPI_CR1_CPHA | (1<<8) | (1<<9);
+	SPI3->CR2 = 0;
+	
+	// code aus skript
+	GPIOB->BSRRH = (1<<9);
+	
+	SPI3->DR = 0x9f;
+	while( (SPI3->SR & (1<<0)) == 0 );
+	factory_id = (uint8_t)SPI3->DR;
+		
+	SPI3->DR = 0;
+	while( (SPI3->SR & (1<<0)) == 0 );
+	dev_id1 = (uint8_t)SPI3->DR;
+	
+	SPI3->DR = 0;
+	while( (SPI3->SR & (1<<0)) == 0 );
+	dev_id2 = (uint8_t)SPI3->DR;
+	
+	SPI3->DR = 0;
+	while( (SPI3->SR & (1<<0)) == 0 );
+	dummy = SPI3->DR;
+	
+	GPIOB->BSRRL = (1<<9);
+	
+	id = factory_id | (dev_id1<<8) | (dev_id2<<16);
+	
+	return id;
+}
 

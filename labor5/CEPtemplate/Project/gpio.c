@@ -6,93 +6,74 @@
 #include "gpio.h"
 
 void gpio_setup(void) {
-    
-    uint32_t temp = 0x00;
-    uint32_t temp_2 = 0x00;
-    
 	GPIO_InitTypeDef gpio;
-	GPIO_InitTypeDef GPIO_InitStruct;
-	SPI_InitTypeDef SPI_InitStruct;
 	
-	gpio.GPIO_Mode = GPIO_Mode_OUT;
+	//gpio.GPIO_Mode = GPIO_Mode_OUT;
 	gpio.GPIO_OType = GPIO_OType_PP;
 	gpio.GPIO_PuPd = GPIO_PuPd_UP;
-	gpio.GPIO_Speed = GPIO_Speed_50MHz;
+	gpio.GPIO_Speed = GPIO_Speed_100MHz;
 
-	//GPIOG & GPIOB, pin9 und pin6 intitialisieren
-	gpio.GPIO_Pin = GPIO_Pin_9;
-	GPIO_Init(GPIOB, &gpio);
-
-	gpio.GPIO_Pin = GPIO_Pin_6;
-	GPIO_Init(GPIOG, &gpio);
-
-	
-	// pg6 -> alternate function
-	GPIOG->MODER = (GPIOG->MODER & ~(3 << (7 * 2))) | (GPIO_Mode_AF << (7 * 2));
-	
-	// speed: 50mhz
-	GPIOG->OSPEEDR = (GPIOG->OSPEEDR & ~(3 << (7 * 2))) | (GPIO_Speed_50MHz << (7 * 2));
-
-	// gpiog, clock enable
-	RCC_APB1PeriphClockCmd(RCC_AHB1Periph_GPIOG, ENABLE);
-	
-	
-	// pb9 -> alternate function
-	GPIOB->MODER = (GPIOB->MODER & ~(3 << (7 * 2))) | (GPIO_Mode_AF << (7 * 2));
-	
-	// speed: 50mhz
-	GPIOB->OSPEEDR = (GPIOB->OSPEEDR & ~(3 << (7 * 2))) | (GPIO_Speed_50MHz << (7 * 2));
+	/******************** gpiob pin9 ********************/
 	
 	// gpiob, clock enable
-	RCC_APB1PeriphClockCmd(RCC_AHB1Periph_GPIOB, ENABLE);
+	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB, ENABLE);
 	
-    
-    //temp = GPIOG->AFR[1];
-    //GPIOG->AFR[1] &= ~(( 0xf << GPIO_PinSource10 ) | ( 0xf << GPIO_PinSource11) |( 0xf << GPIO_PinSource12));
-  
-    temp = GPIOG->AFR[1];                   //absichern
-    GPIOG->AFR[1] &= ~(0xfff << 8);         //PC10, P11 & P12 loeschen
-    GPIOG->AFR[1] |= (0x666 << 8);          //PC10, P11 & P12 auf 6 setzen
-    
-     & ~0x000fff00
-     | 0x00066600
-    
-    GPIOG->AFR[1] |= (0 | (0x  << 8));
-    
-    GPIOG->AFR[1] &= ~((uint32_t)0xFFF << ((uint32_t)((uint32_t) GPIO_PinSource10 & (uint32_t)0x07) * 4) |
-    ((uint32_t)((uint32_t) GPIO_PinSource11 & (uint32_t)0x07) * 4) | ((uint32_t)((uint32_t) GPIO_PinSource12 & (uint32_t)0x07) * 4));
-    
-    
-    /*PORTB |= 0xF0;   // Kurzschreibweise, entspricht PORTB = PORTB | 0xF0; bitweises ODER
- 
-/* PORTB &= 0xF0;   // entspricht PORTB = PORTB & 0xF0; bitweises UND
-                 // Bits 0-3 (das "niederwertige" Nibble) werden geloescht 
- 
-/* übersichtlicher mittels Bit-Definitionen
-#define MEINBIT0 0
-#define MEINBIT1 1  
-#define MEINBIT2 2  
- 
-PORTB &= ~((1 << MEINBIT0) | (1 << MEINBIT2)); // löscht Bit 0 und 2 in PORTB
-*/
-    
-//	GPIO_PinSource10
-//	GPIO_AF_SPI3
+	// GPIOB Pin 9 init
+	gpio.GPIO_Pin = GPIO_Pin_9;
+	GPIO_Init(GPIOB, &gpio);
 	
-	// configure pins used by SPI3, PC10 = SCK / PC11 = MISO / PC12 = MOSI
-//	GPIO_InitStruct.GPIO_Pin = FLASH_SCK | FLASH_MISO | FLASH_MOSI;
-
-	// connect SPI3 pins to SPI alternate function
-//	GPIO_PinAFConfig(FLASH_PORT_C, GPIO_PinSource10, GPIO_AF_SPI3);
-//	GPIO_PinAFConfig(FLASH_PORT_C, GPIO_PinSource11, GPIO_AF_SPI3);
-//	GPIO_PinAFConfig(FLASH_PORT_C, GPIO_PinSource12, GPIO_AF_SPI3);
-
-
-/*
-  temp = ((uint32_t)(GPIO_AF) << ((uint32_t)((uint32_t)GPIO_PinSource & (uint32_t)0x07) * 4)) ;
-  GPIOx->AFR[GPIO_PinSource >> 0x03] &= ~((uint32_t)0xF << ((uint32_t)((uint32_t)GPIO_PinSource & (uint32_t)0x07) * 4)) ;
-  temp_2 = GPIOx->AFR[GPIO_PinSource >> 0x03] | temp;
-  GPIOx->AFR[GPIO_PinSource >> 0x03] = temp_2;
-*/
+	// pb9 -> output
+	GPIOB->MODER = (GPIOB->MODER & ~(3 << (9 * 2))) | (GPIO_Mode_OUT << (9 * 2));
 	
+	// bsrrl -> high
+	GPIOB->BSRRL = GPIO_Pin_9;
+	
+	/******************** gpioc pin10,11,12 ********************/
+	
+	// gpiob, clock enable
+	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOC, ENABLE);
+	
+	// GPIOC Pin 10,11,12 init
+	gpio.GPIO_Pin = GPIO_Pin_10 | GPIO_Pin_11 | GPIO_Pin_12;
+	GPIO_Init(GPIOC, &gpio);
+	
+	// pc10 -> alternate function
+	//GPIOC->MODER = (GPIOC->MODER & ~(3 << (10 * 2))) | (GPIO_Mode_AF << (10 * 2)) | (GPIOC->MODER & ~(3 << (11 * 2))) | (GPIO_Mode_AF << (11 * 2)) | (GPIOC->MODER & ~(3 << (12 * 2))) | (GPIO_Mode_AF << (12 * 2));
+	//GPIOB->MODER = (GPIOC->MODER & ~(3 << (11 * 2))) | (GPIO_Mode_AF << (11 * 2));
+	//GPIOB->MODER = (GPIOC->MODER & ~(3 << (12 * 2))) | (GPIO_Mode_AF << (12 * 2));
+	GPIOC->MODER   |= (GPIO_Mode_AF << (2*10))    | (GPIO_Mode_AF << (2*11))    | (GPIO_Mode_AF << (2*12));
+	GPIOC->AFR[1]  |= (GPIO_AF_SPI3 << (4*2))     | (GPIO_AF_SPI3 << (4*3))     | (GPIO_AF_SPI3 << (4*4));
+	
+	// bsrrl -> low
+	//GPIOC->BSRRL = GPIO_Pin_10 | GPIO_Pin_11 | GPIO_Pin_12;	
+	
+	/******************** gpiog pin6 ********************/
+	
+	// gpiob, clock enable
+	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOG, ENABLE);
+	
+	// GPIOG Pin 6 init
+	gpio.GPIO_Pin = GPIO_Pin_6;
+	GPIO_Init(GPIOG, &gpio);
+	
+	// pg6 -> output
+	GPIOG->MODER = (GPIOG->MODER & ~(3 << (6 * 2))) | (GPIO_Mode_OUT << (6 * 2));
+	
+	// bsrrl -> high
+	GPIOG->BSRRL = GPIO_Pin_6;
+
+	
+//	gpio.GPIO_Mode = GPIO_Mode_OUT;
+//    gpio.GPIO_OType = GPIO_OType_PP;
+//    gpio.GPIO_PuPd = GPIO_PuPd_UP;
+//    gpio.GPIO_Speed = GPIO_Speed_50MHz;
+
+//    gpio.GPIO_Pin = GPIO_Pin_6 ;
+//    GPIO_Init(GPIOG, &gpio);
+	
+	
+	/******************** sonstiges setup ********************/		
+//	GPIOC->MODER   |= (GPIO_Mode_AF << (2*10))    | (GPIO_Mode_AF << (2*11))    | (GPIO_Mode_AF << (2*12));
+//	GPIOC->OSPEEDR |= (GPIO_High_Speed << (2*10)) | (GPIO_High_Speed << (2*11)) | (GPIO_High_Speed << (2*12));
+//	GPIOC->AFR[1]  |= (GPIO_AF_SPI3 << (4*2))     | (GPIO_AF_SPI3 << (4*3))     | (GPIO_AF_SPI3 << (4*4));
 }
