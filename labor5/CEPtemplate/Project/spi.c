@@ -18,14 +18,14 @@ void spi_setup(void) {
 	//RCC->APB1ENR |= RCC_APB1ENR_SPI3EN;
 	//RCC->AHB1ENR |= RCC_AHB1ENR_GPIOBEN | RCC_AHB1ENR_GPIOGEN | RCC_AHB1ENR_GPIOCEN;
 	
-	SPI3->CR1 = SPI_CR1_SPE | SPI_CR1_MSTR | SPI_CR1_CPOL | SPI_CR1_CPHA | SPI_CR1_SSI | SPI_CR1_SSM;  //| SPI_CR1_BR_1 | SPI_CR1_BR_2
+	SPI3->CR1 = SPI_CR1_SPE | SPI_CR1_MSTR | SPI_CR1_CPOL | SPI_CR1_CPHA | SPI_CR1_SSI | SPI_CR1_SSM | SPI_CR1_BR_0 | SPI_CR1_BR_1;
 	SPI3->CR2 = 0;
 }
 
 /*
  * sends/receives a single byte
  */
-/*__inline*/ uint8_t spiTransfer(uint8_t data) {
+inline uint8_t spiTransfer(uint8_t data) {
     SPI3->DR = data;
 	while((SPI3->SR & SPI_SR_RXNE) == 0 ) {}
     return SPI3->DR;

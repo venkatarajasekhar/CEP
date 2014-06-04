@@ -8,7 +8,7 @@ void spi_mem_ReadManufacturerID_test(void) {
 	
 	printf("\nspi_mem_ReadManufacturerID_test()\n");fflush(stdout);
 	
-	res = spiReadManufacturerId(SPI_MEM1);
+	res = spiReadManufacturerId(SPI_MEM_WORK);
 	
 	printf("id=%08X\n", res);fflush(stdout);
 }
@@ -28,19 +28,20 @@ void spi_mem_spiFlashMemWriteRead_test(void) {
 	uint8_t data_out[DATA_SIZE];
 	uint32_t address = 0;
 	unsigned int i = 0;
-	printf("\nTEST");fflush(stdout);
-	for(i=0; i<DATA_SIZE; i++) {
+	
+    for(i=0; i<DATA_SIZE; i++) {
 		data_in[i] = i + 1;
 	}
+    
 	printf("\nspi_mem_spiFlashMemWriteRead_test()\n");fflush(stdout);
 	
-	spiFlashMemWrite(SPI_MEM1, address, data_in);
-	spiFlashMemRead(SPI_MEM1, address, data_out);
+    spiFlashMemErase(SPI_MEM_WORK, address);
+	spiFlashMemWrite(SPI_MEM_WORK, address, data_in, DATA_SIZE);
+	spiFlashMemRead(SPI_MEM_WORK, address, data_out, DATA_SIZE);
 	
 	for(i=0; i<DATA_SIZE; i++) {
 		printf("%d", data_out[i]);fflush(stdout);
 	}	
-	
 	
 	printf("\n");fflush(stdout);
 }	

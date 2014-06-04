@@ -5,27 +5,12 @@
 #include "spi_mem.h"
 #include "global.h"
 
-// specific spi_mem commands
-//#define READ_MANUFACTURER_ID 0x9f
-//#define READ_ARRAY 0x0b
-//#define READ_STATUS_REGISTER 0x05
-//#define WRITE_STATUS_REGISTER_BYTE_1 0x01
-//#define CHIP_ERASE 0x60
-//#define WRITE_ENABLE 0x06
-//#define WRITE_DISABLE 0x04
-//#define Read
-
-// status register
-//#define NEW_SPRL_VALUE 0x80
-//#define GLOBAL_PROTECT 0x3c
-//#define STATUS_REG_BUSY 0x01
-
 // spi-commands
 #define DUMMY 0
 #define CmdReadStatusRegister 0x05
 #define CmdWriteStatusRegister_Byte_1 0x01
 #define CmdWriteEnable 0x06
-#define CmdReadArray 0x0b
+#define CmdReadArray 0x0B
 #define CmdBlockErase 0x52
 #define CmdPageProgram 0x02
 #define CmdReadManufacturerId 0x9f
@@ -33,27 +18,27 @@
 // status register
 #define BlockSize 256
 #define StatusRegReady 0x01
-#define AdressHigh 0x00ff0000
-#define AdressMiddle 0x0000ff00
-#define AdressLow 0x000000ff
+//#define AdressHigh 0x00ff0000
+//#define AdressMiddle 0x0000ff00
+//#define AdressLow 0x000000ff
 
 /***** util-functions *****/
 static void enable_SSEL(unsigned int chip_sel) {
-    if(chip_sel == SPI_MEM1) {
-		SPI_MEM1_H;
+    if(chip_sel == SPI_MEM_WORK) {
+		SPI_MEM_WORK_H;
 		//GPIOG->BSRRH = (1<<6);
 	} else {
-		SPI_MEM2_H;
+		SPI_MEM_ORIGINAL_H;
 		//GPIOB->BSRRH = (1<<9);
 	}
 }
 
 static void disable_SSEL(unsigned int chip_sel) {
-    if(chip_sel == SPI_MEM1) {
-		SPI_MEM1_L;
+    if(chip_sel == SPI_MEM_WORK) {
+		SPI_MEM_WORK_L;
 		//GPIOG->BSRRL = (1<<6);
 	} else {
-		SPI_MEM2_L;
+		SPI_MEM_ORIGINAL_L;
 		//GPIOB->BSRRL = (1<<9);
 	}
 }
@@ -129,24 +114,25 @@ static void spiFlashMemSetWriteEnable(unsigned int chip_sel) {
 /*
  * reads a block of 256 bytes at given address
  */
-void spiFlashMemRead(unsigned int chip_sel, uint32_t address, uint8_t* buffer) {
+void spiFlashMemRead(unsigned int chip_sel, uint32_t address, uint8_t* buffer, int bufferSize) {
     int i = 0;
     
     // chip-select
 	enable_SSEL(chip_sel);
     
     spiTransfer(CmdReadArray);
-    spiTransfer((address & AdressHigh) >> 16);
-    spiTransfer((address & AdressMiddle) >> 8);
-    spiTransfer(address & AdressLow);
+    spiTransfer(address >> 16);
+    spiTransfer(address >> 8);
+    spiTransfer(address);
+    spiTransfer(DUMMY);
     
-    for(i=0; i<BlockSize; i++) {
+    for(i=0; i<bufferSize; i++) {
         buffer[i] = spiTransfer(DUMMY);
     }
-    
     // chip-unselect
 	disable_SSEL(chip_sel);
 }
+
 
 /*
  * erases 32k of memory starting at given address
@@ -160,9 +146,9 @@ void spiFlashMemErase(unsigned int chip_sel, uint32_t address) {
 	enable_SSEL(chip_sel);
     
     spiTransfer(CmdBlockErase);
-    spiTransfer((address & AdressHigh) >> 16);
-    spiTransfer((address & AdressMiddle) >> 8);
-    spiTransfer(address & AdressLow);
+    spiTransfer(address >> 16);
+    spiTransfer(address >> 8);
+    spiTransfer(address);
     
     // chip-unselect
 	disable_SSEL(chip_sel);
@@ -173,7 +159,7 @@ void spiFlashMemErase(unsigned int chip_sel, uint32_t address) {
 /*
  * writes a block of 256 bytes to given address
  */
-void spiFlashMemWrite(unsigned int chip_sel, uint32_t address, uint8_t* buffer) {
+void spiFlashMemWrite(unsigned int chip_sel, uint32_t address, uint8_t* buffer, int bufferSize) {
     int i = 0;
     
     spiFlashMemSetWriteEnable(chip_sel);
@@ -188,7 +174,7 @@ void spiFlashMemWrite(unsigned int chip_sel, uint32_t address, uint8_t* buffer) 
     spiTransfer(address >> 8);
     spiTransfer(address);
     
-    for(i=0; i<BlockSize; i++) {
+    for(i=0; i<bufferSize; i++) {
         spiTransfer(buffer[i]);
     }
     
@@ -217,76 +203,6 @@ uint32_t spiReadManufacturerId(unsigned int chip_sel) {
     
     return res;
 }
-
-/************************************************************ ab hier kann wohl geloescht werden *****************************************************************/
-
-//uint8_t spi_mem_ReadByte(unsigned int chip_sel, unsigned int address) {
-//	uint8_t ret = 0;
-//	
-//	spi_writeByte(chip_sel, READ_ARRAY);
-//	
-//	ret = spi_readByte(chip_sel);
-//	
-//	return ret;
-//}
-
-//void spi_mem_EraseChip(unsigned int chip_sel) {
-//	uint8_t status_reg = 0;
-//	uint16_t busy = 1;
-//	
-//	// write enable
-//	spi_writeByte(chip_sel, WRITE_ENABLE);	// send command
-//	
-//	// read status register
-//	spi_writeByte(chip_sel, READ_STATUS_REGISTER);	// send command
-//	status_reg = spi_readByte(chip_sel);						// read byte 1
-//	spi_readByte(chip_sel);													// ignore byte 2
-//	
-//	// set unprotect
-//	status_reg |= GLOBAL_PROTECT;
-//	status_reg &= ~NEW_SPRL_VALUE;
-//	
-//	// write status register
-//	spi_writeByte(chip_sel, WRITE_STATUS_REGISTER_BYTE_1);	// send command
-//	spi_writeByte(chip_sel, status_reg);										// value
-//	
-//	// chip erase
-//	spi_writeByte(chip_sel, CHIP_ERASE);						// send command
-//	
-//	// check for ready
-//	spi_writeByte(chip_sel, READ_STATUS_REGISTER);	// send command
-//	do{
-//		busy = spi_readByte(chip_sel);								// read byte 1
-//		spi_readByte(chip_sel);												// ignore byte 2
-//	}while((busy & STATUS_REG_BUSY) != 0);
-//	
-//	// read status register
-//	spi_writeByte(chip_sel, READ_STATUS_REGISTER);	// send command
-//	status_reg = spi_readByte(chip_sel);						// read byte 1
-//	spi_readByte(chip_sel);													// ignore byte 2
-//	
-//	// set protect
-//	status_reg &= ~GLOBAL_PROTECT;
-//	
-//	// write status register
-//	spi_writeByte(chip_sel, WRITE_STATUS_REGISTER_BYTE_1);	// send command
-//	spi_writeByte(chip_sel, status_reg);										// value
-//	
-//	// write enable
-//	spi_writeByte(chip_sel, WRITE_DISABLE);	// send command
-//}
-
-//unsigned int spi_mem_ReadManufacturerID(unsigned int chip_sel) {
-//	unsigned int ret = 0;
-//	
-//	spi_writeByte(chip_sel, READ_MANUFACTURER_ID);
-
-//	ret = spi_readByte(chip_sel);				// manufaturer id
-//	ret = ret & (spi_readByte(chip_sel) << 16);	// device id part 1
-//	ret = ret & (spi_readByte(chip_sel) << 8);  // device id part 2
-//	
-//	return ret;
-//}
 
 uint32_t spi_mem_ReadManufacturerID_Heitmann() {
 	uint32_t id = 0;
