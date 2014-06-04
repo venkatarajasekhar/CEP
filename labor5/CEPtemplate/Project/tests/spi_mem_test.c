@@ -6,7 +6,7 @@
 void spi_mem_ReadManufacturerID_test(void) {
 	unsigned int res = 0;	
 	
-	printf("spi_mem_ReadManufacturerID_test()\n");fflush(stdout);
+	printf("\nspi_mem_ReadManufacturerID_test()\n");fflush(stdout);
 	
 	res = spiReadManufacturerId(SPI_MEM1);
 	
@@ -14,7 +14,7 @@ void spi_mem_ReadManufacturerID_test(void) {
 }
 
 void spi_mem_ReadManufacturerID_Heitmann_test(void) {		
-	printf("spi_mem_ReadManufacturerID_Heitmann()\n");fflush(stdout);
+	printf("\nspi_mem_ReadManufacturerID_Heitmann()\n");fflush(stdout);
 	
 	printf("id=%08X\n", spi_mem_ReadManufacturerID_Heitmann());fflush(stdout);
 }
@@ -22,20 +22,24 @@ void spi_mem_ReadManufacturerID_Heitmann_test(void) {
 void spi_mem_spiFlashMemWriteRead_test(void) {
 	//void spiFlashMemWrite(unsigned int chip_sel, uint32_t address, uint8_t* buffer)
 	//void spiFlashMemRead(unsigned int chip_sel, uint32_t address, uint8_t* buffer)
-//	uint8_t data_in[] = {1 ,2 ,3 ,4 ,5};
-//	unsigned int data_size = sizeof(data_in)/sizeof(data_in[0]);
-//	uint8_t data_out[data_size];
-//	uint32_t address = 0;
-//	unsigned int i = 0;
-//	
-//	printf("spi_mem_spiFlashMemWriteRead_test()\n");fflush(stdout);
-//	
-//	spiFlashMemWrite(SPI_MEM1, address, data_in);
-//	spiFlashMemRead(SPI_MEM1, address, data_out);
-//	
-//	for(i=0; i<data_size; i++) {
-//		printf("%d", data_out[i]);fflush(stdout);
-//	}	
-//	
-//	printf("\n");fflush(stdout);
+	const unsigned int DATA_SIZE = 5;
+	uint8_t data_in[DATA_SIZE];
+	uint8_t data_out[DATA_SIZE];
+	uint32_t address = 0;
+	unsigned int i = 0;
+	
+	for(i=0; i<DATA_SIZE; i++) {
+		data_in[i] = i + 1;
+	}
+	
+	printf("\nspi_mem_spiFlashMemWriteRead_test()\n");fflush(stdout);
+	
+	spiFlashMemWrite(SPI_MEM1, address, data_in);
+	spiFlashMemRead(SPI_MEM1, address, data_out);
+	
+	for(i=0; i<DATA_SIZE; i++) {
+		printf("%d", data_out[i]);fflush(stdout);
+	}	
+	
+	printf("\n");fflush(stdout);
 }	

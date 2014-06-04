@@ -7,7 +7,9 @@ Section Cross References
     main.o(i.main) refers to ce_lib.o(i.initCEP_Board) for initCEP_Board
     main.o(i.main) refers to gpio.o(i.gpio_setup) for gpio_setup
     main.o(i.main) refers to spi.o(i.spi_setup) for spi_setup
-    main.o(i.main) refers to spi_mem_test.o(i.spi_mem_ReadManufacturerID_test) for spi_mem_ReadManufacturerID_test
+    main.o(i.main) refers to printf8.o(i.__0printf$8) for __2printf
+    main.o(i.main) refers to spi_mem_test.o(i.spi_mem_spiFlashMemWriteRead_test) for spi_mem_spiFlashMemWriteRead_test
+    main.o(i.main) refers to retarget.o(.data) for __stdout
     spi.o(i.spi_setup) refers to stm32f4xx_rcc.o(i.RCC_APB1PeriphClockCmd) for RCC_APB1PeriphClockCmd
     spi_mem.o(i.spiFLashMemGlobalUnprotect) refers to spi_mem.o(i.enable_SSEL) for enable_SSEL
     spi_mem.o(i.spiFLashMemGlobalUnprotect) refers to spi.o(i.spiTransfer) for spiTransfer
@@ -43,6 +45,10 @@ Section Cross References
     spi_mem_test.o(i.spi_mem_ReadManufacturerID_test) refers to printf8.o(i.__0printf$8) for __2printf
     spi_mem_test.o(i.spi_mem_ReadManufacturerID_test) refers to spi_mem.o(i.spiReadManufacturerId) for spiReadManufacturerId
     spi_mem_test.o(i.spi_mem_ReadManufacturerID_test) refers to retarget.o(.data) for __stdout
+    spi_mem_test.o(i.spi_mem_spiFlashMemWriteRead_test) refers to printf8.o(i.__0printf$8) for __2printf
+    spi_mem_test.o(i.spi_mem_spiFlashMemWriteRead_test) refers to spi_mem.o(i.spiFlashMemWrite) for spiFlashMemWrite
+    spi_mem_test.o(i.spi_mem_spiFlashMemWriteRead_test) refers to spi_mem.o(i.spiFlashMemRead) for spiFlashMemRead
+    spi_mem_test.o(i.spi_mem_spiFlashMemWriteRead_test) refers to retarget.o(.data) for __stdout
     gpio.o(i.gpio_setup) refers to stm32f4xx_rcc.o(i.RCC_AHB1PeriphClockCmd) for RCC_AHB1PeriphClockCmd
     gpio.o(i.gpio_setup) refers to stm32f4xx_gpio.o(i.GPIO_Init) for GPIO_Init
     stm32f4xx_gpio.o(i.GPIO_DeInit) refers to stm32f4xx_rcc.o(i.RCC_AHB1PeriphResetCmd) for RCC_AHB1PeriphResetCmd
@@ -432,15 +438,11 @@ Removing Unused input sections from the image.
     Removing spi.o(.revsh_text), (4 bytes).
     Removing spi_mem.o(.rev16_text), (4 bytes).
     Removing spi_mem.o(.revsh_text), (4 bytes).
-    Removing spi_mem.o(i.spiFLashMemGlobalUnprotect), (30 bytes).
     Removing spi_mem.o(i.spiFlashMemErase), (72 bytes).
-    Removing spi_mem.o(i.spiFlashMemRead), (74 bytes).
-    Removing spi_mem.o(i.spiFlashMemSetWriteEnable), (24 bytes).
-    Removing spi_mem.o(i.spiFlashMemWaitReady), (48 bytes).
-    Removing spi_mem.o(i.spiFlashMemWrite), (96 bytes).
+    Removing spi_mem.o(i.spiReadManufacturerId), (54 bytes).
     Removing spi_mem.o(i.spi_mem_ReadManufacturerID_Heitmann), (196 bytes).
     Removing spi_mem_test.o(i.spi_mem_ReadManufacturerID_Heitmann_test), (92 bytes).
-    Removing spi_mem_test.o(i.spi_mem_spiFlashMemWriteRead_test), (2 bytes).
+    Removing spi_mem_test.o(i.spi_mem_ReadManufacturerID_test), (92 bytes).
     Removing gpio.o(.rev16_text), (4 bytes).
     Removing gpio.o(.revsh_text), (4 bytes).
     Removing core_cm3.o(.emb_text), (32 bytes).
@@ -634,7 +636,7 @@ Removing Unused input sections from the image.
     Removing cdrcmple.o(.text), (40 bytes).
     Removing depilogue.o(.text), (190 bytes).
 
-210 unused section(s) (total 9170 bytes) removed from the image.
+206 unused section(s) (total 9042 bytes) removed from the image.
 
 ==============================================================================
 
@@ -646,33 +648,33 @@ Image Symbol Table
 
     ../clib/microlib/division.c              0x00000000   Number         0  uldiv.o ABSOLUTE
     ../clib/microlib/division.c              0x00000000   Number         0  uidiv.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry7b.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry8a.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry8b.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry9a.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry.o ABSOLUTE
     ../clib/microlib/init/entry.s            0x00000000   Number         0  entry9b.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry10a.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry10b.o ABSOLUTE
     ../clib/microlib/init/entry.s            0x00000000   Number         0  entry5.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry11a.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry9a.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry8b.o ABSOLUTE
     ../clib/microlib/init/entry.s            0x00000000   Number         0  entry11b.o ABSOLUTE
     ../clib/microlib/init/entry.s            0x00000000   Number         0  entry2.o ABSOLUTE
     ../clib/microlib/init/entry.s            0x00000000   Number         0  entry7a.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry7b.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry11a.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry8a.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry10b.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry10a.o ABSOLUTE
     ../clib/microlib/longlong.c              0x00000000   Number         0  llshl.o ABSOLUTE
     ../clib/microlib/longlong.c              0x00000000   Number         0  llsshr.o ABSOLUTE
     ../clib/microlib/longlong.c              0x00000000   Number         0  llushr.o ABSOLUTE
-    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf5.o ABSOLUTE
-    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf8.o ABSOLUTE
-    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf7.o ABSOLUTE
-    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf2.o ABSOLUTE
-    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf6.o ABSOLUTE
     ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf1.o ABSOLUTE
     ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf0.o ABSOLUTE
-    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf4.o ABSOLUTE
     ../clib/microlib/printf/printf.c         0x00000000   Number         0  printfb.o ABSOLUTE
+    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf4.o ABSOLUTE
     ../clib/microlib/printf/printf.c         0x00000000   Number         0  printfa.o ABSOLUTE
+    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf8.o ABSOLUTE
+    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf7.o ABSOLUTE
+    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf6.o ABSOLUTE
+    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf5.o ABSOLUTE
     ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf3.o ABSOLUTE
+    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf2.o ABSOLUTE
     ../clib/microlib/printf/stubs.s          0x00000000   Number         0  stubs.o ABSOLUTE
     ../clib/microlib/stdio/fflush.c          0x00000000   Number         0  fflush.o ABSOLUTE
     ../clib/microlib/string/strlen.c         0x00000000   Number         0  strlen.o ABSOLUTE
@@ -787,12 +789,19 @@ Image Symbol Table
     i.initCEP_Board                          0x08001308   Section        0  ce_lib.o(i.initCEP_Board)
     i.initIO                                 0x0800131c   Section        0  ce_lib.o(i.initIO)
     i.main                                   0x080013f0   Section        0  main.o(i.main)
-    i.spiReadManufacturerId                  0x08001404   Section        0  spi_mem.o(i.spiReadManufacturerId)
-    i.spiTransfer                            0x0800143c   Section        0  spi.o(i.spiTransfer)
-    i.spi_mem_ReadManufacturerID_test        0x0800145c   Section        0  spi_mem_test.o(i.spi_mem_ReadManufacturerID_test)
-    i.spi_setup                              0x080014b8   Section        0  spi.o(i.spi_setup)
-    i.tft_delay                              0x080014d8   Section        0  tft.o(i.tft_delay)
-    tft_delay                                0x080014d9   Thumb Code    16  tft.o(i.tft_delay)
+    i.spiFLashMemGlobalUnprotect             0x08001420   Section        0  spi_mem.o(i.spiFLashMemGlobalUnprotect)
+    spiFLashMemGlobalUnprotect               0x08001421   Thumb Code    30  spi_mem.o(i.spiFLashMemGlobalUnprotect)
+    i.spiFlashMemRead                        0x0800143e   Section        0  spi_mem.o(i.spiFlashMemRead)
+    i.spiFlashMemSetWriteEnable              0x08001488   Section        0  spi_mem.o(i.spiFlashMemSetWriteEnable)
+    spiFlashMemSetWriteEnable                0x08001489   Thumb Code    24  spi_mem.o(i.spiFlashMemSetWriteEnable)
+    i.spiFlashMemWaitReady                   0x080014a0   Section        0  spi_mem.o(i.spiFlashMemWaitReady)
+    spiFlashMemWaitReady                     0x080014a1   Thumb Code    48  spi_mem.o(i.spiFlashMemWaitReady)
+    i.spiFlashMemWrite                       0x080014d0   Section        0  spi_mem.o(i.spiFlashMemWrite)
+    i.spiTransfer                            0x08001530   Section        0  spi.o(i.spiTransfer)
+    i.spi_mem_spiFlashMemWriteRead_test      0x08001550   Section        0  spi_mem_test.o(i.spi_mem_spiFlashMemWriteRead_test)
+    i.spi_setup                              0x080015e0   Section        0  spi.o(i.spi_setup)
+    i.tft_delay                              0x08001600   Section        0  tft.o(i.tft_delay)
+    tft_delay                                0x08001601   Thumb Code    16  tft.o(i.tft_delay)
     .data                                    0x20000000   Section       16  stm32f4xx_rcc.o(.data)
     APBAHBPrescTable                         0x20000000   Data          16  stm32f4xx_rcc.o(.data)
     .data                                    0x20000010   Section        4  usart.o(.data)
@@ -1008,13 +1017,14 @@ Image Symbol Table
     gpio_setup                               0x08001259   Thumb Code   158  gpio.o(i.gpio_setup)
     initCEP_Board                            0x08001309   Thumb Code    20  ce_lib.o(i.initCEP_Board)
     initIO                                   0x0800131d   Thumb Code   188  ce_lib.o(i.initIO)
-    main                                     0x080013f1   Thumb Code    20  main.o(i.main)
-    spiReadManufacturerId                    0x08001405   Thumb Code    54  spi_mem.o(i.spiReadManufacturerId)
-    spiTransfer                              0x0800143d   Thumb Code    28  spi.o(i.spiTransfer)
-    spi_mem_ReadManufacturerID_test          0x0800145d   Thumb Code    40  spi_mem_test.o(i.spi_mem_ReadManufacturerID_test)
-    spi_setup                                0x080014b9   Thumb Code    26  spi.o(i.spi_setup)
-    Region$$Table$$Base                      0x080014e8   Number         0  anon$$obj.o(Region$$Table)
-    Region$$Table$$Limit                     0x08001508   Number         0  anon$$obj.o(Region$$Table)
+    main                                     0x080013f1   Thumb Code    32  main.o(i.main)
+    spiFlashMemRead                          0x0800143f   Thumb Code    74  spi_mem.o(i.spiFlashMemRead)
+    spiFlashMemWrite                         0x080014d1   Thumb Code    96  spi_mem.o(i.spiFlashMemWrite)
+    spiTransfer                              0x08001531   Thumb Code    28  spi.o(i.spiTransfer)
+    spi_mem_spiFlashMemWriteRead_test        0x08001551   Thumb Code    96  spi_mem_test.o(i.spi_mem_spiFlashMemWriteRead_test)
+    spi_setup                                0x080015e1   Thumb Code    26  spi.o(i.spi_setup)
+    Region$$Table$$Base                      0x08001610   Number         0  anon$$obj.o(Region$$Table)
+    Region$$Table$$Limit                     0x08001630   Number         0  anon$$obj.o(Region$$Table)
     __stdout                                 0x20000014   Data           4  retarget.o(.data)
     __stdin                                  0x20000018   Data           4  retarget.o(.data)
     __initial_sp                             0x20000838   Data           0  startup_stm32f40_41xxx.o(STACK)
@@ -1027,9 +1037,9 @@ Memory Map of the image
 
   Image Entry point : 0x08000189
 
-  Load Region LR_IROM1 (Base: 0x08000000, Size: 0x00001524, Max: 0x00100000, ABSOLUTE)
+  Load Region LR_IROM1 (Base: 0x08000000, Size: 0x0000164c, Max: 0x00100000, ABSOLUTE)
 
-    Execution Region ER_IROM1 (Base: 0x08000000, Size: 0x00001508, Max: 0x00100000, ABSOLUTE)
+    Execution Region ER_IROM1 (Base: 0x08000000, Size: 0x00001630, Max: 0x00100000, ABSOLUTE)
 
     Base Addr    Size         Type   Attr      Idx    E Section Name        Object
 
@@ -1099,14 +1109,17 @@ Memory Map of the image
     0x08001258   0x000000b0   Code   RO          240    i.gpio_setup        gpio.o
     0x08001308   0x00000014   Code   RO         1217    i.initCEP_Board     ce_lib.o
     0x0800131c   0x000000d4   Code   RO         1218    i.initIO            ce_lib.o
-    0x080013f0   0x00000014   Code   RO            3    i.main              main.o
-    0x08001404   0x00000036   Code   RO          146    i.spiReadManufacturerId  spi_mem.o
-    0x0800143a   0x00000002   PAD
-    0x0800143c   0x00000020   Code   RO          103    i.spiTransfer       spi.o
-    0x0800145c   0x0000005c   Code   RO          209    i.spi_mem_ReadManufacturerID_test  spi_mem_test.o
-    0x080014b8   0x00000020   Code   RO          104    i.spi_setup         spi.o
-    0x080014d8   0x00000010   Code   RO         1414    i.tft_delay         tft.o
-    0x080014e8   0x00000020   Data   RO         1953    Region$$Table       anon$$obj.o
+    0x080013f0   0x00000030   Code   RO            3    i.main              main.o
+    0x08001420   0x0000001e   Code   RO          140    i.spiFLashMemGlobalUnprotect  spi_mem.o
+    0x0800143e   0x0000004a   Code   RO          142    i.spiFlashMemRead   spi_mem.o
+    0x08001488   0x00000018   Code   RO          143    i.spiFlashMemSetWriteEnable  spi_mem.o
+    0x080014a0   0x00000030   Code   RO          144    i.spiFlashMemWaitReady  spi_mem.o
+    0x080014d0   0x00000060   Code   RO          145    i.spiFlashMemWrite  spi_mem.o
+    0x08001530   0x00000020   Code   RO          103    i.spiTransfer       spi.o
+    0x08001550   0x00000090   Code   RO          210    i.spi_mem_spiFlashMemWriteRead_test  spi_mem_test.o
+    0x080015e0   0x00000020   Code   RO          104    i.spi_setup         spi.o
+    0x08001600   0x00000010   Code   RO         1414    i.tft_delay         tft.o
+    0x08001610   0x00000020   Data   RO         1953    Region$$Table       anon$$obj.o
 
 
     Execution Region RW_IRAM1 (Base: 0x20000000, Size: 0x00000838, Max: 0x00020000, ABSOLUTE)
@@ -1132,12 +1145,12 @@ Image component sizes
        232         24          0          0          0       1061   ce_lib.o
        176         18          0          0          0        529   gpio.o
          0          0          0          0          0      15064   labor5.o
-        20          0          0          0          0     251239   main.o
+        48         16          0          0          0     251251   main.o
        140         22          0          0          0       1579   misc.o
         42          0          0          8          0       2338   retarget.o
         64         10          0          0          0       7746   spi.o
-       118         20          0          0          0       1512   spi_mem.o
-        92         52          0          0          0        558   spi_mem_test.o
+       336         20          0          0          0       4533   spi_mem.o
+       144         48          0          0          0        724   spi_mem_test.o
         36          8        392          0       1024        824   startup_stm32f40_41xxx.o
        214          0          0          0          0       1799   stm32f4xx_gpio.o
        374         14          0          0          0      13476   stm32f4xx_i2c.o
@@ -1148,9 +1161,9 @@ Image component sizes
        492         54          0          4        528       3873   usart.o
 
     ----------------------------------------------------------------------
-      3558        336        424         28       2076     322356   Object Totals
+      3854        348        424         28       2076     325555   Object Totals
          0          0         32          0          0          0   (incl. Generated)
-        10          0          0          0          3          0   (incl. Padding)
+         8          0          0          0          3          0   (incl. Padding)
 
     ----------------------------------------------------------------------
 
@@ -1191,15 +1204,15 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-      4960        406        424         28       2076     318844   Grand Totals
-      4960        406        424         28       2076     318844   ELF Image Totals
-      4960        406        424         28          0          0   ROM Totals
+      5256        418        424         28       2076     321643   Grand Totals
+      5256        418        424         28       2076     321643   ELF Image Totals
+      5256        418        424         28          0          0   ROM Totals
 
 ==============================================================================
 
-    Total RO  Size (Code + RO Data)                 5384 (   5.26kB)
+    Total RO  Size (Code + RO Data)                 5680 (   5.55kB)
     Total RW  Size (RW Data + ZI Data)              2104 (   2.05kB)
-    Total ROM Size (Code + RO Data + RW Data)       5412 (   5.29kB)
+    Total ROM Size (Code + RO Data + RW Data)       5708 (   5.57kB)
 
 ==============================================================================
 
