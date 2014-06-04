@@ -59,3 +59,26 @@ void spi_mem_spiFlashMemErase_test(void) {
 	
 }
 
+void spiCMP_test(void){
+    int ergebnis = 0;
+    const unsigned int DATA_SIZE = 5;
+	uint8_t data_in[DATA_SIZE];
+	uint8_t data_out[DATA_SIZE];
+	uint32_t address = 0;
+	unsigned int i = 0;
+	
+    for(i=0; i<DATA_SIZE; i++) {
+		data_in[i] = i + 5;
+	}
+    
+    spiFlashMemErase(SPI_MEM_WORK, address, DATA_SIZE);
+	spiFlashMemWrite(SPI_MEM_WORK, address, data_in, DATA_SIZE);
+	
+    //spiFlashMemRead(SPI_MEM_WORK, address, data_out, DATA_SIZE);
+    
+    spiFlashMemErase(SPI_MEM_ORIGINAL, address, DATA_SIZE);
+	spiFlashMemRead(SPI_MEM_ORIGINAL, address, data_out, DATA_SIZE);	
+
+    ergebnis = spiCMP(address , DATA_SIZE);
+}
+

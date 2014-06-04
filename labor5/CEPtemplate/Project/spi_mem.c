@@ -250,3 +250,34 @@ uint32_t spiReadManufacturerId(unsigned int chip_sel) {
     return res;
 }
 
+
+int32_t spiCMP(uint32_t address, uint32_t bytes){
+    
+    uint32_t idx = 0;
+    uint8_t workBuffer[BlockSize];
+    uint8_t originalBuffer[BlockSize];
+    uint32_t actualSize = 0;
+   
+    
+ while(bytes){
+    if(bytes > BlockSize){
+        spiFlashMemRead(address, BlockSize, workBuffer, SPI_MEM_WORK);
+        spiFlashMemRead(address, BlockSize, originalBuffer, SPI_MEM_ORIGINAL);
+        actualSize = BlockSize;
+        bytes -= BlockSize;        
+	}
+	else{
+		spiFlashMemRead(address, bytes, workBuffer, SPI_MEM_WORK);
+		spiFlashMemRead(address, bytes, originalBuffer, SPI_MEM_ORIGINAL);
+		actualSize = bytes;
+		bytes = 0;
+	}
+
+	for(idx = 0; idx<actualSize; idx++){
+		if(workBuffer[idx] != originalBuffer[idx]){
+			return -1;
+		}
+	}
+}      return 0;
+
+}

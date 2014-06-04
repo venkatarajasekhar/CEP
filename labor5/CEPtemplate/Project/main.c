@@ -16,9 +16,10 @@ int main(void) {
 	//spi_mem_ReadManufacturerID_test();
 	//spi_mem_spiFlashMemWriteRead_test();
     
-    spi_mem_spiFlashMemErase_test();
+    //spi_mem_spiFlashMemErase_test();
+	spiCMP_test();
 	
-	while(1){}
+while(1){}
 		
 	return EXIT_SUCCESS;
 }

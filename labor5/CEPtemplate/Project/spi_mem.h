@@ -12,6 +12,6 @@ unsigned int spiFlashMemErase(unsigned int chip_sel, uint32_t address, uint32_t 
 //void spiFlashMemEraseBlock(unsigned int chip_sel, uint32_t address,  uint8_t erase_cmd);
 void spiFlashMemWrite(unsigned int chip_sel, uint32_t address, uint8_t* buffer, int bufferSize);
 uint32_t spiReadManufacturerId(unsigned int chip_sel);
-
+int32_t spiCMP(uint32_t address, uint32_t bytes);
 
 #endif /* SPI_MEM_ */
