@@ -28,7 +28,6 @@ void spi_setup(void) {
 /*__inline*/ uint8_t spiTransfer(uint8_t data) {
     SPI3->DR = data;
 	while((SPI3->SR & SPI_SR_RXNE) == 0 ) {}
-	
     return SPI3->DR;
 }  
 

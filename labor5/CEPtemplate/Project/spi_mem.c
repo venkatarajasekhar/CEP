@@ -184,9 +184,9 @@ void spiFlashMemWrite(unsigned int chip_sel, uint32_t address, uint8_t* buffer) 
 	enable_SSEL(chip_sel);
     
     spiTransfer(CmdPageProgram);
-    spiTransfer((address & AdressHigh) >> 16);
-    spiTransfer((address & AdressMiddle) >> 8);
-    spiTransfer(address & AdressLow);
+    spiTransfer(address >> 16);
+    spiTransfer(address >> 8);
+    spiTransfer(address);
     
     for(i=0; i<BlockSize; i++) {
         spiTransfer(buffer[i]);
