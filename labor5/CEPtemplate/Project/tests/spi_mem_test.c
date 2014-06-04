@@ -13,12 +13,6 @@ void spi_mem_ReadManufacturerID_test(void) {
 	printf("id=%08X\n", res);fflush(stdout);
 }
 
-void spi_mem_ReadManufacturerID_Heitmann_test(void) {		
-	printf("\nspi_mem_ReadManufacturerID_Heitmann()\n");fflush(stdout);
-	
-	printf("id=%08X\n", spi_mem_ReadManufacturerID_Heitmann());fflush(stdout);
-}
-
 void spi_mem_spiFlashMemWriteRead_test(void) {
 		
 	const unsigned int DATA_SIZE = 5;

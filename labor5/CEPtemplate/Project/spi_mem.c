@@ -22,9 +22,6 @@
 // status register
 #define BlockSize 256
 #define StatusRegReady 0x01
-//#define AdressHigh 0x00ff0000
-//#define AdressMiddle 0x0000ff00
-//#define AdressLow 0x000000ff
 
 // mem-block size
 #define BLOCK_4KB (4 * 1024) //4069
@@ -124,6 +121,25 @@ static void spiFlashMemSetWriteEnable(unsigned int chip_sel) {
 	disable_SSEL(chip_sel);
 }
 
+static void spiFlashMemEraseBlock(unsigned int chip_sel, uint32_t address,  uint8_t erase_cmd) {
+    spiFlashMemSetWriteEnable(chip_sel);
+    spiFLashMemGlobalUnprotect(chip_sel);
+    spiFlashMemSetWriteEnable(chip_sel);
+     
+    // chip-select
+	enable_SSEL(chip_sel);
+    
+    spiTransfer(erase_cmd); //block-erase-type-kommand aus der tabelle 
+    spiTransfer(address >> 16);
+    spiTransfer(address >> 8);
+    spiTransfer(address);
+    
+    // chip-unselect
+	disable_SSEL(chip_sel);
+    
+    spiFlashMemWaitReady(chip_sel);
+}
+
 /***** memory-functions *****/
 
 /*
@@ -154,17 +170,16 @@ unsigned int spiFlashMemRead(unsigned int chip_sel, uint32_t address, uint8_t* b
     }
 }
 
-
 /*
- * erases 32k of memory starting at given address
+ * erases memory starting at given address
  */
 unsigned int spiFlashMemErase(unsigned int chip_sel, uint32_t address, uint32_t numberOfBytes) {
     uint32_t numberOfBlocks = ((address + numberOfBytes) / BLOCK_4KB) - (address / BLOCK_4KB) + 1;
     
-    if((address+ numberOfBytes) > SPI_MEM_SIZE){
+    if((address + numberOfBytes) > SPI_MEM_SIZE){
         return 0;
-    }else{
-        
+    
+    }else{    
         while(numberOfBlocks) {
             if(numberOfBlocks >= BlockCount_64){
                 spiFlashMemEraseBlock(chip_sel, address, CmdBlockErase_64K); 
@@ -182,29 +197,9 @@ unsigned int spiFlashMemErase(unsigned int chip_sel, uint32_t address, uint32_t 
                 address += BLOCK_4KB;
             }
         } 
+        
         return 1;
     }
-}
-
-
- void spiFlashMemEraseBlock(unsigned int chip_sel, uint32_t address,  uint8_t erase_cmd) {
-    
-    spiFlashMemSetWriteEnable(chip_sel);
-    spiFLashMemGlobalUnprotect(chip_sel);
-    spiFlashMemSetWriteEnable(chip_sel);
-     
-    // chip-select
-	enable_SSEL(chip_sel);
-    
-    spiTransfer(erase_cmd); //block-erase-type-kommand aus der tabelle 
-    spiTransfer(address >> 16);
-    spiTransfer(address >> 8);
-    spiTransfer(address);
-    
-    // chip-unselect
-	disable_SSEL(chip_sel);
-    
-    spiFlashMemWaitReady(chip_sel);
 }
 
 /*
@@ -253,44 +248,5 @@ uint32_t spiReadManufacturerId(unsigned int chip_sel) {
 	disable_SSEL(chip_sel);
     
     return res;
-}
-
-uint32_t spi_mem_ReadManufacturerID_Heitmann() {
-	uint32_t id = 0;
-	uint8_t factory_id = 0;
-	uint8_t dev_id1 = 0;
-	uint8_t dev_id2 = 0;
-	uint8_t dummy = 0; 
-	
-	// setup
-	RCC_APB1PeriphClockCmd(RCC_APB1Periph_SPI3, ENABLE);
-	
-	SPI3->CR1 = 0 | SPI_CR1_SPE | SPI_CR1_MSTR | SPI_CR1_CPOL | SPI_CR1_CPHA | (1<<8) | (1<<9);
-	SPI3->CR2 = 0;
-	
-	// code aus skript
-	GPIOB->BSRRH = (1<<9);
-	
-	SPI3->DR = 0x9f;
-	while( (SPI3->SR & (1<<0)) == 0 );
-	factory_id = (uint8_t)SPI3->DR;
-		
-	SPI3->DR = 0;
-	while( (SPI3->SR & (1<<0)) == 0 );
-	dev_id1 = (uint8_t)SPI3->DR;
-	
-	SPI3->DR = 0;
-	while( (SPI3->SR & (1<<0)) == 0 );
-	dev_id2 = (uint8_t)SPI3->DR;
-	
-	SPI3->DR = 0;
-	while( (SPI3->SR & (1<<0)) == 0 );
-	dummy = SPI3->DR;
-	
-	GPIOB->BSRRL = (1<<9);
-	
-	id = factory_id | (dev_id1<<8) | (dev_id2<<16);
-	
-	return id;
 }
 
