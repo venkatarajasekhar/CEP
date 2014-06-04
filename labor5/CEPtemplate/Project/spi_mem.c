@@ -11,7 +11,11 @@
 #define CmdWriteStatusRegister_Byte_1 0x01
 #define CmdWriteEnable 0x06
 #define CmdReadArray 0x0B
-#define CmdBlockErase 0x52
+
+#define CmdBlockErase_64K 0xd8
+#define CmdBlockErase_32K 0x52
+#define CmdBlockErase_4K 0x20
+
 #define CmdPageProgram 0x02
 #define CmdReadManufacturerId 0x9f
 
@@ -21,6 +25,16 @@
 //#define AdressHigh 0x00ff0000
 //#define AdressMiddle 0x0000ff00
 //#define AdressLow 0x000000ff
+
+// mem-block size
+#define BLOCK_4KB (4 * 1024) //4069
+#define BLOCK_32KB (32 * 1024) //32768
+#define BLOCK_64KB (64 * 1024) //65536
+
+// how many 4KB-blocks of each size are in a single 64K-block
+#define BlockCount_64 (BLOCK_64KB/BLOCK_4KB)
+#define BlockCount_32 (BLOCK_32KB/BLOCK_4KB)
+#define BlockCount_4  (BLOCK_4KB/BLOCK_4KB)
 
 /***** util-functions *****/
 static void enable_SSEL(unsigned int chip_sel) {
@@ -51,6 +65,7 @@ static void spiFLashMemGlobalUnprotect(unsigned int chip_sel) {
 	enable_SSEL(chip_sel);
 
     spiTransfer(CmdWriteStatusRegister_Byte_1);
+    //spiTransfer(GlobalUnprotect); // global unprotect        #define GlobalUnprotect 0x0  ??
     spiTransfer(DUMMY);
     
     // chip-unselect
@@ -114,38 +129,74 @@ static void spiFlashMemSetWriteEnable(unsigned int chip_sel) {
 /*
  * reads a block of 256 bytes at given address
  */
-void spiFlashMemRead(unsigned int chip_sel, uint32_t address, uint8_t* buffer, int bufferSize) {
+unsigned int spiFlashMemRead(unsigned int chip_sel, uint32_t address, uint8_t* buffer, int bufferSize) {
     int i = 0;
     
-    // chip-select
-	enable_SSEL(chip_sel);
+    if(address + bufferSize > SPI_MEM_SIZE) {
+        return 0;
+    } else {
+        // chip-select
+        enable_SSEL(chip_sel);
     
-    spiTransfer(CmdReadArray);
-    spiTransfer(address >> 16);
-    spiTransfer(address >> 8);
-    spiTransfer(address);
-    spiTransfer(DUMMY);
+        spiTransfer(CmdReadArray);
+        spiTransfer(address >> 16);
+        spiTransfer(address >> 8);
+        spiTransfer(address);
+        spiTransfer(DUMMY);
     
-    for(i=0; i<bufferSize; i++) {
-        buffer[i] = spiTransfer(DUMMY);
+        for(i=0; i<bufferSize; i++) {
+            buffer[i] = spiTransfer(DUMMY);
+        }
+        // chip-unselect
+        disable_SSEL(chip_sel);
+    
+        return 1;
     }
-    // chip-unselect
-	disable_SSEL(chip_sel);
 }
 
 
 /*
  * erases 32k of memory starting at given address
  */
-void spiFlashMemErase(unsigned int chip_sel, uint32_t address) {
+unsigned int spiFlashMemErase(unsigned int chip_sel, uint32_t address, uint32_t numberOfBytes) {
+    uint32_t numberOfBlocks = ((address + numberOfBytes) / BLOCK_4KB) - (address / BLOCK_4KB) + 1;
+    
+    if((address+ numberOfBytes) > SPI_MEM_SIZE){
+        return 0;
+    }else{
+        
+        while(numberOfBlocks) {
+            if(numberOfBlocks >= BlockCount_64){
+                spiFlashMemEraseBlock(chip_sel, address, CmdBlockErase_64K); 
+                numberOfBlocks -= BlockCount_64;
+                address += BLOCK_64KB;
+            }
+            else if(numberOfBlocks >= BlockCount_32){
+                spiFlashMemEraseBlock(chip_sel, address, CmdBlockErase_32K);
+                numberOfBlocks -= BlockCount_32;
+                address += BLOCK_32KB;
+            }
+            else if(numberOfBlocks >= BlockCount_4){
+                spiFlashMemEraseBlock(chip_sel, address, CmdBlockErase_4K);
+                numberOfBlocks -= BlockCount_4;
+                address += BLOCK_4KB;
+            }
+        } 
+        return 1;
+    }
+}
+
+
+ void spiFlashMemEraseBlock(unsigned int chip_sel, uint32_t address,  uint8_t erase_cmd) {
+    
     spiFlashMemSetWriteEnable(chip_sel);
     spiFLashMemGlobalUnprotect(chip_sel);
     spiFlashMemSetWriteEnable(chip_sel);
-    
+     
     // chip-select
 	enable_SSEL(chip_sel);
     
-    spiTransfer(CmdBlockErase);
+    spiTransfer(erase_cmd); //block-erase-type-kommand aus der tabelle 
     spiTransfer(address >> 16);
     spiTransfer(address >> 8);
     spiTransfer(address);

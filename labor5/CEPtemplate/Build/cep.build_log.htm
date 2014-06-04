@@ -7,20 +7,21 @@ C:\Documents and Settings\abd299\Desktop\cep\labor5\CEPtemplate\Project.uvproj
 Project File Date:  06/04/2014
 
 <h2>Output:</h2>
-Rebuild target 'cep'
-compiling main.c...
-Project\main.c(25): warning:  #111-D: statement is unreachable
-        return EXIT_SUCCESS;
-Project\main.c: 1 warning, 0 errors
-compiling labor5.c...
-compiling spi.c...
-compiling spi_mem.c...
-Project\spi_mem.c(212): warning:  #550-D: variable "dummy" was set but never used
-        uint8_t dummy = 0; 
-Project\spi_mem.c: 1 warning, 0 errors
+Build target 'cep'
 compiling spi_mem_test.c...
-compiling gpio.c...
-compiling core_cm3.c...
+linking...
+Program Size: Code=3924 RO-data=424 RW-data=20 ZI-data=2076  
+".\Build\cep.axf" - 0 Error(s), 0 Warning(s).
+Load "C:\\Documents and Settings\\abd299\\Desktop\\cep\\labor5\\CEPtemplate\\Build\\cep.axf" 
+Erase Done.
+Programming Done.
+Verify OK.
+Warning(s).
+Load "C:\\Documents and Settings\\abd299\\Desktop\\cep\\labor5\\CEPtemplate\\Build\\cep.axf" 
+Erase Done.
+Programming Done.
+Verify OK.
+c...
 compiling misc.c...
 compiling stm32f4xx_gpio.c...
 compiling stm32f4xx_rcc.c...
@@ -33,72 +34,39 @@ compiling Usart.c...
 compiling Retarget.c...
 compiling tft.c...
 linking...
-Program Size: Code=5352 RO-data=424 RW-data=28 ZI-data=2076  
+Program Size: Code=5476 RO-data=424 RW-data=28 ZI-data=2076  
 ".\Build\cep.axf" - 0 Error(s), 2 Warning(s).
-Load "C:\\Documents and Settings\\abd299\\Desktop\\cep\\labor5\\CEPtemplate\\Build\\cep.axf" 
-Erase Done.
-Programming Done.
-Verify OK.
-</pre>
-</body>
-</html>
-- 0 Error(s), 3 Warning(s).
-Load "C:\\Documents and Settings\\abd299\\Desktop\\cep\\labor5\\CEPtemplate\\Build\\cep.axf" 
-Erase Done.
-Programming Done.
-Verify OK.
-Load "C:\\Documents and Settings\\abd299\\Desktop\\cep\\labor5\\CEPtemplate\\Build\\cep.axf" 
-Erase Done.
-Programming Done.
-Verify OK.
- Done.
-Verify OK.
-Error: Target DLL has been cancelled. Debugger aborted !
-geByte(address>>8); // MEDIUM BYTE ADDRESS
-Project\spi_mem.c(163): warning:  #77-D: this declaration has no storage class or type specifier
-  spiExchangeByte(address>>8); // MEDIUM BYTE ADDRESS
-Project\spi_mem.c(164): warning:  #77-D: this declaration has no storage class or type specifier
-  spiExchangeByte(address); // LOW BYTE ADDRESS
-Project\spi_mem.c(164): error:  #92: identifier-list parameters may only be used in a function definition
-  spiExchangeByte(address); // LOW BYTE ADDRESS
-Project\spi_mem.c(165): error:  #79: expected a type specifier
-  spiExchangeByte(DUMMY);
-Project\spi_mem.c(165): warning:  #77-D: this declaration has no storage class or type specifier
-  spiExchangeByte(DUMMY);
-Project\spi_mem.c(167): error:  #169: expected a declaration
-  for(i=0; i<bufferSize; i++)
-Project\spi_mem.c(172): warning:  #12-D: parsing restarts here after previous syntax error
-  GPIOG->BSRRL = ((uint16_t)0x0040);
-Project\spi_mem.c(174): error:  #169: expected a declaration
-  }
-Project\spi_mem.c(224): warning:  #12-D: parsing restarts here after previous syntax error
-      spiFlashMemWaitReady(chip_sel);
-Project\spi_mem.c(225): error:  #169: expected a declaration
-  }
-Project\spi_mem.c(338): warning:  #12-D: parsing restarts here after previous syntax error
-        while( (SPI3->SR & (1<<0)) == 0 );
-Project\spi_mem.c(339): error:  #77-D: this declaration has no storage class or type specifier
-        dev_id1 = (uint8_t)SPI3->DR;
-Project\spi_mem.c(339): error:  #59: function call is not allowed in a constant expression
-        dev_id1 = (uint8_t)SPI3->DR;
-Project\spi_mem.c(341): error:  #18: expected a ")"
-        SPI3->DR = 0;
-Project\spi_mem.c(341): error:  #79: expected a type specifier
-        SPI3->DR = 0;
-Project\spi_mem.c(341): error:  #101: "SPI_TypeDef" has already been declared in the current scope
-        SPI3->DR = 0;
-Project\spi_mem.c(341): error:  #141-D: unnamed prototyped parameters not allowed when body is present
-        SPI3->DR = 0;
-Project\spi_mem.c(341): error:  #130: expected a "{"
-        SPI3->DR = 0;
-Project\spi_mem.c(354): warning:  #12-D: parsing restarts here after previous syntax error
-  }
-Project\spi_mem.c(64): warning:  #177-D: function "spiFLashMemGlobalUnprotect" was declared but never referenced
-  static void spiFLashMemGlobalUnprotect(unsigned int chip_sel) {
-Project\spi_mem.c(98): warning:  #177-D: function "spiFlashMemWaitReady" was declared but never referenced
-  static void spiFlashMemWaitReady(unsigned int chip_sel) {
-Project\spi_mem.c(117): warning:  #177-D: function "spiFlashMemSetWriteEnable" was declared but never referenced
-  static void spiFlashMemSetWriteEnable(unsigned int chip_sel) {
-Project\spi_mem.c: 13 warnings, 20 errors
-".\Build\cep.axf" - 20 Error(s), 13 Warning(s).
+SPI_MEM_WORK, address);
+Project\tests\spi_mem_test.c: 0 warnings, 1 error
+".\Build\cep.axf" - 4 Error(s), 2 Warning(s).
+Target not created
+ck" declared implicitly
+                  spiFlashMemEraseBlock(chip_sel, address, CmdBlockErase_32K);
+Project\spi_mem.c(177): error:  #20: identifier "MEDIUM_BLOCK" is undefined
+                  address += MEDIUM_BLOCK;
+Project\spi_mem.c(180): warning:  #223-D: function "spiFlashMemEraseBlock" declared implicitly
+                  spiFlashMemEraseBlock(chip_sel, address, CmdBlockErase_4K);
+Project\spi_mem.c(190): error:  #159: declaration is incompatible with previous "spiFlashMemEraseBlock" (declared at line 170)
+   void spiFlashMemEraseBlock(unsigned int chip_sel, uint32_t address,  uint8_t erase_cmd) {
+Project\spi_mem.c(191): warning:  #177-D: variable "blk_srt_address" was declared but never referenced
+      uint32_t blk_srt_address = 0; 
+Project\spi_mem.c(264): warning:  #550-D: variable "dummy" was set but never used
+        uint8_t dummy = 0; 
+Project\spi_mem.c: 5 warnings, 5 errors
+".\Build\cep.axf" - 5 Error(s), 6 Warning(s).
+Target not created
+o.c...
+compiling core_cm3.c...
+compiling misc.c...
+compiling stm32f4xx_gpio.c...
+compiling stm32f4xx_rcc.c...
+compiling stm32f4xx_usart.c...
+assembling startup_stm32f40_41xxx.s...
+compiling system_stm32f4xx.c...
+compiling stm32f4xx_i2c.c...
+compiling CE_Lib.c...
+compiling Usart.c...
+compiling Retarget.c...
+compiling tft.c...
+".\Build\cep.axf" - 5 Error(s), 6 Warning(s).
 Target not created

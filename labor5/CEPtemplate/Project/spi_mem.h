@@ -7,8 +7,9 @@
 //unsigned int spi_mem_ReadManufacturerID(unsigned int chip_sel);
 uint32_t spi_mem_ReadManufacturerID_Heitmann(void);
 
-void spiFlashMemRead(unsigned int chip_sel, uint32_t address, uint8_t* buffer, int bufferSize);
-void spiFlashMemErase(unsigned int chip_sel, uint32_t address);
+unsigned int spiFlashMemRead(unsigned int chip_sel, uint32_t address, uint8_t* buffer, int bufferSize);
+unsigned int spiFlashMemErase(unsigned int chip_sel, uint32_t address, uint32_t numberOfBytes);
+void spiFlashMemEraseBlock(unsigned int chip_sel, uint32_t address,  uint8_t erase_cmd);
 void spiFlashMemWrite(unsigned int chip_sel, uint32_t address, uint8_t* buffer, int bufferSize);
 uint32_t spiReadManufacturerId(unsigned int chip_sel);
 

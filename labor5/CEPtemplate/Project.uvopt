@@ -199,13 +199,13 @@
           <Type>0</Type>
           <LineNumber>46</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134223362</Address>
+          <Address>0</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>1</BreakIfRCount>
+          <BreakIfRCount>0</BreakIfRCount>
           <Filename>C:\Documents and Settings\abd299\Desktop\cep\labor5\CEPtemplate\Project\tests\spi_mem_test.c</Filename>
           <ExecCommand></ExecCommand>
           <Expression></Expression>
@@ -336,10 +336,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>0</ColumnNumber>
+      <ColumnNumber>4</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
       <TopLine>1</TopLine>
-      <CurrentLine>10</CurrentLine>
+      <CurrentLine>22</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\Project\main.c</PathWithFileName>
       <FilenameWithoutPath>main.c</FilenameWithoutPath>
@@ -352,10 +352,10 @@
       <FileType>5</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>24</ColumnNumber>
+      <ColumnNumber>20</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>0</TopLine>
-      <CurrentLine>0</CurrentLine>
+      <TopLine>1</TopLine>
+      <CurrentLine>13</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\Project\global.h</PathWithFileName>
       <FilenameWithoutPath>global.h</FilenameWithoutPath>
@@ -400,7 +400,7 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>101</ColumnNumber>
+      <ColumnNumber>104</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
       <TopLine>1</TopLine>
       <CurrentLine>21</CurrentLine>
@@ -416,10 +416,10 @@
       <FileType>5</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>46</ColumnNumber>
+      <ColumnNumber>6</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>0</TopLine>
-      <CurrentLine>0</CurrentLine>
+      <TopLine>1</TopLine>
+      <CurrentLine>7</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\Project\spi.h</PathWithFileName>
       <FilenameWithoutPath>spi.h</FilenameWithoutPath>
@@ -432,10 +432,10 @@
       <FileType>5</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>94</ColumnNumber>
+      <ColumnNumber>12</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
       <TopLine>1</TopLine>
-      <CurrentLine>12</CurrentLine>
+      <CurrentLine>11</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\Project\spi_mem.h</PathWithFileName>
       <FilenameWithoutPath>spi_mem.h</FilenameWithoutPath>
@@ -448,10 +448,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>26</ColumnNumber>
+      <ColumnNumber>5</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>121</TopLine>
-      <CurrentLine>14</CurrentLine>
+      <TopLine>160</TopLine>
+      <CurrentLine>185</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\Project\spi_mem.c</PathWithFileName>
       <FilenameWithoutPath>spi_mem.c</FilenameWithoutPath>
@@ -480,10 +480,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>0</ColumnNumber>
+      <ColumnNumber>32</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
       <TopLine>1</TopLine>
-      <CurrentLine>46</CurrentLine>
+      <CurrentLine>32</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\Project\tests\spi_mem_test.c</PathWithFileName>
       <FilenameWithoutPath>spi_mem_test.c</FilenameWithoutPath>
@@ -514,8 +514,8 @@
       <Focus>0</Focus>
       <ColumnNumber>4</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>26</TopLine>
-      <CurrentLine>39</CurrentLine>
+      <TopLine>27</TopLine>
+      <CurrentLine>40</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\Project\gpio.c</PathWithFileName>
       <FilenameWithoutPath>gpio.c</FilenameWithoutPath>
@@ -594,7 +594,7 @@
       <Focus>0</Focus>
       <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>1458</TopLine>
+      <TopLine>1459</TopLine>
       <CurrentLine>1468</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\Libraries\StdPeriph_Driver\src\stm32f4xx_rcc.c</PathWithFileName>
@@ -658,7 +658,7 @@
       <Focus>0</Focus>
       <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>1164</TopLine>
+      <TopLine>1165</TopLine>
       <CurrentLine>1171</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\Libraries\StdPeriph_Driver\src\stm32f4xx_i2c.c</PathWithFileName>
@@ -1112,10 +1112,10 @@
       <FileType>5</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>0</ColumnNumber>
+      <ColumnNumber>40</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>0</TopLine>
-      <CurrentLine>0</CurrentLine>
+      <TopLine>423</TopLine>
+      <CurrentLine>434</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\Libraries\StdPeriph_Driver\inc\stm32f4xx_spi.h</PathWithFileName>
       <FilenameWithoutPath>stm32f4xx_spi.h</FilenameWithoutPath>
@@ -1144,10 +1144,10 @@
       <FileType>5</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>31</ColumnNumber>
+      <ColumnNumber>35</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>0</TopLine>
-      <CurrentLine>0</CurrentLine>
+      <TopLine>145</TopLine>
+      <CurrentLine>165</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\Libraries\StdPeriph_Driver\inc\stm32f4xx_gpio.h</PathWithFileName>
       <FilenameWithoutPath>stm32f4xx_gpio.h</FilenameWithoutPath>
@@ -1170,7 +1170,7 @@
       <Focus>0</Focus>
       <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>70</TopLine>
+      <TopLine>71</TopLine>
       <CurrentLine>75</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\Libraries\TiLib\CE_Lib.c</PathWithFileName>
@@ -1202,7 +1202,7 @@
       <Focus>0</Focus>
       <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>42</TopLine>
+      <TopLine>43</TopLine>
       <CurrentLine>50</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\Libraries\TiLib\Retarget.c</PathWithFileName>
