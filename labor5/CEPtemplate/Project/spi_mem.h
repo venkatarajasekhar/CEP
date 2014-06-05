@@ -3,15 +3,20 @@
 
 #include <stdint.h>
 
-//void spi_mem_EraseChip(unsigned int chip_sel);
-//unsigned int spi_mem_ReadManufacturerID(unsigned int chip_sel);
-//uint32_t spi_mem_ReadManufacturerID_Heitmann(void);
+// spi-memory ids
+#define SPI_MEM_WORK 1
+#define SPI_MEM_WORK_H (GPIOG->BSRRH = (1<<6))
+#define SPI_MEM_WORK_L (GPIOG->BSRRL = (1<<6))
+
+#define SPI_MEM_ORIGINAL 2
+#define SPI_MEM_ORIGINAL_H (GPIOB->BSRRH = (1<<9))
+#define SPI_MEM_ORIGINAL_L (GPIOB->BSRRL = (1<<9))
 
 unsigned int spiFlashMemRead(unsigned int chip_sel, uint32_t address, uint8_t* buffer, int bufferSize);
 unsigned int spiFlashMemErase(unsigned int chip_sel, uint32_t address, uint32_t numberOfBytes);
-//void spiFlashMemEraseBlock(unsigned int chip_sel, uint32_t address,  uint8_t erase_cmd);
-void spiFlashMemWrite(unsigned int chip_sel, uint32_t address, uint8_t* buffer, int bufferSize);
+unsigned int spiFlashMemWrite(unsigned int chip_sel, uint32_t address, uint8_t* buffer, int numBytes);
 uint32_t spiReadManufacturerId(unsigned int chip_sel);
-int32_t spiCMP(uint32_t address, uint32_t bytes);
+uint8_t spiFlashMemChipCompare(void);
+uint8_t spiFlashMemChipCopy(unsigned int chip_src, unsigned int chip_dst);
 
 #endif /* SPI_MEM_ */

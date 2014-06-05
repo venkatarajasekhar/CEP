@@ -9,15 +9,14 @@
 int main(void) {
 	initCEP_Board();
 	
-    gpio_setup();
+  gpio_setup();
 	spi_setup();
 
 	//labor5();
-	//spi_mem_ReadManufacturerID_test();
+	spi_mem_ReadManufacturerID_test();
 	//spi_mem_spiFlashMemWriteRead_test();
     
-    //spi_mem_spiFlashMemErase_test();
-	spiCMP_test();
+  spi_mem_spiFlashMemErase_test();
 	
 while(1){}
 		

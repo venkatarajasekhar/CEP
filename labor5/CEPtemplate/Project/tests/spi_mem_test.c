@@ -21,13 +21,13 @@ void spi_mem_spiFlashMemWriteRead_test(void) {
 	uint32_t address = 0;
 	unsigned int i = 0;
 	
-    for(i=0; i<DATA_SIZE; i++) {
+  for(i=0; i<DATA_SIZE; i++) {
 		data_in[i] = i + 1;
 	}
     
 	printf("\nspi_mem_spiFlashMemWriteRead_test()\n");fflush(stdout);
 	
-    spiFlashMemErase(SPI_MEM_WORK, address, DATA_SIZE);
+  spiFlashMemErase(SPI_MEM_WORK, address, DATA_SIZE);
 	spiFlashMemWrite(SPI_MEM_WORK, address, data_in, DATA_SIZE);
 	spiFlashMemRead(SPI_MEM_WORK, address, data_out, DATA_SIZE);
 	
@@ -40,45 +40,32 @@ void spi_mem_spiFlashMemWriteRead_test(void) {
 
 void spi_mem_spiFlashMemErase_test(void) {
     
-    const unsigned int DATA_SIZE = 5;
-	uint8_t data_in[DATA_SIZE];
+  const unsigned int DATA_SIZE = 5;
 	uint8_t data_out[DATA_SIZE];
+	uint8_t data_in[DATA_SIZE];
 	uint32_t address = 0;
 	unsigned int i = 0;
 	
-    for(i=0; i<DATA_SIZE; i++) {
-		data_in[i] = i + 5;
-	}
-    
-    spiFlashMemErase(SPI_MEM_WORK, address, DATA_SIZE);
-	spiFlashMemWrite(SPI_MEM_WORK, address, data_in, DATA_SIZE);
-	spiFlashMemRead(SPI_MEM_WORK, address, data_out, DATA_SIZE);
-    
-    spiFlashMemErase(SPI_MEM_WORK, address, DATA_SIZE);
-	spiFlashMemRead(SPI_MEM_WORK, address, data_out, DATA_SIZE);	
+	printf("\nspi_mem_spiFlashMemWriteRead_test()\n");fflush(stdout);
 	
+	printf("in: ");fflush(stdout);
+  for(i=0; i<DATA_SIZE; i++) {
+		data_out[i] = i;
+		printf(" %X", data_out[i]);fflush(stdout);
+	}
+	printf("\n");fflush(stdout);
+    
+  spiFlashMemErase(SPI_MEM_WORK, address, DATA_SIZE);
+	spiFlashMemWrite(SPI_MEM_WORK, address, data_out, DATA_SIZE);
+    
+  spiFlashMemErase(SPI_MEM_WORK, address, DATA_SIZE);
+	spiFlashMemRead(SPI_MEM_WORK, address, data_in, DATA_SIZE);
+	
+	printf("out: ");fflush(stdout);
+	for(i=0; i<DATA_SIZE; i++) {
+		printf(" %X", data_in[i]);fflush(stdout);
+	}
+	printf("\n");fflush(stdout);
 }
 
-void spiCMP_test(void){
-    int ergebnis = 0;
-    const unsigned int DATA_SIZE = 5;
-	uint8_t data_in[DATA_SIZE];
-	uint8_t data_out[DATA_SIZE];
-	uint32_t address = 0;
-	unsigned int i = 0;
-	
-    for(i=0; i<DATA_SIZE; i++) {
-		data_in[i] = i + 5;
-	}
-    
-    spiFlashMemErase(SPI_MEM_WORK, address, DATA_SIZE);
-	spiFlashMemWrite(SPI_MEM_WORK, address, data_in, DATA_SIZE);
-	
-    //spiFlashMemRead(SPI_MEM_WORK, address, data_out, DATA_SIZE);
-    
-    spiFlashMemErase(SPI_MEM_ORIGINAL, address, DATA_SIZE);
-	spiFlashMemRead(SPI_MEM_ORIGINAL, address, data_out, DATA_SIZE);	
-
-    ergebnis = spiCMP(address , DATA_SIZE);
-}
 
