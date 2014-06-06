@@ -3,8 +3,8 @@
 <pre>
 <h1>µVision Build Log</h1>
 <h2>Project:</h2>
-C:\Documents and Settings\schmid_m\Desktop\CEP\labor5\CEPtemplate\Project.uvproj
-Project File Date:  06/04/2014
+C:\Documents and Settings\abd299\Desktop\cep\labor5\CEPtemplate\Project.uvproj
+Project File Date:  06/06/2014
 
 <h2>Output:</h2>
 Rebuild target 'cep'
@@ -13,6 +13,11 @@ Project\main.c(23): warning:  #111-D: statement is unreachable
         return EXIT_SUCCESS;
 Project\main.c: 1 warning, 0 errors
 compiling labor5.c...
+Project\labor5.c(23): warning:  #177-D: variable "write" was declared but never referenced
+      int write = 1;
+Project\labor5.c(25): warning:  #177-D: variable "bufferWrite" was declared but never referenced
+      uint8_t bufferWrite[BUFFER_SIZE];
+Project\labor5.c: 2 warnings, 0 errors
 compiling spi.c...
 compiling spi_mem.c...
 compiling spi_mem_test.c...
@@ -30,46 +35,20 @@ compiling Usart.c...
 compiling Retarget.c...
 compiling tft.c...
 linking...
-Program Size: Code=5768 RO-data=424 RW-data=28 ZI-data=2076  
-".\Build\cep.axf" - 0 Error(s), 1 Warning(s).
-</pre>
-</body>
-</html>
-ttings\\schmid_m\\Desktop\\CEP\\labor5\\CEPtemplate\\Build\\cep.axf" 
+Program Size: Code=6948 RO-data=628 RW-data=32 ZI-data=2080  
+".\Build\cep.axf" - 0 Error(s), 3 Warning(s).
+Load "C:\\Documents and Settings\\abd299\\Desktop\\cep\\labor5\\CEPtemplate\\Build\\cep.axf" 
 Erase Done.
 Programming Done.
 Verify OK.
-declared implicitly
-        enable_SSEL(chip_sel);
-Project\spi_mem.c(132): warning:  #223-D: function "enable_SSEL" declared implicitly
-                enable_SSEL(chip_sel);
-Project\spi_mem.c(153): warning:  #223-D: function "enable_SSEL" declared implicitly
-                enable_SSEL(chip_sel);
-Project\spi_mem.c(186): warning:  #223-D: function "enable_SSEL" declared implicitly
-          enable_SSEL(chip_sel);
-Project\spi_mem.c(277): warning:  #223-D: function "enable_SSEL" declared implicitly
-                enable_SSEL(chip_sel);
-Project\spi_mem.c(310): error:  #247: function "spiFlashMemChipCopy" has already been defined
-  uint8_t spiFlashMemChipCopy(unsigned int chip_src, unsigned int chip_dst) {
-Project\spi_mem.c: 8 warnings, 3 errors
-compiling spi_mem_test.c...
-Project\tests\spi_mem_test.c(6): error:  #130: expected a "{"
-  void spi_mem_ReadManufacturerID_test(void) {
-Project\tests\spi_mem_test.c(14): warning:  #940-D: missing return statement at end of non-void function "spiFlashMemChipCopy"
-  }
-Project\tests\spi_mem_test.c: 1 warning, 1 error
-compiling gpio.c...
-compiling core_cm3.c...
-compiling misc.c...
-compiling stm32f4xx_gpio.c...
-compiling stm32f4xx_rcc.c...
-compiling stm32f4xx_usart.c...
-assembling startup_stm32f40_41xxx.s...
-compiling system_stm32f4xx.c...
-compiling stm32f4xx_i2c.c...
-compiling CE_Lib.c...
-compiling Usart.c...
-compiling Retarget.c...
-compiling tft.c...
-".\Build\cep.axf" - 4 Error(s), 10 Warning(s).
-Target not created
+</pre>
+</body>
+</html>
+ttings\\abd299\\Desktop\\cep\\labor5\\CEPtemplate\\Build\\cep.axf" 
+Erase Done.
+Programming Done.
+Verify OK.
+Load "C:\\Documents and Settings\\abd299\\Desktop\\cep\\labor5\\CEPtemplate\\Build\\cep.axf" 
+Erase Done.
+Programming Done.
+Verify OK.

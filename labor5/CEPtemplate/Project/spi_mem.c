@@ -22,14 +22,6 @@
 // status register
 #define StatusRegReady 0x01
 
-#define SPI_MEM_SIZE 0xff000
-#define PAGE_SIZE 256
-
-// mem-block size
-#define BLOCK_4KB (4 * 1024) //4069
-#define BLOCK_32KB (32 * 1024) //32768
-#define BLOCK_64KB (64 * 1024) //65536
-
 // how many 4KB-blocks of each size are in a single 64K-block
 #define BlockCount_64 (BLOCK_64KB/BLOCK_4KB)
 #define BlockCount_32 (BLOCK_32KB/BLOCK_4KB)
@@ -145,21 +137,22 @@ static void spiFlashMemEraseBlock(unsigned int chip_sel, uint32_t address,  uint
     spiFlashMemWaitReady(chip_sel);
 }
 
-//////////////////////////////////////////////////////////////////////////////////////// spiFlashMemWritePage
 /*
  * writes a page to a given address
  */
 static void spiFlashMemWritePage(unsigned int chip_sel, uint32_t address, uint8_t* buffer, int numBytes) {
 		int i = 0;
 	
-		// chip-select
-		enable_SSEL(chip_sel);
+	
 	
     spiFlashMemSetWriteEnable(chip_sel);
     spiFLashMemGlobalUnprotect(chip_sel);
     spiFlashMemSetWriteEnable(chip_sel);
 	
-		spiTransfer(CmdPageProgram);
+    // chip-select
+	enable_SSEL(chip_sel);
+    
+	spiTransfer(CmdPageProgram);
     spiTransfer(address >> 16);
     spiTransfer(address >> 8);
     spiTransfer(address);
@@ -179,11 +172,11 @@ static void spiFlashMemWritePage(unsigned int chip_sel, uint32_t address, uint8_
 /*
  * reads at given address
  */
-unsigned int spiFlashMemRead(unsigned int chip_sel, uint32_t address, uint8_t* buffer, int numBytes) {
+int spiFlashMemRead(unsigned int chip_sel, uint32_t address, uint8_t* buffer, int numBytes) {
     int i = 0;
     
     if(address + numBytes > SPI_MEM_SIZE) {
-        return 0;
+        return -1;
     } else {
         // chip-select
         enable_SSEL(chip_sel);
@@ -201,18 +194,18 @@ unsigned int spiFlashMemRead(unsigned int chip_sel, uint32_t address, uint8_t* b
         // chip-unselect
         disable_SSEL(chip_sel);
     
-        return 1;
+        return 0;
     }
 }
 
 /*
  * erases memory starting at given address
  */
-unsigned int spiFlashMemErase(unsigned int chip_sel, uint32_t address, uint32_t numBytes) {
+int spiFlashMemErase(unsigned int chip_sel, uint32_t address, uint32_t numBytes) {
     uint32_t numberOfBlocks = ((address + numBytes) / BLOCK_4KB) - (address / BLOCK_4KB) + 1;
     
-    if((address + numBytes) > SPI_MEM_SIZE){
-        return 0;
+    if((address + numBytes) > SPI_MEM_SIZE){    
+        return -1;
     
     }else{    
         while(numberOfBlocks) {
@@ -233,31 +226,30 @@ unsigned int spiFlashMemErase(unsigned int chip_sel, uint32_t address, uint32_t 
             }
         } 
         
-        return 1;
+        return 0;
     }
 }
-
-//////////////////////////////////////////////////////////////////////////////////////// spiFlashMemWrite
 
 /*
  * writes bytes to given address
  */
-unsigned int spiFlashMemWrite(unsigned int chip_sel, uint32_t address, uint8_t* buffer, int numBytes) { 	
-		unsigned int mem_idx = 0;
+int spiFlashMemWrite(unsigned int chip_sel, uint32_t address, uint8_t* buffer, int numBytes) { 	
+		unsigned int mem_idx = 0;   //buffer-index of written bytes
 		unsigned int mem_left = 0;
 	
-		if((address + numBytes) > SPI_MEM_SIZE){
-        return 0;
+		if((address + numBytes) > SPI_MEM_SIZE){     //avoid overlap
+            return -1;
 		} else {
-		
-			mem_left = PAGE_SIZE - (address % PAGE_SIZE);
-			
-			while(numBytes) {
-				if(mem_left >= numBytes) {
+
+			while(numBytes) {       //as long as there are bytes left to write
+             
+                mem_left = PAGE_SIZE - (address % PAGE_SIZE);    //how many bytes of the current page are left
+                
+				if(mem_left >= numBytes) {      // left bytes fit into current page  
 					spiFlashMemWritePage(chip_sel, address, &buffer[mem_idx], numBytes);
 					address += numBytes;
 					mem_idx   += numBytes;
-					numBytes 	= 0;
+					numBytes 	= 0;        //done!
 				} else {
 					spiFlashMemWritePage(chip_sel, address, &buffer[mem_idx], mem_left);
 					address += mem_left;
@@ -266,7 +258,7 @@ unsigned int spiFlashMemWrite(unsigned int chip_sel, uint32_t address, uint8_t* 
 				}
 			}
 			
-			return 1;
+			return 0;
 		}	
 }
 
@@ -277,7 +269,7 @@ uint32_t spiReadManufacturerId(unsigned int chip_sel) {
     int res = 0;
     
     // chip-select
-		enable_SSEL(chip_sel);
+	enable_SSEL(chip_sel);
     
     spiTransfer(CmdReadManufacturerId);
     res = (spiTransfer(DUMMY) << 16);
@@ -285,40 +277,108 @@ uint32_t spiReadManufacturerId(unsigned int chip_sel) {
     res |= spiTransfer(DUMMY);
     
     // chip-unselect
-		disable_SSEL(chip_sel);
+	disable_SSEL(chip_sel);
     
     return res;
 }
 
-uint8_t spiFlashMemChipCompare(void) {
-	uint8_t buffer_work[BLOCK_64KB];
-	uint8_t buffer_original[BLOCK_64KB];
+/*
+ * compares work-flash with original-flash
+ */
+int spiFlashMemChipCompare(void) {
+	uint8_t buffer_work[BLOCK_32KB];
+	uint8_t buffer_original[BLOCK_32KB];
 	unsigned int address = 0;
 	unsigned int i = 0;
 	
-	for(address=0; address<SPI_MEM_SIZE; address+=BLOCK_64KB) {
-		spiFlashMemRead(SPI_MEM_ORIGINAL, address, buffer_original, BLOCK_64KB);
-		spiFlashMemRead(SPI_MEM_WORK, address, buffer_work, BLOCK_64KB);
+	for(address=0; address<SPI_MEM_SIZE; address+=BLOCK_32KB) {
+		spiFlashMemRead(SPI_MEM_ORIGINAL, address, buffer_original, BLOCK_32KB);
+		spiFlashMemRead(SPI_MEM_WORK, address, buffer_work, BLOCK_32KB);
 	
-		for(i=0; i<BLOCK_64KB; i++) {
+		for(i=0; i<BLOCK_32KB; i++) {
 			if(buffer_original[i] != buffer_work[i]) {
-				return 0;
+				return -1;
 			}	
 		}
 	}	
 	
-	return 1;
+	return 0;
 }
 
-uint8_t spiFlashMemChipCopy(unsigned int chip_src, unsigned int chip_dst) {
-	uint8_t buffer[BLOCK_64KB];
+/*
+ * compares work-flash with original-flash
+ */
+int spiFlashMemCompare(unsigned int address_work, unsigned int address_original, unsigned int bytes) {
+    uint8_t workBuffer[PAGE_SIZE];
+    uint8_t originalBuffer[PAGE_SIZE];
+    unsigned int bytesToCompare = 0;
+    unsigned int i = 0;    
+    
+    if(((address_work + bytes ) > SPI_MEM_SIZE) || ((address_original + bytes ) > SPI_MEM_SIZE)) {
+        return -1;
+    } else {
+
+        while(bytes) {
+            if(bytes > PAGE_SIZE) {
+                spiFlashMemRead(SPI_MEM_WORK, address_work, workBuffer, PAGE_SIZE);
+                spiFlashMemRead(SPI_MEM_ORIGINAL, address_original, originalBuffer, PAGE_SIZE);
+                bytesToCompare = PAGE_SIZE;
+                bytes -= PAGE_SIZE;
+            } else {
+                spiFlashMemRead(SPI_MEM_WORK, address_work, workBuffer, bytes);
+                spiFlashMemRead(SPI_MEM_ORIGINAL, address_original, originalBuffer, bytes);
+                bytesToCompare = bytes;
+                bytes = 0;
+            }
+
+            for(i = 0; i<bytesToCompare; i++) {
+                if(workBuffer[i] != originalBuffer[i]) {
+                    return -1;
+                }
+            }
+        } 
+    
+    }    
+
+    return 0;
+}
+
+/*
+ * copies source-flash to destination-flash
+ */
+void spiFlashMemChipCopy(unsigned int chip_src, unsigned int chip_dst) {
+	uint8_t buffer[BLOCK_32KB];
 	int address = 0;
 	
-	for(address=0; address<SPI_MEM_SIZE; address+=BLOCK_64KB) {
-		spiFlashMemRead(chip_src, address, buffer, BLOCK_64KB);
-		spiFlashMemWrite(chip_dst, address, buffer, BLOCK_64KB);
+	for(address=0; address<SPI_MEM_SIZE; address+=BLOCK_32KB) {
+		spiFlashMemRead(chip_src, address, buffer, BLOCK_32KB);
+		spiFlashMemWrite(chip_dst, address, buffer, BLOCK_32KB);
 	}
-		
-	return 1;
 }
 
+/*
+ * copies a memory area from source-flash to destination-flash
+ */
+int spiFlashMemCopy(unsigned int chip_src, unsigned int chip_dst, unsigned int address_src, unsigned int address_dst, unsigned int bytes) {
+    uint8_t buffer[PAGE_SIZE];
+    
+     if(((address_src + bytes ) > SPI_MEM_SIZE) || ((address_dst + bytes ) > SPI_MEM_SIZE)) {
+        return -1;
+     } else {
+     
+          while(bytes) {
+            if(bytes > PAGE_SIZE) {
+                spiFlashMemRead(chip_src, address_src, buffer, PAGE_SIZE);
+                spiFlashMemWrite(chip_dst, address_dst, buffer, PAGE_SIZE);
+                bytes -= PAGE_SIZE;
+            } else {
+                spiFlashMemRead(chip_src, address_src, buffer, bytes);
+                spiFlashMemWrite(chip_dst, address_dst, buffer, bytes);
+//              bytes = 0;
+            }
+          }
+          
+     }         
+    
+    return 0;
+}    

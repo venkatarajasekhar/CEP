@@ -15,3 +15,4 @@
 .\build\labor5.o: C:\Keil\ARM\ARMCC\bin\..\include\stdio.h
 .\build\labor5.o: Project\global.h
 .\build\labor5.o: Project\labor5.h
+.\build\labor5.o: Project\spi_mem.h
