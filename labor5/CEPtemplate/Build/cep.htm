@@ -3,9 +3,9 @@
 <title>Static Call Graph - [.\Build\cep.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Build\cep.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5.03 [Build 76]: Last Updated: Fri Jun 06 19:27:39 2014
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5.03 [Build 76]: Last Updated: Fri Jun 06 21:26:27 2014
 <BR><P>
-<H3>Maximum Stack Usage =       4360 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
+<H3>Maximum Stack Usage =        208 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
 main &rArr; labor5 &rArr; __0scanf &rArr; __vfscanf_char_file &rArr; __vfscanf_char &rArr; __vfscanf &rArr; _scanf_int
 <P>
@@ -134,7 +134,7 @@ Global Symbols
 <P><STRONG><a name="[5f]"></a>__main</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry.o(.ARM.Collect$$$$00000000))
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f40_41xxx.o(.text)
 </UL>
-<P><STRONG><a name="[9f]"></a>_main_stk</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry2.o(.ARM.Collect$$$$00000001))
+<P><STRONG><a name="[a4]"></a>_main_stk</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry2.o(.ARM.Collect$$$$00000001))
 
 <P><STRONG><a name="[65]"></a>_main_scatterload</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry5.o(.ARM.Collect$$$$00000004))
 <BR><BR>[Calls]<UL><LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__scatterload
@@ -144,15 +144,15 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__scatterload
 </UL>
 
-<P><STRONG><a name="[a0]"></a>_main_clock</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry7b.o(.ARM.Collect$$$$00000008))
+<P><STRONG><a name="[a5]"></a>_main_clock</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry7b.o(.ARM.Collect$$$$00000008))
 
-<P><STRONG><a name="[a1]"></a>_main_cpp_init</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry8b.o(.ARM.Collect$$$$0000000A))
+<P><STRONG><a name="[a6]"></a>_main_cpp_init</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry8b.o(.ARM.Collect$$$$0000000A))
 
-<P><STRONG><a name="[a2]"></a>_main_init</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry9a.o(.ARM.Collect$$$$0000000B))
+<P><STRONG><a name="[a7]"></a>_main_init</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry9a.o(.ARM.Collect$$$$0000000B))
 
-<P><STRONG><a name="[a3]"></a>__rt_final_cpp</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry10a.o(.ARM.Collect$$$$0000000D))
+<P><STRONG><a name="[a8]"></a>__rt_final_cpp</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry10a.o(.ARM.Collect$$$$0000000D))
 
-<P><STRONG><a name="[a4]"></a>__rt_final_exit</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry11a.o(.ARM.Collect$$$$0000000F))
+<P><STRONG><a name="[a9]"></a>__rt_final_exit</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry11a.o(.ARM.Collect$$$$0000000F))
 
 <P><STRONG><a name="[1]"></a>Reset_Handler</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, startup_stm32f40_41xxx.o(.text))
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f40_41xxx.o(RESET)
@@ -508,9 +508,9 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[65]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_main_scatterload
 </UL>
 
-<P><STRONG><a name="[a5]"></a>__scatterload_rt2</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, init.o(.text), UNUSED)
+<P><STRONG><a name="[aa]"></a>__scatterload_rt2</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, init.o(.text), UNUSED)
 
-<P><STRONG><a name="[a6]"></a>_fgetc$bs</STRONG> (Thumb, 28 bytes, Stack size 8 bytes, fgetc_b.o(.text), UNUSED)
+<P><STRONG><a name="[ab]"></a>_fgetc$bs</STRONG> (Thumb, 28 bytes, Stack size 8 bytes, fgetc_b.o(.text), UNUSED)
 
 <P><STRONG><a name="[61]"></a>__backspace</STRONG> (Thumb, 10 bytes, Stack size 0 bytes, fgetc_b.o(.text))
 <BR>[Address Reference Count : 1]<UL><LI> scanf_char_file.o(.text)
@@ -519,13 +519,13 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[6b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_uldivmod
 </UL>
 
-<P><STRONG><a name="[a7]"></a>_ll_shift_l</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, llshl.o(.text), UNUSED)
+<P><STRONG><a name="[ac]"></a>_ll_shift_l</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, llshl.o(.text), UNUSED)
 
 <P><STRONG><a name="[6c]"></a>__aeabi_llsr</STRONG> (Thumb, 32 bytes, Stack size 0 bytes, llushr.o(.text), UNUSED)
 <BR><BR>[Called By]<UL><LI><a href="#[6b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_uldivmod
 </UL>
 
-<P><STRONG><a name="[a8]"></a>_ll_ushift_r</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, llushr.o(.text), UNUSED)
+<P><STRONG><a name="[ad]"></a>_ll_ushift_r</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, llushr.o(.text), UNUSED)
 
 <P><STRONG><a name="[6e]"></a>__vfscanf_char</STRONG> (Thumb, 20 bytes, Stack size 0 bytes, scanf_char.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 144<LI>Call Chain = __vfscanf_char &rArr; __vfscanf &rArr; _scanf_int
@@ -535,7 +535,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[68]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__vfscanf_char_file
 </UL>
 
-<P><STRONG><a name="[a9]"></a>__semihosting_library_function</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, semi.o(.text), UNUSED)
+<P><STRONG><a name="[ae]"></a>__semihosting_library_function</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, semi.o(.text), UNUSED)
 
 <P><STRONG><a name="[63]"></a>isspace</STRONG> (Thumb, 10 bytes, Stack size 0 bytes, isspace_c.o(.text))
 <BR><BR>[Calls]<UL><LI><a href="#[71]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__ctype_lookup
@@ -550,7 +550,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__vfscanf_char
 </UL>
 
-<P><STRONG><a name="[aa]"></a>__I$use$semihosting$fgetc</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, iusesemig.o(.text), UNUSED)
+<P><STRONG><a name="[af]"></a>__I$use$semihosting$fgetc</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, iusesemig.o(.text), UNUSED)
 
 <P><STRONG><a name="[71]"></a>__ctype_lookup</STRONG> (Thumb, 34 bytes, Stack size 0 bytes, ctype_c.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[63]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;isspace
@@ -628,7 +628,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[76]"></a>RCC_APB1PeriphClockCmd</STRONG> (Thumb, 26 bytes, Stack size 0 bytes, stm32f4xx_rcc.o(i.RCC_APB1PeriphClockCmd))
-<BR><BR>[Called By]<UL><LI><a href="#[9b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;spi_setup
+<BR><BR>[Called By]<UL><LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;spi_setup
 <LI><a href="#[75]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TFT_Init
 </UL>
 
@@ -764,19 +764,20 @@ Global Symbols
 <BR><BR>[Calls]<UL><LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_core
 </UL>
 
-<P><STRONG><a name="[ab]"></a>__1printf$8</STRONG> (Thumb, 0 bytes, Stack size 24 bytes, printf8.o(i.__0printf$8), UNUSED)
+<P><STRONG><a name="[b0]"></a>__1printf$8</STRONG> (Thumb, 0 bytes, Stack size 24 bytes, printf8.o(i.__0printf$8), UNUSED)
 
 <P><STRONG><a name="[99]"></a>__2printf</STRONG> (Thumb, 0 bytes, Stack size 24 bytes, printf8.o(i.__0printf$8))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = __2printf
 </UL>
-<BR>[Called By]<UL><LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;labor5
+<BR>[Called By]<UL><LI><a href="#[9b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;spiFlashMemErase
+<LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;labor5
 </UL>
 
-<P><STRONG><a name="[ac]"></a>__scatterload_copy</STRONG> (Thumb, 14 bytes, Stack size unknown bytes, handlers.o(i.__scatterload_copy), UNUSED)
+<P><STRONG><a name="[b1]"></a>__scatterload_copy</STRONG> (Thumb, 14 bytes, Stack size unknown bytes, handlers.o(i.__scatterload_copy), UNUSED)
 
-<P><STRONG><a name="[ad]"></a>__scatterload_null</STRONG> (Thumb, 2 bytes, Stack size unknown bytes, handlers.o(i.__scatterload_null), UNUSED)
+<P><STRONG><a name="[b2]"></a>__scatterload_null</STRONG> (Thumb, 2 bytes, Stack size unknown bytes, handlers.o(i.__scatterload_null), UNUSED)
 
-<P><STRONG><a name="[ae]"></a>__scatterload_zeroinit</STRONG> (Thumb, 14 bytes, Stack size unknown bytes, handlers.o(i.__scatterload_zeroinit), UNUSED)
+<P><STRONG><a name="[b3]"></a>__scatterload_zeroinit</STRONG> (Thumb, 14 bytes, Stack size unknown bytes, handlers.o(i.__scatterload_zeroinit), UNUSED)
 
 <P><STRONG><a name="[60]"></a>fgetc</STRONG> (Thumb, 28 bytes, Stack size 16 bytes, retarget.o(i.fgetc))
 <BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = fgetc &rArr; fputc &rArr; USART_SendChar
@@ -824,41 +825,55 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;initCEP_Board
 </UL>
 
-<P><STRONG><a name="[98]"></a>labor5</STRONG> (Thumb, 384 bytes, Stack size 4160 bytes, labor5.o(i.labor5))
-<BR><BR>[Stack]<UL><LI>Max Depth = 4360<LI>Call Chain = labor5 &rArr; __0scanf &rArr; __vfscanf_char_file &rArr; __vfscanf_char &rArr; __vfscanf &rArr; _scanf_int
+<P><STRONG><a name="[98]"></a>labor5</STRONG> (Thumb, 644 bytes, Stack size 0 bytes, labor5.o(i.labor5))
+<BR><BR>[Stack]<UL><LI>Max Depth = 200<LI>Call Chain = labor5 &rArr; __0scanf &rArr; __vfscanf_char_file &rArr; __vfscanf_char &rArr; __vfscanf &rArr; _scanf_int
 </UL>
 <BR>[Calls]<UL><LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;spiFlashMemRead
+<LI><a href="#[9b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;spiFlashMemErase
 <LI><a href="#[67]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__0scanf
 <LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
 <BR>[Called By]<UL><LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[5d]"></a>main</STRONG> (Thumb, 20 bytes, Stack size 0 bytes, main.o(i.main))
-<BR><BR>[Stack]<UL><LI>Max Depth = 4360<LI>Call Chain = main &rArr; labor5 &rArr; __0scanf &rArr; __vfscanf_char_file &rArr; __vfscanf_char &rArr; __vfscanf &rArr; _scanf_int
+<P><STRONG><a name="[5d]"></a>main</STRONG> (Thumb, 22 bytes, Stack size 8 bytes, main.o(i.main))
+<BR><BR>[Stack]<UL><LI>Max Depth = 208<LI>Call Chain = main &rArr; labor5 &rArr; __0scanf &rArr; __vfscanf_char_file &rArr; __vfscanf_char &rArr; __vfscanf &rArr; _scanf_int
 </UL>
-<BR>[Calls]<UL><LI><a href="#[9b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;spi_setup
+<BR>[Calls]<UL><LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;spi_setup
 <LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;labor5
 <LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;initCEP_Board
 <LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gpio_setup
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> entry9a.o(.ARM.Collect$$$$0000000B)
 </UL>
-<P><STRONG><a name="[9a]"></a>spiFlashMemRead</STRONG> (Thumb, 96 bytes, Stack size 24 bytes, spi_mem.o(i.spiFlashMemRead))
-<BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = spiFlashMemRead
+<P><STRONG><a name="[9b]"></a>spiFlashMemErase</STRONG> (Thumb, 144 bytes, Stack size 24 bytes, spi_mem.o(i.spiFlashMemErase))
+<BR><BR>[Stack]<UL><LI>Max Depth = 56<LI>Call Chain = spiFlashMemErase &rArr; spiFlashMemEraseBlock &rArr; spiFlashMemWaitReady
 </UL>
-<BR>[Calls]<UL><LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;enable_SSEL
-<LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;disable_SSEL
-<LI><a href="#[9d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;spiTransfer
+<BR>[Calls]<UL><LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;spiFlashMemEraseBlock
+<LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
 <BR>[Called By]<UL><LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;labor5
 </UL>
 
-<P><STRONG><a name="[9d]"></a>spiTransfer</STRONG> (Thumb, 28 bytes, Stack size 0 bytes, spi.o(i.spiTransfer))
-<BR><BR>[Called By]<UL><LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;spiFlashMemRead
+<P><STRONG><a name="[9a]"></a>spiFlashMemRead</STRONG> (Thumb, 96 bytes, Stack size 24 bytes, spi_mem.o(i.spiFlashMemRead))
+<BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = spiFlashMemRead
+</UL>
+<BR>[Calls]<UL><LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;enable_SSEL
+<LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;disable_SSEL
+<LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;spiTransfer
+</UL>
+<BR>[Called By]<UL><LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;labor5
 </UL>
 
-<P><STRONG><a name="[9b]"></a>spi_setup</STRONG> (Thumb, 26 bytes, Stack size 8 bytes, spi.o(i.spi_setup))
+<P><STRONG><a name="[9f]"></a>spiTransfer</STRONG> (Thumb, 28 bytes, Stack size 0 bytes, spi.o(i.spiTransfer))
+<BR><BR>[Called By]<UL><LI><a href="#[a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;spiFlashMemWaitReady
+<LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;spiFlashMemSetWriteEnable
+<LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;spiFlashMemEraseBlock
+<LI><a href="#[9d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;spiFLashMemGlobalUnprotect
+<LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;spiFlashMemRead
+</UL>
+
+<P><STRONG><a name="[9c]"></a>spi_setup</STRONG> (Thumb, 26 bytes, Stack size 8 bytes, spi.o(i.spi_setup))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = spi_setup
 </UL>
 <BR>[Calls]<UL><LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_APB1PeriphClockCmd
@@ -869,12 +884,63 @@ Global Symbols
 <H3>
 Local Symbols
 </H3>
-<P><STRONG><a name="[9e]"></a>disable_SSEL</STRONG> (Thumb, 22 bytes, Stack size 0 bytes, spi_mem.o(i.disable_SSEL))
-<BR><BR>[Called By]<UL><LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;spiFlashMemRead
+<P><STRONG><a name="[a0]"></a>disable_SSEL</STRONG> (Thumb, 22 bytes, Stack size 0 bytes, spi_mem.o(i.disable_SSEL))
+<BR><BR>[Called By]<UL><LI><a href="#[a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;spiFlashMemWaitReady
+<LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;spiFlashMemSetWriteEnable
+<LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;spiFlashMemEraseBlock
+<LI><a href="#[9d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;spiFLashMemGlobalUnprotect
+<LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;spiFlashMemRead
 </UL>
 
-<P><STRONG><a name="[9c]"></a>enable_SSEL</STRONG> (Thumb, 22 bytes, Stack size 0 bytes, spi_mem.o(i.enable_SSEL))
-<BR><BR>[Called By]<UL><LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;spiFlashMemRead
+<P><STRONG><a name="[9e]"></a>enable_SSEL</STRONG> (Thumb, 22 bytes, Stack size 0 bytes, spi_mem.o(i.enable_SSEL))
+<BR><BR>[Called By]<UL><LI><a href="#[a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;spiFlashMemWaitReady
+<LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;spiFlashMemSetWriteEnable
+<LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;spiFlashMemEraseBlock
+<LI><a href="#[9d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;spiFLashMemGlobalUnprotect
+<LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;spiFlashMemRead
+</UL>
+
+<P><STRONG><a name="[9d]"></a>spiFLashMemGlobalUnprotect</STRONG> (Thumb, 30 bytes, Stack size 8 bytes, spi_mem.o(i.spiFLashMemGlobalUnprotect))
+<BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = spiFLashMemGlobalUnprotect
+</UL>
+<BR>[Calls]<UL><LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;enable_SSEL
+<LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;disable_SSEL
+<LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;spiTransfer
+</UL>
+<BR>[Called By]<UL><LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;spiFlashMemEraseBlock
+</UL>
+
+<P><STRONG><a name="[a1]"></a>spiFlashMemEraseBlock</STRONG> (Thumb, 74 bytes, Stack size 16 bytes, spi_mem.o(i.spiFlashMemEraseBlock))
+<BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = spiFlashMemEraseBlock &rArr; spiFlashMemWaitReady
+</UL>
+<BR>[Calls]<UL><LI><a href="#[a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;spiFlashMemWaitReady
+<LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;spiFlashMemSetWriteEnable
+<LI><a href="#[9d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;spiFLashMemGlobalUnprotect
+<LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;enable_SSEL
+<LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;disable_SSEL
+<LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;spiTransfer
+</UL>
+<BR>[Called By]<UL><LI><a href="#[9b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;spiFlashMemErase
+</UL>
+
+<P><STRONG><a name="[a2]"></a>spiFlashMemSetWriteEnable</STRONG> (Thumb, 24 bytes, Stack size 8 bytes, spi_mem.o(i.spiFlashMemSetWriteEnable))
+<BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = spiFlashMemSetWriteEnable
+</UL>
+<BR>[Calls]<UL><LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;enable_SSEL
+<LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;disable_SSEL
+<LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;spiTransfer
+</UL>
+<BR>[Called By]<UL><LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;spiFlashMemEraseBlock
+</UL>
+
+<P><STRONG><a name="[a3]"></a>spiFlashMemWaitReady</STRONG> (Thumb, 48 bytes, Stack size 16 bytes, spi_mem.o(i.spiFlashMemWaitReady))
+<BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = spiFlashMemWaitReady
+</UL>
+<BR>[Calls]<UL><LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;enable_SSEL
+<LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;disable_SSEL
+<LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;spiTransfer
+</UL>
+<BR>[Called By]<UL><LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;spiFlashMemEraseBlock
 </UL>
 
 <P><STRONG><a name="[74]"></a>SetSysClock</STRONG> (Thumb, 218 bytes, Stack size 12 bytes, system_stm32f4xx.o(i.SetSysClock))

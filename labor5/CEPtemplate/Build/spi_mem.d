@@ -14,3 +14,5 @@
 .\build\spi_mem.o: Project\spi.h
 .\build\spi_mem.o: Project\spi_mem.h
 .\build\spi_mem.o: Project\global.h
+.\build\spi_mem.o: .\Libraries\TiLib\CE_Lib.h
+.\build\spi_mem.o: C:\Keil\ARM\ARMCC\bin\..\include\stdio.h

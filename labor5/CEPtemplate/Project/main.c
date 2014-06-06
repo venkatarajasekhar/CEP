@@ -18,7 +18,7 @@ int main(void) {
     //spi_mem_spiFlashMemWrite_test();
     //spi_mem_spiFlashMemErase_test();
 	
-while(1){}
+    //while(1){}
 		
 	return EXIT_SUCCESS;
 }

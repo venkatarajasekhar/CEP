@@ -15,20 +15,19 @@ typedef struct{
 
 #define BUFFER_SIZE BLOCK_4KB
 
+static int i = 0;
+static eingabe_t eingabe;
+static uint8_t bufferRead[BUFFER_SIZE];
+
 void labor5(void) {
-	eingabe_t eingabe; 
-    
     //Hilfs-Variablen 
-    int i;
-    int write = 1;
-    uint8_t bufferRead[BUFFER_SIZE];
-    uint8_t bufferWrite[BUFFER_SIZE];
+    //int write = 1;
+    //uint8_t bufferWrite[BUFFER_SIZE];
   
     while(1) {         
-        printf("\n");
-        printf("Bitte entscheiden Sie sich fuer eine Option \n");
-        printf(" 1: Auslesen \n 2: Loeschen \n 3: Programmieren \n 4: Compare \n 5: Copy \n");
-        scanf("%d", &eingabe.auswahl);
+        printf("\nBitte entscheiden Sie sich fuer eine Option\n");fflush(stdout);
+        printf(" 1: Auslesen \n 2: Loeschen \n 3: Programmieren \n 4: Compare \n 5: Copy\n");fflush(stdout);
+        scanf("%d", &eingabe.auswahl);fflush(stdout);
         printf("--> %d \n", eingabe.auswahl);fflush(stdout); 
           
         switch(eingabe.auswahl) {
@@ -49,50 +48,61 @@ void labor5(void) {
                 printf("--> %d \n", eingabe.startadresse);fflush(stdout);
                   
                 //Anzahl Bytes 
-                printf("\nBitte geben Sie die Anzahl der Bytes, des auszugebenden Bereiches\n"); fflush(stdout);
-                scanf("%X", &eingabe.anzahlBytes);
+                printf("\nBitte geben Sie die Anzahl der Bytes, des auszugebenden Bereiches\n");fflush(stdout);
+                scanf("%d", &eingabe.anzahlBytes);
                 printf("--> %d \n", eingabe.anzahlBytes);fflush(stdout);
                           
-                printf("\n");
+                printf("\n");fflush(stdout);
                 while(eingabe.anzahlBytes) {
                     if(eingabe.anzahlBytes > BUFFER_SIZE) {
                         spiFlashMemRead(eingabe.baustein_src, eingabe.startadresse, bufferRead, BUFFER_SIZE);
+                        
+                         for(i = 0; i < BUFFER_SIZE; i++) {
+                            printf("%X", bufferRead[i]);fflush(stdout);
+                        }
+                        
                         eingabe.anzahlBytes -= BUFFER_SIZE;
                         eingabe.startadresse += BUFFER_SIZE;
                     } else {
                         spiFlashMemRead(eingabe.baustein_src, eingabe.startadresse, bufferRead, eingabe.anzahlBytes);
-                    }
-
-                    for(i = 0; i < eingabe.anzahlBytes; i++) {
-                        printf("%X", bufferRead[i]);fflush(stdout);
+                        
+                        for(i = 0; i < eingabe.anzahlBytes; i++) {
+                            printf("%X", bufferRead[i]);fflush(stdout);
+                        }
+                        
+                        eingabe.anzahlBytes = 0;
                     }
                 } 
                 printf("\nfertig!\n");fflush(stdout);
-  
+ 
                 break;
 
-//            //Loeschen    
-//            case 2:  
-//                do{
-//                    printf("Bitte geben Sie den Baustein an \n"); fflush(stdout);
-//                    printf("1: Original \n2: Work \n"); fflush(stdout);
-//                    scanf("%d", &eingabe.baustein);
-//                    printf("--> %d \n", eingabe.baustein);fflush(stdout);
-//                }while((!(eingabe.baustein > 0) && (eingabe.baustein <= 2)));     
-//                  
-//                //Startadresse
-//                printf("Bitte geben Sie die Startadresse an \n"); fflush(stdout);
-//                scanf("%d", &eingabe.startadresse);
-//                printf("--> %d \n", eingabe.startadresse);fflush(stdout);
-//                  
-//                //Anzahl Bytes 
-//                printf("Bitte geben Sie die Groesse des zu loeschenden Bereichs \n"); fflush(stdout);
-//                scanf("%d", &eingabe.anzahlBytes);
-//                printf("--> %d \n", eingabe.anzahlBytes);fflush(stdout);
-//          
-//                spiFlashMemErase(eingabe.baustein, eingabe.startadresse, eingabe.anzahlBytes);
-//                
-//                break;
+            //Loeschen    
+            case 2:  
+                do {
+                    printf("\nBitte geben Sie den Baustein an"); fflush(stdout);
+                    printf("\n 1: Original \n 2: Work\n"); fflush(stdout);
+                    scanf("%d", &eingabe.baustein_src);
+                    printf("--> %d \n", eingabe.baustein_src);fflush(stdout);
+                } while((!(eingabe.baustein_src > 0) && (eingabe.baustein_src <= 2)));     
+                  
+                //Startadresse
+                printf("\nBitte geben Sie die Startadresse an\n"); fflush(stdout);
+                scanf("%d", &eingabe.startadresse);
+                printf("--> %d \n", eingabe.startadresse);fflush(stdout);
+                  
+                //Anzahl Bytes 
+                printf("\nBitte geben Sie die Groesse des zu loeschenden Bereichs\n"); fflush(stdout);
+                scanf("%d", &eingabe.anzahlBytes);
+                printf("--> %d \n", eingabe.anzahlBytes);fflush(stdout);
+          
+                printf("\n");fflush(stdout);
+                if(spiFlashMemErase(eingabe.baustein_src, eingabe.startadresse, eingabe.anzahlBytes) != 0) {
+                    printf("\nFehler beim loeschen von Addresse %X, Anzahl Bytes %d\n", eingabe.startadresse, eingabe.anzahlBytes); fflush(stdout);
+                }
+                printf("\nfertig!\n");fflush(stdout);
+                
+                break;
                 
 //        //Programmieren        
 //        case 3:  

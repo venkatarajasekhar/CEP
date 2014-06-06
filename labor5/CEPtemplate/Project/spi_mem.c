@@ -4,6 +4,7 @@
 #include "spi.h"
 #include "spi_mem.h"
 #include "global.h"
+#include "CE_Lib.h"
 
 // spi-commands
 #define DUMMY 0
@@ -210,16 +211,19 @@ int spiFlashMemErase(unsigned int chip_sel, uint32_t address, uint32_t numBytes)
     }else{    
         while(numberOfBlocks) {
             if(numberOfBlocks >= BlockCount_64){
+                printf("erase 64\n");fflush(stdout);
                 spiFlashMemEraseBlock(chip_sel, address, CmdBlockErase_64K); 
                 numberOfBlocks -= BlockCount_64;
                 address += BLOCK_64KB;
             }
             else if(numberOfBlocks >= BlockCount_32){
+                printf("erase 32\n");fflush(stdout);
                 spiFlashMemEraseBlock(chip_sel, address, CmdBlockErase_32K);
                 numberOfBlocks -= BlockCount_32;
                 address += BLOCK_32KB;
             }
             else if(numberOfBlocks >= BlockCount_4){
+                printf("erase 4\n");fflush(stdout);
                 spiFlashMemEraseBlock(chip_sel, address, CmdBlockErase_4K);
                 numberOfBlocks -= BlockCount_4;
                 address += BLOCK_4KB;
@@ -374,7 +378,7 @@ int spiFlashMemCopy(unsigned int chip_src, unsigned int chip_dst, unsigned int a
             } else {
                 spiFlashMemRead(chip_src, address_src, buffer, bytes);
                 spiFlashMemWrite(chip_dst, address_dst, buffer, bytes);
-//              bytes = 0;
+                bytes = 0;
             }
           }
           

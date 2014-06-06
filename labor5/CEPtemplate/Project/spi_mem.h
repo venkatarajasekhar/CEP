@@ -12,7 +12,7 @@
 #define SPI_MEM_ORIGINAL_H (GPIOB->BSRRH = (1<<9))
 #define SPI_MEM_ORIGINAL_L (GPIOB->BSRRL = (1<<9))
 
-#define SPI_MEM_SIZE 0xff000
+#define SPI_MEM_SIZE 0x7fffff
 #define PAGE_SIZE 256
 
 // mem-block size
