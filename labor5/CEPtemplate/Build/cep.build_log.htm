@@ -4,13 +4,18 @@
 <h1>µVision Build Log</h1>
 <h2>Project:</h2>
 C:\Documents and Settings\abd299\Desktop\cep\labor5\CEPtemplate\Project.uvproj
-Project File Date:  06/06/2014
+Project File Date:  06/10/2014
 
 <h2>Output:</h2>
 Build target 'cep'
+compiling labor5.c...
+compiling spi_mem.c...
+Project\spi_mem.c(233): warning:  #177-D: variable "test" was declared but never referenced
+                                                                                                uint32_t test = rest % BLOCK_4KB;
+Project\spi_mem.c: 1 warning, 0 errors
 linking...
-Program Size: Code=7696 RO-data=628 RW-data=36 ZI-data=6196  
-".\Build\cep.axf" - 0 Error(s), 0 Warning(s).
+Program Size: Code=7888 RO-data=628 RW-data=36 ZI-data=6196  
+".\Build\cep.axf" - 0 Error(s), 1 Warning(s).
 Load "C:\\Documents and Settings\\abd299\\Desktop\\cep\\labor5\\CEPtemplate\\Build\\cep.axf" 
 Erase Done.
 Programming Done.
@@ -18,21 +23,3 @@ Verify OK.
 </pre>
 </body>
 </html>
-(stdout);
-Project\spi_mem.c(214): error:  #20: identifier "stdout" is undefined
-                  printf("erase 64\n");fflush(stdout);
-Project\spi_mem.c(220): warning:  #223-D: function "printf" declared implicitly
-                  printf("erase 32\n");fflush(stdout);
-Project\spi_mem.c(220): warning:  #223-D: function "fflush" declared implicitly
-                  printf("erase 32\n");fflush(stdout);
-Project\spi_mem.c(220): error:  #20: identifier "stdout" is undefined
-                  printf("erase 32\n");fflush(stdout);
-Project\spi_mem.c(226): warning:  #223-D: function "printf" declared implicitly
-                  printf("erase 4\n");fflush(stdout);
-Project\spi_mem.c(226): warning:  #223-D: function "fflush" declared implicitly
-                  printf("erase 4\n");fflush(stdout);
-Project\spi_mem.c(226): error:  #20: identifier "stdout" is undefined
-                  printf("erase 4\n");fflush(stdout);
-Project\spi_mem.c: 6 warnings, 3 errors
-".\Build\cep.axf" - 3 Error(s), 6 Warning(s).
-Target not created
