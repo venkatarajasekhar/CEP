@@ -367,10 +367,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>0</ColumnNumber>
+      <ColumnNumber>113</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>65</TopLine>
-      <CurrentLine>78</CurrentLine>
+      <TopLine>36</TopLine>
+      <CurrentLine>61</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\Project\labor5.c</PathWithFileName>
       <FilenameWithoutPath>labor5.c</FilenameWithoutPath>
@@ -431,10 +431,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>20</ColumnNumber>
+      <ColumnNumber>5</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>397</TopLine>
-      <CurrentLine>260</CurrentLine>
+      <TopLine>272</TopLine>
+      <CurrentLine>261</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\Project\spi_mem.c</PathWithFileName>
       <FilenameWithoutPath>spi_mem.c</FilenameWithoutPath>
@@ -465,7 +465,7 @@
       <Focus>0</Focus>
       <ColumnNumber>1</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>50</TopLine>
+      <TopLine>51</TopLine>
       <CurrentLine>69</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\Project\tests\spi_mem_test.c</PathWithFileName>
@@ -609,7 +609,7 @@
       <Focus>0</Focus>
       <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>174</TopLine>
+      <TopLine>175</TopLine>
       <CurrentLine>182</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\Libraries\Device\startup_stm32f40_41xxx.s</PathWithFileName>
@@ -641,7 +641,7 @@
       <Focus>0</Focus>
       <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>1142</TopLine>
+      <TopLine>1143</TopLine>
       <CurrentLine>1160</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\Libraries\StdPeriph_Driver\src\stm32f4xx_i2c.c</PathWithFileName>
@@ -1185,7 +1185,7 @@
       <Focus>0</Focus>
       <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>55</TopLine>
+      <TopLine>56</TopLine>
       <CurrentLine>66</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\Libraries\TiLib\Retarget.c</PathWithFileName>
@@ -1201,7 +1201,7 @@
       <Focus>0</Focus>
       <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>184</TopLine>
+      <TopLine>185</TopLine>
       <CurrentLine>190</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\Libraries\TiLib\tft.c</PathWithFileName>

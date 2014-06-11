@@ -8,6 +8,8 @@
 #include "peripherals.h"
 #include "mp3dec.h"
 #include <stm32f4xx_gpio.h>
+#include "spi.h"
+#include "spi_mem.h"
 
 
 #define N_ARR 3808 		//168Mhz/44100HZ
@@ -45,7 +47,7 @@ int interrupt_Counter = 0;
 int mseczaehlvar = 0;
 int fi = 0;
 
-volatile static spi_main_Buffer mainBuf;
+static spi_main_Buffer mainBuf;
 
 volatile static buffer_t buf1;
 volatile static buffer_t buf2;
@@ -73,10 +75,6 @@ void labor6(void) {
 	
 	initCEP_Board();
 	start_TIM8_DAC();
-    
-    //Init von PWM + MP3Dekoder
-    pwm_Init();
-    MP3InitDecoder();
 
 	//SysTick end of count event each 10ms 
 	RCC_GetClocksFreq(&RCC_Clocks);
@@ -89,8 +87,18 @@ void labor6(void) {
 	
 	mp3OutBuffer = &buf1;																//start with buf1
 	irsInBuffer = &buf1;
-	
-	
+	   
+    //Init von PWM + MP3Dekoder
+    pwm_Init();     // --> noch leer
+    MP3InitDecoder();
+    
+    //SPI INIT
+    spi_setup();
+    
+    //Fuelle Eingabepuffer mit MP3-Daten vom SPI-Flash (die ersten 1940?)
+    spiFlashMemRead(SPI_MEM_ORIGINAL, 0, mainBuf.data, MAINBUF_SIZE);
+    
+
 	
 	
 	TFT_cls();
