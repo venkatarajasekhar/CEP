@@ -3,23 +3,70 @@
 <pre>
 <h1>µVision Build Log</h1>
 <h2>Project:</h2>
-C:\Documents and Settings\abd299\Desktop\cep\labor5\CEPtemplate\Project.uvproj
-Project File Date:  06/10/2014
+C:\Documents and Settings\aba271\Desktop\cep\labor5\CEPtemplate\Project.uvproj
+Project File Date:  06/11/2014
 
 <h2>Output:</h2>
 Build target 'cep'
-compiling labor5.c...
-compiling spi_mem.c...
-Project\spi_mem.c(233): warning:  #177-D: variable "test" was declared but never referenced
-                                                                                                uint32_t test = rest % BLOCK_4KB;
-Project\spi_mem.c: 1 warning, 0 errors
+compiling main.c...
+Project\main.c(24): warning:  #111-D: statement is unreachable
+        return EXIT_SUCCESS;
+Project\main.c: 1 warning, 0 errors
 linking...
-Program Size: Code=7888 RO-data=628 RW-data=36 ZI-data=6196  
+Program Size: Code=5812 RO-data=424 RW-data=28 ZI-data=2076  
 ".\Build\cep.axf" - 0 Error(s), 1 Warning(s).
-Load "C:\\Documents and Settings\\abd299\\Desktop\\cep\\labor5\\CEPtemplate\\Build\\cep.axf" 
+Load "C:\\Documents and Settings\\aba271\\Desktop\\cep\\labor5\\CEPtemplate\\Build\\cep.axf" 
 Erase Done.
 Programming Done.
 Verify OK.
-</pre>
-</body>
-</html>
+Ptemplate\\Build\\cep.axf" 
+Erase Done.
+Programming Done.
+Verify OK.
+Warning(s).
+Load "C:\\Documents and Settings\\aba271\\Desktop\\cep\\labor5\\CEPtemplate\\Build\\cep.axf" 
+Erase Done.
+Programming Done.
+Verify OK.
+etarget.c...
+compiling tft.c...
+linking...
+Program Size: Code=9016 RO-data=628 RW-data=36 ZI-data=6196  
+".\Build\cep.axf" - 0 Error(s), 1 Warning(s).
+Load "C:\\Documents and Settings\\aba271\\Desktop\\cep\\labor5\\CEPtemplate\\Build\\cep.axf" 
+Erase Done.
+Programming Done.
+Verify OK.
+data=6196  
+".\Build\cep.axf" - 0 Error(s), 2 Warning(s).
+ Done.
+Verify OK.
+bufferWrite[i] = write;
+Project\labor5.c(134): error:  #136: struct "<unnamed>" has no field "baustein"
+                  spiFlashMemWrite(eingabe.baustein, eingabe.startadresse, bufferWrite, eingabe.anzahlBytes);
+Project\labor5.c(134): error:  #20: identifier "bufferWrite" is undefined
+                  spiFlashMemWrite(eingabe.baustein, eingabe.startadresse, bufferWrite, eingabe.anzahlBytes);
+Project\labor5.c: 0 warnings, 9 errors
+compiling spi.c...
+compiling spi_mem.c...
+Project\spi_mem.c(231): error:  #29: expected an expression
+                                = rest + (BLOCK_4KB -(rest % BLOCK_4KB));
+Project\spi_mem.c(233): warning:  #177-D: variable "test" was declared but never referenced
+                                uint32_t test = rest % BLOCK_4KB;
+Project\spi_mem.c: 1 warning, 1 error
+compiling spi_mem_test.c...
+compiling gpio.c...
+compiling core_cm3.c...
+compiling misc.c...
+compiling stm32f4xx_gpio.c...
+compiling stm32f4xx_rcc.c...
+compiling stm32f4xx_usart.c...
+assembling startup_stm32f40_41xxx.s...
+compiling system_stm32f4xx.c...
+compiling stm32f4xx_i2c.c...
+compiling CE_Lib.c...
+compiling Usart.c...
+compiling Retarget.c...
+compiling tft.c...
+".\Build\cep.axf" - 10 Error(s), 1 Warning(s).
+Target not created

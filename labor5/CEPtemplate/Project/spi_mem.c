@@ -207,55 +207,49 @@ int spiFlashMemErase(unsigned int chip_sel, uint32_t address, uint32_t numBytes)
     
     if((address + numBytes) > SPI_MEM_SIZE){    
         return -1;
-    
+		
     }else{ 
-				//wenn noch nicht an der grenze 
-				if(address % BLOCK_64KB != 0){
+	
+	//wenn noch nicht an der grenze 
+	if(address % BLOCK_64KB != 0){
 							
-						if(address % BLOCK_32KB != 0){
-									uint32_t rest = BLOCK_64KB - (address % BLOCK_64KB);
-									if(rest > BLOCK_32KB){
-										spiFlashMemEraseBlock(chip_sel, address, CmdBlockErase_32K); 
-										numberOfBlocks -= BlockCount_32;
-										address += BLOCK_32KB;
-										rest = rest - BLOCK_32KB;
-									}
-									if(address % BLOCK_4KB != 0){
-												rest = BLOCK_64KB - (address % BLOCK_64KB);
-										
-												if(rest < BLOCK_4KB){
-													 address = address - (BLOCK_4KB % rest);
-													 rest = rest + (BLOCK_4KB % rest);
-												}else{
-														address = address - (BLOCK_4KB -(rest % BLOCK_4KB));
-														rest = rest + (BLOCK_4KB -(rest % BLOCK_4KB));
-												}
-												uint32_t test = rest % BLOCK_4KB;
+		if(address % BLOCK_32KB != 0){
+			uint32_t rest = BLOCK_64KB - (address % BLOCK_64KB);
+			if(rest > BLOCK_32KB){
+			spiFlashMemEraseBlock(chip_sel, address, CmdBlockErase_32K); 
+			numberOfBlocks -= BlockCount_32;
+			address += BLOCK_32KB;
+			rest = rest - BLOCK_32KB;
+		}
+			if(address % BLOCK_4KB != 0){
+				rest = BLOCK_64KB - (address % BLOCK_64KB);						
+				if(rest < BLOCK_4KB){
+				address = address - (BLOCK_4KB % rest);
+				rest = rest + (BLOCK_4KB % rest);
+			}else{
+				address = address - (BLOCK_4KB -(rest % BLOCK_4KB));
+				rest = rest + (BLOCK_4KB -(rest % BLOCK_4KB));
+			}
+				uint32_t test = rest % BLOCK_4KB;
 												
-												while(rest != 0){
-														spiFlashMemEraseBlock(chip_sel, address, CmdBlockErase_4K);
-														numberOfBlocks -= BlockCount_4;
-														address += BLOCK_4KB;
-														rest = rest - BLOCK_4KB;
-												}
-
-										}
-					                             
-							}else {
-										spiFlashMemEraseBlock(chip_sel, address, CmdBlockErase_32K); 
-										numberOfBlocks -= BlockCount_32;
-										address += BLOCK_32KB;
-							}
+				while(rest != 0){
+					spiFlashMemEraseBlock(chip_sel, address, CmdBlockErase_4K);
+					numberOfBlocks -= BlockCount_4;
+					address += BLOCK_4KB;
+					rest = rest - BLOCK_4KB;
 				}
-				
-				
-				
-				
-				uint32_t ausgabe = 0;
+			}
+		}else {
+		spiFlashMemEraseBlock(chip_sel, address, CmdBlockErase_32K); 
+		numberOfBlocks -= BlockCount_32;
+		address += BLOCK_32KB;
+		}
+	}
+		uint32_t ausgabe = 0;
         while(numberOfBlocks) {
 						
             if(numberOfBlocks >= BlockCount_64){
-								ausgabe += 1;
+				ausgabe += 1;
                 printf("erase %d\n",ausgabe);fflush(stdout);
                 spiFlashMemEraseBlock(chip_sel, address, CmdBlockErase_64K); 
                 numberOfBlocks -= BlockCount_64;

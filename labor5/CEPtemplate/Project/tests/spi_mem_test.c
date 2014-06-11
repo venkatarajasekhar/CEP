@@ -40,7 +40,7 @@ void spi_mem_spiFlashMemWriteRead_test(void) {
 
 void spi_mem_spiFlashMemErase_test(void) {
     
-    const unsigned int DATA_SIZE = 5;
+    const unsigned int DATA_SIZE = 11;
 	uint8_t data_out[DATA_SIZE];
 	uint8_t data_in[DATA_SIZE];
 	uint32_t address = 0;
@@ -48,24 +48,38 @@ void spi_mem_spiFlashMemErase_test(void) {
 	
 	printf("\nspi_mem_spiFlashMemWriteRead_test()\n");fflush(stdout);
 	
-	printf("in: ");fflush(stdout);
-    for(i=0; i<DATA_SIZE; i++) {
-		data_out[i] = i;
-		printf(" %X", data_out[i]);fflush(stdout);
-	}
-	printf("\n");fflush(stdout);
-    
-    spiFlashMemErase(SPI_MEM_WORK, address, DATA_SIZE);
-	spiFlashMemWrite(SPI_MEM_WORK, address, data_out, DATA_SIZE);
-    
-    spiFlashMemErase(SPI_MEM_WORK, address, DATA_SIZE);
-	spiFlashMemRead(SPI_MEM_WORK, address, data_in, DATA_SIZE);
+//	printf("in: ");fflush(stdout);
+//    for(i=0; i<DATA_SIZE; i++) {
+//		data_out[i] = i;
+//		printf(" %X", data_out[i]);fflush(stdout);
+//	}
 	
-	printf("out: ");fflush(stdout);
-	for(i=0; i<DATA_SIZE; i++) {
-		printf(" %X", data_in[i]);fflush(stdout);
-	}
 	printf("\n");fflush(stdout);
+    
+//    spiFlashMemErase(SPI_MEM_WORK, address, DATA_SIZE);
+//	spiFlashMemWrite(SPI_MEM_WORK, address, data_out, DATA_SIZE);
+//    
+//    spiFlashMemErase(SPI_MEM_WORK, address, DATA_SIZE);
+//	spiFlashMemRead(SPI_MEM_WORK, address, data_in, DATA_SIZE);
+
+   	  //spiFlashMemRead(SPI_MEM_ORIGINAL, address, data_out, DATA_SIZE);
+	  //spiFlashMemErase(SPI_MEM_WORK, address, DATA_SIZE);
+      //spiFlashMemWrite(SPI_MEM_WORK, address, data_out, DATA_SIZE);
+	  
+//	spiFlashMemRead(SPI_MEM_ORIGINAL, address, data_in, DATA_SIZE);
+//	  
+//	
+//	printf("out: ");fflush(stdout);
+//	for(i=0; i<DATA_SIZE; i++) {
+//		printf(" %X", data_in[i]);fflush(stdout);
+//	}
+	
+	spiFlashMemRead(SPI_MEM_ORIGINAL, address, data_in, DATA_SIZE);
+                        
+    for(i = 0; i < DATA_SIZE; i++) {
+      printf("%X ", data_in[i]);
+    }
+	printf("\n");
 }
 
 void spi_mem_spiFlashMemWrite_test(void) {

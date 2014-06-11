@@ -9,7 +9,8 @@ typedef struct{
     int auswahl;
     int baustein_src;
     int baustein_dst;
-    int startadresse;
+    int src_startadresse;
+	int dst_startadresse;
     int anzahlBytes;
 } eingabe_t; 
 
@@ -33,7 +34,9 @@ void labor5(void) {
         switch(eingabe.auswahl) {
             
             //Auslesen 
-            case 1:                      
+            case 1:  
+				i = 0;
+			
                 do {
                     printf("\nBitte geben Sie den Baustein an");fflush(stdout);
                     printf("\n 1: Original \n 2: Work\n"); fflush(stdout);
@@ -42,10 +45,10 @@ void labor5(void) {
                     printf("--> %d \n", eingabe.baustein_src);fflush(stdout);
                 } while((!(eingabe.baustein_src > 0) && (eingabe.baustein_src <= 2)));     
                   
-                //Startadresse
+                //src_Startadresse
                 printf("\nBitte geben Sie die Startadresse an\n"); fflush(stdout);
-                scanf("%X", &eingabe.startadresse);
-                printf("--> %d \n", eingabe.startadresse);fflush(stdout);
+                scanf("%d", &eingabe.src_startadresse);
+                printf("--> %d \n", eingabe.src_startadresse);fflush(stdout);
                   
                 //Anzahl Bytes 
                 printf("\nBitte geben Sie die Anzahl der Bytes, des auszugebenden Bereiches\n");fflush(stdout);
@@ -55,19 +58,19 @@ void labor5(void) {
                 printf("\n");fflush(stdout);
                 while(eingabe.anzahlBytes) {
                     if(eingabe.anzahlBytes > BUFFER_SIZE) {
-                        spiFlashMemRead(eingabe.baustein_src, eingabe.startadresse, bufferRead, BUFFER_SIZE);
+                        spiFlashMemRead(eingabe.baustein_src, eingabe.src_startadresse, bufferRead, BUFFER_SIZE);
                         
                          for(i = 0; i < BUFFER_SIZE; i++) {
-                            printf("%X", bufferRead[i]);fflush(stdout);
+                            printf("%X ", bufferRead[i]);fflush(stdout);
                         }
                         
                         eingabe.anzahlBytes -= BUFFER_SIZE;
-                        eingabe.startadresse += BUFFER_SIZE;
+                        eingabe.src_startadresse += BUFFER_SIZE;
                     } else {
-                        spiFlashMemRead(eingabe.baustein_src, eingabe.startadresse, bufferRead, eingabe.anzahlBytes);
+                        spiFlashMemRead(eingabe.baustein_src, eingabe.src_startadresse, bufferRead, eingabe.anzahlBytes);
                         
                         for(i = 0; i < eingabe.anzahlBytes; i++) {
-                            printf("%X", bufferRead[i]);fflush(stdout);
+                            printf("%X ", bufferRead[i]);fflush(stdout);
                         }
                         
                         eingabe.anzahlBytes = 0;
@@ -88,8 +91,8 @@ void labor5(void) {
                   
                 //Startadresse
                 printf("\nBitte geben Sie die Startadresse an\n"); fflush(stdout);
-                scanf("%d", &eingabe.startadresse);
-                printf("--> %d \n", eingabe.startadresse);fflush(stdout);
+                scanf("%d", &eingabe.src_startadresse);
+                printf("--> %d \n", eingabe.src_startadresse);fflush(stdout);
                   
                 //Anzahl Bytes 
                 printf("\nBitte geben Sie die Groesse des zu loeschenden Bereichs\n"); fflush(stdout);
@@ -97,52 +100,60 @@ void labor5(void) {
                 printf("--> %d \n", eingabe.anzahlBytes);fflush(stdout);
           
                 printf("\n");fflush(stdout);
-                if(spiFlashMemErase(eingabe.baustein_src, eingabe.startadresse, eingabe.anzahlBytes) != 0) {
-                    printf("\nFehler beim loeschen von Addresse %X, Anzahl Bytes %d\n", eingabe.startadresse, eingabe.anzahlBytes); fflush(stdout);
+                if(spiFlashMemErase(eingabe.baustein_src, eingabe.src_startadresse, eingabe.anzahlBytes) != 0) {
+                    printf("\nFehler beim loeschen von Addresse %X, Anzahl Bytes %d\n", eingabe.src_startadresse, eingabe.anzahlBytes); fflush(stdout);
                 }
                 printf("\nfertig!\n");fflush(stdout);
                 
                 break;
                 
-//        //Programmieren        
-//        case 3:  
-//                do{
-//                    printf("Bitte geben Sie den Baustein an \n ");  fflush(stdout);
-//                    printf(" 1: Work  \n 2: Original \n"); fflush(stdout);
-//                    //Baustein
-//                    scanf("%d", &eingabe.baustein);
-//                    printf("--> %d \n", eingabe.baustein);fflush(stdout);
-//                      
-//                }while((!(eingabe.baustein > 0) && (eingabe.baustein <= 2)));     
-//                  
-//                //Startadresse
-//                printf("Bitte geben Sie die Startadresse an \n"); fflush(stdout);
-//                scanf("%d", &eingabe.startadresse);
-//                printf("--> %d \n", eingabe.startadresse);fflush(stdout);
-//                  
-//                //Anzahl Bytes 
-//                printf("Bitte geben Sie die Anzahl der Bytes, des auszugebenden Bereiches \n"); fflush(stdout);
-//                scanf("%d", &eingabe.anzahlBytes);
-//                printf("--> %d \n", eingabe.anzahlBytes);fflush(stdout);
-//          
-//          
-//                for(i = 0; i < bufferSize; i++){
-//                    bufferWrite[i] = write;
-//                    write = write + 1;
-//                }
-//              
-//                spiFlashMemWrite(eingabe.baustein, eingabe.startadresse, bufferWrite, eingabe.anzahlBytes);
-//                break;
+        //Programmieren        
+        case 3:  
+                do{
+                    printf("\nBitte geben Sie den Source-Baustein an \n");  fflush(stdout);
+                    printf("\n 1: Original  \n 2: Work\n"); fflush(stdout);
+                    //Baustein
+                    scanf("%d", &eingabe.baustein_src);
+                    printf("--> %d \n", eingabe.baustein_src);fflush(stdout);
+                      
+                }while((!(eingabe.baustein_src > 0) && (eingabe.baustein_src <= 2)));     
+                  
+				if(eingabe.baustein_src == 1) {
+					eingabe.baustein_dst = 2;
+				} else {
+					eingabe.baustein_dst = 1;
+				}	
+				
+                //src_Startadresse
+                printf("\nBitte geben Sie die Quell-Startadresse an\n"); fflush(stdout);
+                scanf("%d", &eingabe.src_startadresse);
+                printf("--> %d \n", eingabe.src_startadresse);fflush(stdout);
+				
+				//dst_Startadresse
+                printf("\nBitte geben Sie die Ziel-Startadresse an\n"); fflush(stdout);
+                scanf("%d", &eingabe.dst_startadresse);
+                printf("--> %d \n", eingabe.dst_startadresse);fflush(stdout);
+				     
+                //Anzahl Bytes 
+                printf("\nBitte geben Sie die Anzahl der Bytes, des auszugebenden Bereiches\n"); fflush(stdout);
+                scanf("%d", &eingabe.anzahlBytes);
+                printf("--> %d \n", eingabe.anzahlBytes);fflush(stdout);
+          
+				if(spiFlashMemCopy(eingabe.baustein_src, eingabe.baustein_dst, eingabe.src_startadresse, eingabe.dst_startadresse, eingabe.anzahlBytes) != 0) {
+					printf("\nProgrammierfehler!!!\n"); fflush(stdout);
+				}	
+               
+                break;
          
-//        //Compare                
-//        case 4:            
-//            if(spiFlashMemChipCompare() == 1){
-//                printf("Beide Speicher sind gleich!");fflush(stdout);
-//            }else{
-//                printf("Die Speicher sind nicht identisch!");fflush(stdout);
-//            }
-//                
-//            break;
+        //Compare                
+        case 4:            
+            if(spiFlashMemChipCompare() == 1){
+                printf("Beide Speicher sind gleich!");fflush(stdout);
+            }else{
+                printf("Die Speicher sind nicht identisch!");fflush(stdout);
+            }
+                
+            break;
             
 //        //Copy    
 //        case 5: 
