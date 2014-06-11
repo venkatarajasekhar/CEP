@@ -2,6 +2,7 @@
 #include "stdio.h"
 #include "../spi_mem.h"
 #include "../global.h"
+#define BUFFER_SIZE BLOCK_4KB
 
 void spi_mem_ReadManufacturerID_test(void) {
 	unsigned int res = 0;	
@@ -40,13 +41,11 @@ void spi_mem_spiFlashMemWriteRead_test(void) {
 
 void spi_mem_spiFlashMemErase_test(void) {
     
-    const unsigned int DATA_SIZE = 11;
-	uint8_t data_out[DATA_SIZE];
+    unsigned int DATA_SIZE = 11;
+	//uint8_t data_out[DATA_SIZE];
 	uint8_t data_in[DATA_SIZE];
 	uint32_t address = 0;
 	unsigned int i = 0;
-	
-	printf("\nspi_mem_spiFlashMemWriteRead_test()\n");fflush(stdout);
 	
 //	printf("in: ");fflush(stdout);
 //    for(i=0; i<DATA_SIZE; i++) {
@@ -80,6 +79,29 @@ void spi_mem_spiFlashMemErase_test(void) {
       printf("%X ", data_in[i]);
     }
 	printf("\n");
+	
+	
+	
+	while(DATA_SIZE) {
+		if(DATA_SIZE >  BUFFER_SIZE) {
+        spiFlashMemRead(SPI_MEM_ORIGINAL, address, data_in, BUFFER_SIZE);
+                        
+        for(i = 0; i < BUFFER_SIZE; i++) {
+           printf("%X ", data_in[i]);fflush(stdout);
+                        }
+                        
+                        DATA_SIZE -= BUFFER_SIZE;
+                        address += BUFFER_SIZE;
+                    } else {
+                        spiFlashMemRead(SPI_MEM_ORIGINAL, address, data_in, DATA_SIZE);
+                        
+						for(i = 0; i < DATA_SIZE; i++) {
+							printf("%X ", data_in[i]);
+						}
+                        
+                        DATA_SIZE = 0;
+                    }
+                } 
 }
 
 void spi_mem_spiFlashMemWrite_test(void) {
