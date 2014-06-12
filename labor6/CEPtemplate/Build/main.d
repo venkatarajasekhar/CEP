@@ -1,7 +1,7 @@
 .\build\main.o: Project\main.c
 .\build\main.o: C:\Keil\ARM\ARMCC\bin\..\include\stdio.h
 .\build\main.o: C:\Keil\ARM\ARMCC\bin\..\include\stdlib.h
-.\build\main.o: Project\labor4.h
+.\build\main.o: Project\labor6.h
 .\build\main.o: Project\tests/dac_test.h
 .\build\main.o: Project\peripherals.h
 .\build\main.o: .\Libraries\TiLib\CE_Lib.h

@@ -15,10 +15,7 @@
 #define N_ARR 3808 		//168Mhz/44100HZ
 #define SCREEN_UPDATE_CYCLE 168000
 
-//typedef struct{
-//	int isEmpty;
-//	int data [BUFFER_SIZE];
-//} buffer_t;
+
 typedef struct{
 	int isEmpty;
 	int16_t data [MAX_NGRAN*MAX_NCHAN*MAX_NSAMP];
@@ -88,26 +85,23 @@ void labor6(void) {
 	mp3OutBuffer = &buf1;																//start with buf1
 	irsInBuffer = &buf1;
 	   
-    //Init von PWM + MP3Dekoder
-    pwm_Init();     // --> noch leer
-    MP3InitDecoder();
+  //Init von PWM + MP3Dekoder
+  pwm_Init();     // inti & setup
+  HMP3Decoder mp3dec = MP3InitDecoder();
     
-    //SPI INIT
-    spi_setup();
+  //SPI INIT
+  spi_setup();
     
-    //Fuelle Eingabepuffer mit MP3-Daten vom SPI-Flash (die ersten 1940?)
-    spiFlashMemRead(SPI_MEM_ORIGINAL, 0, mainBuf.data, MAINBUF_SIZE);
-    
+  //Fuelle Eingabepuffer mit MP3-Daten vom SPI-Flash (die ersten 1940?)
+  spiFlashMemRead(SPI_MEM_ORIGINAL, 0, mainBuf.data, MAINBUF_SIZE);
 
-	
 	
 	TFT_cls();
 	
-		TFT_gotoxy(1,1);
-		TFT_puts("Frequenz:   440");
+	TFT_gotoxy(1,1);
+	TFT_puts("Frequenz:   440");
 		
 
-	
 	while(1){
 		
 		read_buttons();
@@ -153,6 +147,9 @@ void labor6(void) {
 			setLED(WAITING_LED);
 		}
 	}
+	
+	MP3FreeDecoder(mp3dec);
+	
 }
 
 void TIM8_UP_TIM13_IRQHandler(void) {
@@ -215,34 +212,31 @@ void TIM8_UP_TIM13_IRQHandler(void) {
  }
  
  void pwm_Init(void){
- 
-    //#define PB1 1
-    ////PWM1 ist PB1 ist TIM8_CH3N
-    //RCC->AHB1ENR |= RCC_AHB1ENR_GPIOBEN;
-    //GPIOB->MODER &= ~(3u << (PB1 * 2));
-    //GPIOB->MODER |= GPIO_Mode_AF << (PB1 * 2);
-    //GPIOB->OSPEEDR &= ~(3u << (PB1 * 2));
-    //GPIOB->OSPEEDR |= GPIO_Speed_50MHz << (PB1 * 2);
-    //GPIOB->OTYPER &= ~(1 << (PB1));
-    //GPIOB->OTYPER |= GPIO_OType_PP << (PB1);
-    //GPIOB->PUPDR &= ~(3 << (PB1 * 2));
-    //GPIOB->PUPDR |= GPIO_PuPd_UP << (PB1 * 2);
-    //GPIOB->AFR[0] &= ~(0xf << (PB1 * 4));
-    //GPIOB->AFR[0] |= GPIO_AF_TIM8 << (PB1 * 4);
-    //     
-     
-    //  RCC->APB2ENR |= RCC_APB2ENR_TIM8EN; // Takt fuer Timer 8 einschalten
-    //  TIM8->CR1 = 0; // Timer disabled
-    //  TIM8->CR2 = 0;
-    //  TIM8->PSC = 0; // Prescaler, Timertakt: 1 MHz
-    //  TIM8->ARR = 16800-1; // Auto reload register, Tpwm = 100usec
-    //  TIM8->CCR3 = 16800/2; // Erster Schaltzeitpunkt
-    //  TIM8->CCMR2 = TIM_CCMR2_OC3M_2 | TIM_CCMR2_OC3M_1;
-    //  TIM8->CCER = TIM_CCER_CC3NE;
-    //  TIM8->BDTR = TIM_BDTR_MOE;
-    //  TIM8->CR1 = TIM_CR1_CEN | TIM_CR1_ARPE; // Enable Timer, enable preload
-     
-     //NVIC kommt noch 
+	 
+		//PORT B PIN 1&2 INITIALISIEREN
+		RCC->AHB1ENR |= RCC_AHB1ENR_GPIOBEN;
+		GPIOB->MODER |= (GPIO_Mode_AF << (GPIO_PinSource0 *2)) | (GPIO_Mode_AF << (GPIO_PinSource1 *2));
+		GPIOB->OSPEEDR |= (GPIO_Speed_50MHz << (GPIO_PinSource0 * 2)) | (GPIO_Speed_50MHz << (GPIO_PinSource1 * 2));
+		GPIOB->OTYPER |= (GPIO_OType_PP << (GPIO_PinSource0)) | (GPIO_OType_PP << (GPIO_PinSource1));
+	  GPIOB->PUPDR |= (GPIO_PuPd_UP << (GPIO_PinSource0 * 2)) | (GPIO_PuPd_UP << (GPIO_PinSource1 * 2));
+		GPIOB->AFR[0] |= (GPIO_AF_TIM8 << (GPIO_PinSource0 * 4)) | (GPIO_AF_TIM8 << (GPIO_PinSource1 * 4));
+  
+    //TIMER SETUP	 
+    RCC->APB2ENR |= RCC_APB2ENR_TIM8EN; // Takt fuer Timer 8 einschalten
+		TIM8->PSC = 0; // Prescaler, Timertakt: 1 MHz
+		TIM8->ARR = N_ARR;
+		TIM8->BDTR = TIM_BDTR_MOE;
+		TIM8->CCMR1 = TIM_CCMR1_OC2M_2 | TIM_CCMR1_OC2M_1 | TIM_CCMR1_OC2PE;
+		TIM8->CCMR1 = TIM_CCMR2_OC3M_2 | TIM_CCMR2_OC3M_1 | TIM_CCMR2_OC3PE;
+	  TIM8->CCER = TIM_CCER_CC3NE | TIM_CCER_CC2NE;
+		TIM8->DIER = TIM_DIER_UIE;
+    TIM8->CR1 = TIM_CR1_CEN | TIM_CR1_ARPE; // CONTROL ENABLE & AUTO RELOAD PRELOAD ENABLE
+    TIM8->CR2 = 0;
+		
+		NVIC_SetPriorityGrouping(2);
+		NVIC_SetPriority(TIM8_UP_TIM13_IRQn, 0);
+		NVIC_EnableIRQ(TIM8_UP_TIM13_IRQn);
+		
  }
  
  
