@@ -12,9 +12,11 @@
 #include "spi_mem.h"
 
 
+
 #define N_ARR 3808 		//168Mhz/44100HZ
 #define SCREEN_UPDATE_CYCLE 168000
-
+HMP3Decoder mp3dec;
+int run = 1;
 
 typedef struct{
 	int isEmpty;
@@ -31,6 +33,7 @@ void TIM8_UP_TIM13_IRQHandler(void);
 void start_TIM8_DAC(void);
 void fuelle_puffer(volatile buffer_t *buf);
 void pwm_Init(void);
+void print_display(void);
 	
 
 volatile int idx_ISR = 0;
@@ -54,11 +57,15 @@ volatile static buffer_t* mp3OutBuffer;
 volatile static buffer_t* irsInBuffer;
 
 
-unsigned int frequency;
+//unsigned int frequency;
+unsigned int play_modus;
 int *tabelle = sinus_table;
 unsigned int amplitude;
 int srefresh = SREFRESH_OFF;
 
+//labor6
+int syncword_address =0;
+int address = 0;
 
 void labor6(void) {
 		
@@ -67,7 +74,7 @@ void labor6(void) {
 	msec = 0;
 	
 	//start with 5000Hz and Amplitude 1.0V (b_big)
-	frequency= DELTA_IDX_440;
+	//frequency= DELTA_IDX_440;
 	amplitude = b_big;
 	
 	initCEP_Board();
@@ -87,69 +94,56 @@ void labor6(void) {
 	   
   //Init von PWM + MP3Dekoder
   pwm_Init();     // inti & setup
-  HMP3Decoder mp3dec = MP3InitDecoder();
+  mp3dec = MP3InitDecoder();
     
   //SPI INIT
   spi_setup();
     
   //Fuelle Eingabepuffer mit MP3-Daten vom SPI-Flash (die ersten 1940?)
-  spiFlashMemRead(SPI_MEM_ORIGINAL, 0, mainBuf.data, MAINBUF_SIZE);
+  spiFlashMemRead(SPI_MEM_ORIGINAL, address, mainBuf.data, MAINBUF_SIZE);
 
 	
 	TFT_cls();
 	
 	TFT_gotoxy(1,1);
-	TFT_puts("Frequenz:   440");
-		
+	TFT_puts("no skip");
+	//TFT_puts("Frequenz:   440");
+	
 
-	while(1){
+	while(run){
 		
-		read_buttons();
+				read_buttons();
+				print_display();
+				syncword_address = MP3FindSyncWord(mainBuf.data, MAINBUF_SIZE); //sync word finden 
 		
-		// screen nur nach x intervallen updaten
-		if(mseczaehlvar <= SCREEN_UPDATE_CYCLE) {
-			mseczaehlvar++;
-		} else {
-			mseczaehlvar = 0;
-		}
-		
-		if(srefresh == SREFRESH_ON && (mseczaehlvar == SCREEN_UPDATE_CYCLE)){
-			ITM->PORT[8].u32 = 0;
-			TFT_gotoxy(1,2);
-			TFT_puts("msec: ");
-			sprintf(msec_Buf, "%d" , msec);
-			TFT_puts(msec_Buf);
+		if (syncword_address== -1){	//sync word nicht gefunden ? ende
+				run =0;
+		}else{			//mainbuffer ab neuer syncword_address erneut fuellen
+				
+					address += syncword_address;
+					spiFlashMemRead(SPI_MEM_ORIGINAL, address, mainBuf.data, MAINBUF_SIZE);
 			
-			TFT_gotoxy(1,3);
-			TFT_puts("Anzahl Values: ");
-			sprintf(interupt_Buf, "%d" , interrupt_Counter);
-			TFT_puts(interupt_Buf);
-			ITM->PORT[8].u32 = 1;
+					while(mp3OutBuffer->isEmpty==1){	
+							setLED(WAITING_LED);	//warte
+					}//ansonsten fuelle mp3OutBuffer
+			
+					resetLED(WAITING_LED);	
+					
+					ITM->PORT[9].u32 = 0;		//zeit messen	
+					fuelle_puffer(mp3OutBuffer);	
+					ITM->PORT[9].u32 = 1;			
+		
+					// switch Buffer
+					if(mp3OutBuffer == &buf1) {
+							mp3OutBuffer = &buf2;											
+					}else {
+							mp3OutBuffer = &buf1;											
+					} 
+				}
 			
 		}
-		
-		
-		
-		if(mp3OutBuffer->isEmpty){
-			resetLED(WAITING_LED);
-			
-			ITM->PORT[9].u32 = 0;		//zeit messen	
-			fuelle_puffer(mp3OutBuffer);	
-			ITM->PORT[9].u32 = 1;			
-		
-			// switch Buffer
-			if(mp3OutBuffer == &buf1) {
-				mp3OutBuffer = &buf2;											
-			} else {
-				mp3OutBuffer = &buf1;											
-			} 
-		}else {
-			setLED(WAITING_LED);
-		}
-	}
 	
 	MP3FreeDecoder(mp3dec);
-	
 }
 
 void TIM8_UP_TIM13_IRQHandler(void) {
@@ -164,14 +158,13 @@ void TIM8_UP_TIM13_IRQHandler(void) {
 	}else {
 		resetLED(UNDERFLOW_LED);
 	
-		DAC->DHR12R1 = irsInBuffer->data[idx_ISR];												//an DAC weiterleiten
+		DAC->DHR12R1 = irsInBuffer->data[idx_ISR];	 //an DAC weiterleiten
 		irsInBuffer->data[idx_ISR];
 		idx_ISR += 1;
 		
 		if(idx_ISR >= BUFFER_SIZE){ 
 			idx_ISR = 0;
-			
-			
+	
 			irsInBuffer->isEmpty = 1;
 			if(irsInBuffer == &buf1){ irsInBuffer = &buf2;}
 			else{ irsInBuffer = &buf1;}
@@ -241,23 +234,54 @@ void TIM8_UP_TIM13_IRQHandler(void) {
  
  
 void SysTick_Handler(){
+	
 	msec++;
 }
 
+
 void fuelle_puffer(volatile buffer_t *buf){
-		int i;
-		unsigned int idx = 0;
-		int buf_input= 0;
-		int val = 0;
+//		int i;
+//		unsigned int idx = 0;
+//		int buf_input= 0;
+//		int val = 0;
+//	
+//	
+//		for(i = 0; i < BUFFER_SIZE; i++){
+//			idx = fi >> FIXPOINT_ARITH;			//index zuweisung
+//			val = tabelle[idx];							//wert holen
+//			buf_input = ( a +  amplitude * val) >> FIXPOINT_ARITH;		//berechnung der DA-Wandler N = a + b*N-stuetz
+//			buf->data[i] = buf_input;				//wert in buffer einfuegen		
+//		//	fi = (fi + frequency) % SHIFTED_TABLE_SIZE;			//next index berechnen
+//	}
+//	buf->isEmpty = 0;
 	
-		for(i = 0; i < BUFFER_SIZE; i++){
-			idx = fi >> FIXPOINT_ARITH;			//index zuweisung
-			val = tabelle[idx];							//wert holen
-			buf_input = ( a +  amplitude * val) >> FIXPOINT_ARITH;		//berechnung der DA-Wandler N = a + b*N-stuetz
-			buf->data[i] = buf_input;				//wert in buffer einfuegen		
-			fi = (fi + frequency) % SHIFTED_TABLE_SIZE;			//next index berechnen
-	}
-	buf->isEmpty = 0;
+	int bytesLeft =  MAX_NGRAN*MAX_NCHAN*MAX_NSAMP; //vllt muss die variable nach oben 
+	unsigned char** ptr = (unsigned char **)&( mainBuf.data);
+	short* ptr2 = (short *)&(buf->data);
+	MP3Decode( mp3dec, ptr, &bytesLeft , ptr2, 0);  
+	
 }
 
-
+void print_display(){
+		// screen nur nach x intervallen updaten
+		if(mseczaehlvar <= SCREEN_UPDATE_CYCLE){
+			mseczaehlvar++;
+		} else {
+			mseczaehlvar = 0;
+		}
+		
+		if(srefresh == SREFRESH_ON && (mseczaehlvar == SCREEN_UPDATE_CYCLE)){
+			ITM->PORT[8].u32 = 0;
+			TFT_gotoxy(1,2);
+			TFT_puts("msec: ");
+			sprintf(msec_Buf, "%d" , msec);
+			TFT_puts(msec_Buf);
+			
+			TFT_gotoxy(1,3);
+			TFT_puts("Anzahl Values: ");
+			sprintf(interupt_Buf, "%d" , interrupt_Counter);
+			TFT_puts(interupt_Buf);
+			ITM->PORT[8].u32 = 1;
+			
+		}
+}

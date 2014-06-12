@@ -1,9 +1,11 @@
 --cpu Cortex-M4.fp
 ".\build\main.o"
 ".\build\functiongen.o"
-".\build\labor4.o"
 ".\build\peripherals.o"
 ".\Project\helix.lib"
+".\build\labor6.o"
+".\build\spi.o"
+".\build\spi_mem.o"
 ".\build\core_cm3.o"
 ".\build\misc.o"
 ".\build\stm32f4xx_gpio.o"

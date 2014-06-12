@@ -354,7 +354,7 @@
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
             <VariousControls>
-              <MiscControls></MiscControls>
+              <MiscControls>--c99</MiscControls>
               <Define>STM32F40_41xxx, USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
               <IncludePath>.\Libraries\CMSIS\CM3\CoreSupport;.\Libraries\StdPeriph_Driver\inc;.\Libraries\Device;.\Libraries\TiLib</IncludePath>
