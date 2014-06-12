@@ -151,25 +151,28 @@ void TIM8_UP_TIM13_IRQHandler(void) {
 	TIM8->SR = ~(1 << 0);													//Interrupt zurücknehmen 
 	interrupt_Counter++;
 	
-	
-	
-	if((irsInBuffer->isEmpty)){
-		setLED(UNDERFLOW_LED);
-	}else {
-		resetLED(UNDERFLOW_LED);
-	
-		DAC->DHR12R1 = irsInBuffer->data[idx_ISR];	 //an DAC weiterleiten
-		irsInBuffer->data[idx_ISR];
-		idx_ISR += 1;
-		
-		if(idx_ISR >= BUFFER_SIZE){ 
-			idx_ISR = 0;
-	
-			irsInBuffer->isEmpty = 1;
-			if(irsInBuffer == &buf1){ irsInBuffer = &buf2;}
-			else{ irsInBuffer = &buf1;}
-		}
-	}
+	if(irsInBuffer->isEmpty) {
+        setLED(UNDERFLOW_LED);
+    } else {
+        resetLED(UNDERFLOW_LED);
+        
+        //TODO
+        // aus isrInPuffer lesen
+        
+        //TODO
+        // pwm werte berechnen und ausgeben
+        
+        if(idx_ISR >= BUFFER_SIZE) {
+            idx_ISR = 0;
+            irsInBuffer->isEmpty = 1;
+            
+            if(irsInBuffer == &buf1) { 
+                irsInBuffer = &buf2;
+            } else {
+                irsInBuffer = &buf1;
+            }
+        }   
+    }
 }
 
  void start_TIM8_DAC(void){
