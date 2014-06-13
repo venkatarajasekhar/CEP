@@ -29,7 +29,7 @@ typedef struct{
 	uint8_t data [MAINBUF_SIZE];
 } spi_main_Buffer;
 
-void TIM8_UP_TIM13_IRQHandler(void);
+void setup_TIM8_DAC_PWM(void);
 void start_TIM8_DAC(void);
 void fuelle_puffer(volatile buffer_t *buf);
 void pwm_Init(void);
@@ -78,7 +78,7 @@ void labor6(void) {
 	amplitude = b_big;
 	
 	initCEP_Board();
-	start_TIM8_DAC();
+	setup_TIM8_DAC_PWM();
 
 	//SysTick end of count event each 10ms 
 	RCC_GetClocksFreq(&RCC_Clocks);
@@ -175,39 +175,60 @@ void TIM8_UP_TIM13_IRQHandler(void) {
     }
 }
 
- void start_TIM8_DAC(void){
-     
-     GPIO_InitTypeDef gpio;
- /*____________________________________T = 44100 Hz___________________________________*/
-	RCC->APB2ENR |= RCC_APB2ENR_TIM8EN; 									// Takt fuer Timer 8 einschalten	 
-	 
-	TIM8->CR1 = 0;															// Timer disabled
-	TIM8->CR2 = 0;															// Timer disabled
-	TIM8->PSC = 0; 															// Prescaler
-	TIM8->ARR = N_ARR; 														// Auto reload register
-	TIM8->DIER = TIM_DIER_UIE; 												// Interrupt einschalten
-	TIM8->CR1 = TIM_CR1_CEN | TIM_CR1_ARPE; 								// Enable Timer(Counter Enable) , enable preload
-	NVIC_EnableIRQ(TIM8_UP_TIM13_IRQn);
-	
-
-	 //DAC_START
-	DAC->CR = 0;
-	RCC_APB1PeriphClockCmd(RCC_APB1Periph_DAC, ENABLE); //Enabling Clock for DAC1
-	DAC->CR |= (DAC_CR_EN1 << 0);
-    
-     //Dac : Pins PA4 und PA5 müssen als analoge Pins konfiguriert werden ( Pin 6 und 
+void setup_TIM8_DAC_PWM(void) {
+    GPIO_InitTypeDef gpio;
+    RCC->APB2ENR |= RCC_APB2ENR_TIM8EN; 					// Takt fuer Timer 8 einschalten
+ 
+    // led 4 und 5 auf gpioi
 	gpio.GPIO_Mode = GPIO_Mode_AIN;
     gpio.GPIO_OType = GPIO_OType_PP;
     gpio.GPIO_PuPd = GPIO_PuPd_UP;
-    gpio.GPIO_Speed = GPIO_Speed_50MHz;
-
+    gpio.GPIO_Speed = GPIO_Speed_100MHz;
     gpio.GPIO_Pin = GPIO_Pin_4 | GPIO_Pin_5;
     GPIO_Init(GPIOI, &gpio);
+    
+    // pin 1 und 2 unf gpiob
+	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB, ENABLE);
+	gpio.GPIO_Mode  = GPIO_Mode_AF;
+	gpio.GPIO_OType = GPIO_OType_PP;
+	gpio.GPIO_PuPd  = GPIO_PuPd_NOPULL;
+	gpio.GPIO_Pin   = GPIO_Pin_0 | GPIO_Pin_1;	
+	gpio.GPIO_Speed	= GPIO_Speed_100MHz;
+	GPIO_Init(GPIOB, &gpio);
 	
+	GPIOB->AFR[0] |= 0x03  << 0;
+	GPIOB->AFR[0] |= 0x03  << 1*4;
+    
+    // timer enable
+    TIM8->CR1 = 0;											// Timer disabled
+	TIM8->CR2 = 0;										    // Timer disabled
+	TIM8->PSC = 0; 										    // Prescaler
+	TIM8->ARR = N_ARR; 									    // Auto reload register
+	TIM8->DIER = TIM_DIER_UIE; 								// Interrupt einschalten
+	TIM8->CR1 = TIM_CR1_CEN | TIM_CR1_ARPE; 			    // Enable Timer(Counter Enable) , enable preload
 	
- }
+    //Enable PWM
+	TIM8->CCMR1 |= TIM_CCMR1_OC2M_2 | TIM_CCMR1_OC2M_1 | TIM_CCMR1_OC2PE; //Channel 2
+	TIM8->CCMR2 |= TIM_CCMR2_OC3M_2 | TIM_CCMR2_OC3M_1 | TIM_CCMR2_OC3PE; //Channel 3
+	TIM8->CCER |= TIM_CCER_CC3NE | TIM_CCER_CC2NE;
+	TIM8->BDTR = TIM_BDTR_MOE;
+	TIM8->CR1 = TIM_CR1_CEN | TIM_CR1_ARPE;                               // Enable Timer, enable preload
+
+	NVIC_SetPriorityGrouping(2);
+	NVIC_SetPriority(TIM8_UP_TIM13_IRQn, 8);
+	NVIC_EnableIRQ(TIM8_UP_TIM13_IRQn);	
+		
+	TIM8->CCR2 = 0;
+	TIM8->CCR3 = 0;	
+    
+    //DAC_START
+	DAC->CR = 0;
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_DAC, ENABLE); //Enabling Clock for DAC1
+	DAC->CR |= DAC_CR_EN1 | DAC_CR_EN2;
+}    
  
- void pwm_Init(void){
+// setup von nils
+void pwm_Init(void){
 	 
 		//PORT B PIN 1&2 INITIALISIEREN
 		RCC->AHB1ENR |= RCC_AHB1ENR_GPIOBEN;
@@ -232,8 +253,72 @@ void TIM8_UP_TIM13_IRQHandler(void) {
 		NVIC_SetPriorityGrouping(2);
 		NVIC_SetPriority(TIM8_UP_TIM13_IRQn, 0);
 		NVIC_EnableIRQ(TIM8_UP_TIM13_IRQn);
-		
+	
+    
+    
  }
+ 
+//void start_TIM8_DAC(void){
+//     
+//     GPIO_InitTypeDef gpio;
+// /*____________________________________T = 44100 Hz___________________________________*/
+//	RCC->APB2ENR |= RCC_APB2ENR_TIM8EN; 									// Takt fuer Timer 8 einschalten	 
+//	 
+//	TIM8->CR1 = 0;															// Timer disabled
+//	TIM8->CR2 = 0;															// Timer disabled
+//	TIM8->PSC = 0; 															// Prescaler
+//	TIM8->ARR = N_ARR; 														// Auto reload register
+//	TIM8->DIER = TIM_DIER_UIE; 												// Interrupt einschalten
+//	TIM8->CR1 = TIM_CR1_CEN | TIM_CR1_ARPE; 								// Enable Timer(Counter Enable) , enable preload
+//	NVIC_EnableIRQ(TIM8_UP_TIM13_IRQn);
+//	
+
+//	 //DAC_START
+//	DAC->CR = 0;
+//	RCC_APB1PeriphClockCmd(RCC_APB1Periph_DAC, ENABLE); //Enabling Clock for DAC1
+//	DAC->CR |= (DAC_CR_EN1 << 0);
+//    
+//     //Dac : Pins PA4 und PA5 müssen als analoge Pins konfiguriert werden ( Pin 6 und 
+//	gpio.GPIO_Mode = GPIO_Mode_AIN;
+//    gpio.GPIO_OType = GPIO_OType_PP;
+//    gpio.GPIO_PuPd = GPIO_PuPd_UP;
+//    gpio.GPIO_Speed = GPIO_Speed_50MHz;
+
+//    gpio.GPIO_Pin = GPIO_Pin_4 | GPIO_Pin_5;
+//    GPIO_Init(GPIOI, &gpio);
+//	
+//	
+// }
+// 
+// void pwm_Init(void){
+//	 
+//		//PORT B PIN 1&2 INITIALISIEREN
+//		RCC->AHB1ENR |= RCC_AHB1ENR_GPIOBEN;
+//		GPIOB->MODER |= (GPIO_Mode_AF << (GPIO_PinSource0 *2)) | (GPIO_Mode_AF << (GPIO_PinSource1 *2));
+//		GPIOB->OSPEEDR |= (GPIO_Speed_50MHz << (GPIO_PinSource0 * 2)) | (GPIO_Speed_50MHz << (GPIO_PinSource1 * 2));
+//		GPIOB->OTYPER |= (GPIO_OType_PP << (GPIO_PinSource0)) | (GPIO_OType_PP << (GPIO_PinSource1));
+//	  GPIOB->PUPDR |= (GPIO_PuPd_UP << (GPIO_PinSource0 * 2)) | (GPIO_PuPd_UP << (GPIO_PinSource1 * 2));
+//		GPIOB->AFR[0] |= (GPIO_AF_TIM8 << (GPIO_PinSource0 * 4)) | (GPIO_AF_TIM8 << (GPIO_PinSource1 * 4));
+//  
+//    //TIMER SETUP	 
+//    RCC->APB2ENR |= RCC_APB2ENR_TIM8EN; // Takt fuer Timer 8 einschalten
+//		TIM8->PSC = 0; // Prescaler, Timertakt: 1 MHz
+//		TIM8->ARR = N_ARR;
+//		TIM8->BDTR = TIM_BDTR_MOE;
+//		TIM8->CCMR1 = TIM_CCMR1_OC2M_2 | TIM_CCMR1_OC2M_1 | TIM_CCMR1_OC2PE;
+//		TIM8->CCMR1 = TIM_CCMR2_OC3M_2 | TIM_CCMR2_OC3M_1 | TIM_CCMR2_OC3PE;
+//	  TIM8->CCER = TIM_CCER_CC3NE | TIM_CCER_CC2NE;
+//		TIM8->DIER = TIM_DIER_UIE;
+//    TIM8->CR1 = TIM_CR1_CEN | TIM_CR1_ARPE; // CONTROL ENABLE & AUTO RELOAD PRELOAD ENABLE
+//    TIM8->CR2 = 0;
+//		
+//		NVIC_SetPriorityGrouping(2);
+//		NVIC_SetPriority(TIM8_UP_TIM13_IRQn, 0);
+//		NVIC_EnableIRQ(TIM8_UP_TIM13_IRQn);
+//	
+//    
+//    
+// }
  
  
 void SysTick_Handler(){

@@ -12,14 +12,31 @@
  * inititialisieren von cr1 und cr2
  */
 void spi_setup(void) {   
+//    RCC->APB1ENR |= RCC_APB1ENR_SPI3EN;
+//	RCC->AHB1ENR |= RCC_AHB1ENR_GPIOBEN | RCC_AHB1ENR_GPIOGEN | RCC_AHB1ENR_GPIOCEN;
+//	
+//	GPIOB->MODER |= (GPIO_Mode_OUT << (2*9));
+//	GPIOG->MODER |= (GPIO_Mode_OUT << (2*6));
+//	GPIOG->BSRRL = GPIO_Pin_6;
+//	GPIOB->BSRRL = GPIO_Pin_9;
+//		
+//	GPIOC->MODER   |= (GPIO_Mode_AF << (2*10))    | (GPIO_Mode_AF << (2*11))    | (GPIO_Mode_AF << (2*12));
+//	GPIOC->OSPEEDR |= (GPIO_High_Speed << (2*10)) | (GPIO_High_Speed << (2*11)) | (GPIO_High_Speed << (2*12));
+//	GPIOC->AFR[1]  |= (GPIO_AF_SPI3 << (4*2))     | (GPIO_AF_SPI3 << (4*3))     | (GPIO_AF_SPI3 << (4*4));
+//	
+//	SPI3->CR1 = SPI_CR1_SPE | SPI_CR1_MSTR | SPI_CR1_CPOL | SPI_CR1_CPHA | SPI_CR1_SSI | SPI_CR1_SSM;  //| SPI_CR1_BR_1 | SPI_CR1_BR_2
+//	SPI3->CR2 = 0;
     
-    RCC->APB1ENR |= RCC_APB1ENR_SPI3EN;
-	RCC->AHB1ENR |= RCC_AHB1ENR_GPIOBEN | RCC_AHB1ENR_GPIOGEN | RCC_AHB1ENR_GPIOCEN;
+    RCC->APB1ENR |= RCC_APB1ENR_SPI3EN; // spi clock-enable
+	RCC->AHB1ENR |= RCC_AHB1ENR_GPIOBEN | RCC_AHB1ENR_GPIOGEN | RCC_AHB1ENR_GPIOCEN; // gpio clock-enable
 	
+    GPIOG->MODER |= (GPIO_Mode_OUT << (2*6)); // set to output
+    GPIOG->OSPEEDR |= (GPIO_High_Speed << (2*6)); // set to highspeed
+    GPIOG->BSRRL = GPIO_Pin_6; // set to low // set to low
+    
 	GPIOB->MODER |= (GPIO_Mode_OUT << (2*9));
-	GPIOG->MODER |= (GPIO_Mode_OUT << (2*6));
-	GPIOG->BSRRL = GPIO_Pin_6;
-	GPIOB->BSRRL = GPIO_Pin_9;
+    GPIOB->OSPEEDR |= (GPIO_High_Speed << (2*9));
+	GPIOB->BSRRL = GPIO_Pin_9; // set to low
 		
 	GPIOC->MODER   |= (GPIO_Mode_AF << (2*10))    | (GPIO_Mode_AF << (2*11))    | (GPIO_Mode_AF << (2*12));
 	GPIOC->OSPEEDR |= (GPIO_High_Speed << (2*10)) | (GPIO_High_Speed << (2*11)) | (GPIO_High_Speed << (2*12));
