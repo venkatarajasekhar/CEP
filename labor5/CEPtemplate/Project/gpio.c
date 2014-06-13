@@ -27,7 +27,7 @@ void gpio_setup(void) {
 	
 	// bsrrl -> high
 	GPIOB->BSRRL = GPIO_Pin_9;
-	
+    
 	/******************** gpioc pin10,11,12 ********************/
 	
 	// gpiob, clock enable
@@ -40,7 +40,7 @@ void gpio_setup(void) {
 	// pc10 -> alternate function
 	//GPIOC->MODER = (GPIOC->MODER & ~(3 << (10 * 2))) | (GPIO_Mode_AF << (10 * 2)) | (GPIOC->MODER & ~(3 << (11 * 2))) | (GPIO_Mode_AF << (11 * 2)) | (GPIOC->MODER & ~(3 << (12 * 2))) | (GPIO_Mode_AF << (12 * 2));
 	//GPIOB->MODER = (GPIOC->MODER & ~(3 << (11 * 2))) | (GPIO_Mode_AF << (11 * 2));
-	//GPIOB->MODER = (GPIOC->MODER & ~(3 << (12 * 2))) | (GPIO_Mode_AF << (12 * 2));
+	//GPIOB->MODER = (GPIOC ->MODER & ~(3 << (12 * 2))) | (GPIO_Mode_AF << (12 * 2));
 	GPIOC->MODER   |= (GPIO_Mode_AF << (2*10))    | (GPIO_Mode_AF << (2*11))    | (GPIO_Mode_AF << (2*12));
 	GPIOC->AFR[1]  |= (GPIO_AF_SPI3 << (4*2))     | (GPIO_AF_SPI3 << (4*3))     | (GPIO_AF_SPI3 << (4*4));
 	

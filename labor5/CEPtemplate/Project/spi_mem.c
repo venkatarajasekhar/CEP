@@ -247,25 +247,26 @@ int spiFlashMemErase(unsigned int chip_sel, uint32_t address, uint32_t numBytes)
 	
             if(numberOfBlocks >= BlockCount_64){
 				ausgabe += 1;
-                printf("erase %d\n",ausgabe);
+                printf("erase 64 %d\n",ausgabe);
                 spiFlashMemEraseBlock(chip_sel, address, CmdBlockErase_64K); 
                 numberOfBlocks -= BlockCount_64;
                 address += BLOCK_64KB;
             }
             else if(numberOfBlocks >= BlockCount_32){
-                printf("erase 32\n");
+                ausgabe += 1;
+                printf("erase 32 %d\n",ausgabe);
                 spiFlashMemEraseBlock(chip_sel, address, CmdBlockErase_32K);
                 numberOfBlocks -= BlockCount_32;
                 address += BLOCK_32KB;
             }
             else if(numberOfBlocks >= BlockCount_4){
-                printf("erase 4\n");
+                ausgabe += 1;
+                printf("erase 4 %d\n",ausgabe);
                 spiFlashMemEraseBlock(chip_sel, address, CmdBlockErase_4K);
                 numberOfBlocks -= BlockCount_4;
                 address += BLOCK_4KB;
             }
         } 
-        printf("erase \n");
         return 0;
     }
 }

@@ -448,16 +448,6 @@
               <FileType>1</FileType>
               <FilePath>.\Project\tests\spi_mem_test.c</FilePath>
             </File>
-            <File>
-              <FileName>gpio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\Project\gpio.h</FilePath>
-            </File>
-            <File>
-              <FileName>gpio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Project\gpio.c</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
