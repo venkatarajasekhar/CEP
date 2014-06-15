@@ -2,8 +2,8 @@
 #include "global.h"
 #include "functiongen.h"
 
-const unsigned int DELTA_IDX_440 = (unsigned int) ((440.L/SAMPLE_FREQ * TABLE_SIZE) * (1<<FIXPOINT_ARITH));
-const unsigned int DELTA_IDX_5000 = (unsigned int) ((5000.L/SAMPLE_FREQ * TABLE_SIZE) * (1<<FIXPOINT_ARITH));
+//const unsigned int DELTA_IDX_440 = (unsigned int) ((440.L/SAMPLE_FREQ * TABLE_SIZE) * (1<<FIXPOINT_ARITH));
+//const unsigned int DELTA_IDX_5000 = (unsigned int) ((5000.L/SAMPLE_FREQ * TABLE_SIZE) * (1<<FIXPOINT_ARITH));
 
 const unsigned int SHIFTED_TABLE_SIZE =  TABLE_SIZE * (1<<FIXPOINT_ARITH);
 	

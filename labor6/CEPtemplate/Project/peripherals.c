@@ -9,11 +9,9 @@
 
 //kommt aus labor4.c
 extern int play_modus; 		//defines --> REPLAY & SKIP
-//extern int frequency;
-extern int graph_type;
 extern int amplitude;
 extern int srefresh;
-extern int *tabelle;
+
 
 //Buttons-Mask
 #define S0 (1<<9)			
@@ -36,38 +34,18 @@ extern int *tabelle;
 #define B8 (GPIOH->IDR & S7)
 
 void read_buttons(void){
-	if(B1 == 0){						//is S1 pressed ? 		
-			TFT_gotoxy(1,1);
-			TFT_puts("replay");
-		}
+	if(B1 == 0){						//is S1 pressed ? 	
+		TFT_gotoxy(1,2);
+		TFT_puts("       replay");
+		play_modus = REPLAY;
+	}
 	
-			if(B2 == 0){				//is S2 pressed ? 		
-			TFT_gotoxy(1,1);
-			TFT_puts("skip 0x200000");
-		}
-		
-//	if(B1 == 0){						//is S1 pressed ? 	
-//		TFT_gotoxy(1,1);
-//		TFT_puts("Frequenz:   440");
-//		frequency = DELTA_IDX_440;
-//	}
-//	if(B2 == 0){						//is S2 pressed ? 
-//		TFT_gotoxy(1,1);
-//		TFT_puts("Frequenz:  5000");
-//		frequency = DELTA_IDX_5000;
-//	}
-	if(B3 == 0){						//is S3 pressed ? 		
-		tabelle = sinus_table;
+	if(B2 == 0){				//is S2 pressed ? 
+		TFT_gotoxy(1,2);
+		TFT_puts("skip 0x200000");		
+		play_modus = SKIP;
 	}
-	if(B4 == 0){						//is S4 pressed ? 		
-		tabelle = triangle_table;
-	}
-	if(B5 == 0){						//is S5 pressed ? 		
-		amplitude = b_big;
-	}
-	if(B6 == 0){						//is S6 pressed ? 		
-		amplitude = b_small;
-	}
+
 	if(B7 == 0){						//is S7 pressed ? 		
 		srefresh = SREFRESH_ON;
 	}		

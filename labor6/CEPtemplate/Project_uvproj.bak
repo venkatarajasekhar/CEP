@@ -354,7 +354,7 @@
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
             <VariousControls>
-              <MiscControls></MiscControls>
+              <MiscControls>--c99</MiscControls>
               <Define>STM32F40_41xxx, USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
               <IncludePath>.\Libraries\CMSIS\CM3\CoreSupport;.\Libraries\StdPeriph_Driver\inc;.\Libraries\Device;.\Libraries\TiLib</IncludePath>
@@ -404,29 +404,9 @@
               <FilePath>.\Project\main.c</FilePath>
             </File>
             <File>
-              <FileName>buffer.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Project\buffer.c</FilePath>
-            </File>
-            <File>
-              <FileName>buffer.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\Project\buffer.h</FilePath>
-            </File>
-            <File>
               <FileName>global.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\Project\global.h</FilePath>
-            </File>
-            <File>
-              <FileName>keypad.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Project\keypad.c</FilePath>
-            </File>
-            <File>
-              <FileName>keypad.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\Project\keypad.h</FilePath>
             </File>
             <File>
               <FileName>functiongen.h</FileName>
@@ -439,34 +419,54 @@
               <FilePath>.\Project\functiongen.c</FilePath>
             </File>
             <File>
-              <FileName>labor4.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Project\labor4.c</FilePath>
-            </File>
-            <File>
-              <FileName>labor4.h</FileName>
+              <FileName>peripherals.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\Project\labor4.h</FilePath>
+              <FilePath>.\Project\peripherals.h</FilePath>
             </File>
             <File>
-              <FileName>dac_test.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\Project\tests\dac_test.h</FilePath>
-            </File>
-            <File>
-              <FileName>dac_test.c</FileName>
+              <FileName>peripherals.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\Project\tests\dac_test.c</FilePath>
+              <FilePath>.\Project\peripherals.c</FilePath>
             </File>
             <File>
-              <FileName>dac.h</FileName>
+              <FileName>helix.lib</FileName>
+              <FileType>4</FileType>
+              <FilePath>.\Project\helix.lib</FilePath>
+            </File>
+            <File>
+              <FileName>mp3dec.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\Project\dac.h</FilePath>
+              <FilePath>.\Project\mp3dec.h</FilePath>
             </File>
             <File>
-              <FileName>dac.c</FileName>
+              <FileName>labor6.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\Project\dac.c</FilePath>
+              <FilePath>.\Project\labor6.c</FilePath>
+            </File>
+            <File>
+              <FileName>labor6.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Project\labor6.h</FilePath>
+            </File>
+            <File>
+              <FileName>spi.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Project\spi.h</FilePath>
+            </File>
+            <File>
+              <FileName>spi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Project\spi.c</FilePath>
+            </File>
+            <File>
+              <FileName>spi_mem.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Project\spi_mem.h</FilePath>
+            </File>
+            <File>
+              <FileName>spi_mem.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Project\spi_mem.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -654,11 +654,6 @@
               <FilePath>..\..\..\Libraries\StdPeriph_Driver\inc\stm32f4xx_syscfg.h</FilePath>
             </File>
             <File>
-              <FileName>stm32f4xx_tim.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\..\Libraries\StdPeriph_Driver\inc\stm32f4xx_tim.h</FilePath>
-            </File>
-            <File>
               <FileName>stm32f4xx_usart.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\..\Libraries\StdPeriph_Driver\inc\stm32f4xx_usart.h</FilePath>
@@ -667,6 +662,11 @@
               <FileName>stm32f4xx_wwdg.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\..\Libraries\StdPeriph_Driver\inc\stm32f4xx_wwdg.h</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_tim.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Libraries\StdPeriph_Driver\inc\stm32f4xx_tim.h</FilePath>
             </File>
           </Files>
         </Group>
