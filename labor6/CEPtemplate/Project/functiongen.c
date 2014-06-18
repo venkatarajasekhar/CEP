@@ -11,6 +11,8 @@ const unsigned int a =  (unsigned int)((1.5L/3.3 *DAC_MAX_VAL)* (1<< FIXPOINT_AR
 const unsigned int b_small =  (unsigned int)((0.5L/DAC_MAX_V * DAC_MAX_VAL)/(1 << 15) *  (1 << FIXPOINT_ARITH));
 const unsigned int b_big = (unsigned int)((1.0L/DAC_MAX_V * DAC_MAX_VAL)/(1 << 15) *  (1 << FIXPOINT_ARITH));
 
+const unsigned int AVG = (unsigned int) ((1.65L/3.3 * (65536-1)) * (1 << (16))); 					//intercept
+const unsigned int A_BIG = (unsigned int) ((1.65L/3.3 * (65536-1))/(1 << (15)) * (1 << (16)));		//coefficient for middle V value 
 
 int sinus_table[TABLE_SIZE] = {
          0,   804,  1608,  2411,  3212,  4011,  4808,  5602,  6393,  7180,

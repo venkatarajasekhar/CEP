@@ -589,11 +589,6 @@
               <FilePath>..\..\..\Libraries\StdPeriph_Driver\inc\stm32f4xx_fsmc.h</FilePath>
             </File>
             <File>
-              <FileName>stm32f4xx_gpio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\..\Libraries\StdPeriph_Driver\inc\stm32f4xx_gpio.h</FilePath>
-            </File>
-            <File>
               <FileName>stm32f4xx_hash.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\..\Libraries\StdPeriph_Driver\inc\stm32f4xx_hash.h</FilePath>
@@ -667,6 +662,11 @@
               <FileName>stm32f4xx_tim.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\Libraries\StdPeriph_Driver\inc\stm32f4xx_tim.h</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_gpio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Libraries\StdPeriph_Driver\inc\stm32f4xx_gpio.h</FilePath>
             </File>
           </Files>
         </Group>

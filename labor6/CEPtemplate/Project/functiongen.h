@@ -15,5 +15,7 @@ extern const unsigned int b_big;
 
 extern int sinus_table[TABLE_SIZE];
 extern int triangle_table[TABLE_SIZE];
+extern const unsigned int AVG;
+extern const unsigned int A_BIG;
 
 #endif /* FUNCTIONGEN_H_ */
