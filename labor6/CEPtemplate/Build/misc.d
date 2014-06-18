@@ -1,11 +1,11 @@
 .\build\misc.o: Libraries\StdPeriph_Driver\src\misc.c
 .\build\misc.o: .\Libraries\StdPeriph_Driver\inc\misc.h
 .\build\misc.o: .\Libraries\Device\stm32f4xx.h
-.\build\misc.o: C:\Keil_v5\ARM\PACK\ARM\CMSIS\3.20.4\CMSIS\Include\core_cm4.h
-.\build\misc.o: C:\Keil_v5\ARM\ARMCC\bin\..\include\stdint.h
-.\build\misc.o: C:\Keil_v5\ARM\PACK\ARM\CMSIS\3.20.4\CMSIS\Include\core_cmInstr.h
-.\build\misc.o: C:\Keil_v5\ARM\PACK\ARM\CMSIS\3.20.4\CMSIS\Include\core_cmFunc.h
-.\build\misc.o: C:\Keil_v5\ARM\PACK\ARM\CMSIS\3.20.4\CMSIS\Include\core_cm4_simd.h
+.\build\misc.o: C:\Keil\ARM\PACK\ARM\CMSIS\3.20.4\CMSIS\Include\core_cm4.h
+.\build\misc.o: C:\Keil\ARM\ARMCC\bin\..\include\stdint.h
+.\build\misc.o: C:\Keil\ARM\PACK\ARM\CMSIS\3.20.4\CMSIS\Include\core_cmInstr.h
+.\build\misc.o: C:\Keil\ARM\PACK\ARM\CMSIS\3.20.4\CMSIS\Include\core_cmFunc.h
+.\build\misc.o: C:\Keil\ARM\PACK\ARM\CMSIS\3.20.4\CMSIS\Include\core_cm4_simd.h
 .\build\misc.o: .\Libraries\Device\system_stm32f4xx.h
 .\build\misc.o: .\Libraries\Device\stm32f4xx_conf.h
 .\build\misc.o: .\Libraries\Device\RTE_Components.h

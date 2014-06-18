@@ -5,7 +5,6 @@
 #include "functiongen.h"
 #include "global.h"
 #include "labor6.h"
-#include "peripherals.h"
 #include "mp3dec.h"
 #include <stm32f4xx_gpio.h>
 #include "spi.h"
@@ -15,19 +14,23 @@
 #define SCREEN_UPDATE_CYCLE 168000
 #define BUF_SIZE MAX_NGRAN*MAX_NCHAN*MAX_NSAMP
 #define OFFSET 32768
-#define REPLAY_ADDRESS 0
-#define SKIP_ADDRESS 200000
+#define REPLAY_ADDRESS 0x0
+#define SKIP_ADDRESS 0x20000
+
+#define UNDERFLOW_LED LED0
+#define WAITING_LED LED7
 
 //Prototypen
 void TIM8_UP_TIM13_IRQHandler(void);
 void setup_TIM8_DAC_PWM(void);
 //void pwm_Init(void);
 void print_display(void);
+void read_buttons(void);
 
 //Main Buffer (SPI-Daten kommen hier rein und werden dann vom MP3-Dekoder decodiert und in den eigentlichen Buffer reingeschrieben
 uint8_t mainBuf[MAINBUF_SIZE];
 uint8_t* ptrMainBuf = mainBuf;
-uint8_t mainBuf_empty = 1;
+uint8_t mainBuf_empty;
 
 //Input- / Output- Buffer Struktur
 typedef struct{
@@ -40,16 +43,15 @@ buffer_t buf2;
 buffer_t* mp3OutBuffer;
 buffer_t* irsInBuffer;
 
-volatile int idx_ISR = 0;
+volatile int idx_ISR;
 volatile int msec;
 char msec_Buf[10];
 char interupt_Buf[10];
 char freq_Buf[20];
 
 
-int interrupt_Counter = 0;
-int mseczaehlvar = 0;
-int fi = 0;
+int interrupt_Counter;
+int mseczaehlvar;
 
 //unsigned int frequency;
 unsigned int play_modus;
@@ -58,18 +60,33 @@ unsigned int amplitude;
 int srefresh = SREFRESH_OFF;
 
 //labor6
-int syncword_address =0;
-uint32_t spi_address = 0; 
-uint16_t pwmVal = 0;
-HMP3Decoder mp3dec;
-int run = 1;
+int syncword_address;
+uint32_t spi_address; 
+uint16_t pwmVal;
+
+int run;
 float SCALE_PWM = (65536.0)/(N_ARR);
-int bytesLeft = 0;
-int bytesTilSyncWord = 0;
-int decodeRetVal = 0;
+int bytesLeft;
+int bytesTilSyncWord;
+int decodeRetVal;
+
+unsigned int errorCounter;
 
 void labor6(void) {
-		
+	run = 1;	
+    syncword_address =0;
+    spi_address = 0; 
+    pwmVal = 0;
+    HMP3Decoder mp3dec;
+    bytesLeft = 0;
+    bytesTilSyncWord = 0;
+    decodeRetVal = 0;
+    errorCounter = 0;
+    idx_ISR = 0;
+    mainBuf_empty = 1;
+    interrupt_Counter = 0;
+    mseczaehlvar = 0;
+    
 	RCC_ClocksTypeDef RCC_Clocks;
 	msec = 0;
 	int i = 0;
@@ -77,9 +94,7 @@ void labor6(void) {
 	//Amplitude 1.0V (b_big)
 	amplitude = b_big;
 	
-	//INIT
-	initCEP_Board();
-  spi_setup();
+    spi_setup();
 	setup_TIM8_DAC_PWM();
 	mp3dec = MP3InitDecoder();
 	
@@ -98,25 +113,15 @@ void labor6(void) {
 	TFT_cls();
 	TFT_gotoxy(1,1);
 	TFT_puts("Frequenz:   5000");
-	
+    
+	while(B1 != 0 && B2 != 0){}
+
 	do{
 		//Check Buttons
 		read_buttons();
-		
 		//ausgabe
 		print_display();
-			
-		//ueberpruefung ob Adresse uebersprungen werden soll 
-		if(play_modus == REPLAY){
-			spi_address = REPLAY_ADDRESS;
-			bytesLeft = 0;
-			
-		}
-		if(play_modus == SKIP){
-			spi_address += SKIP_ADDRESS;
-			bytesLeft = 0;
-		}
-		
+				
 		//wenn der mainBuf leer ist, muss der durch readSPI mit mp3-daten gefuellt werden
 		if (mainBuf_empty) {																								
 
@@ -182,7 +187,13 @@ void labor6(void) {
 				
 				mainBuf_empty = 1;																									//der mainBuf ist nicht komplett voll
 				
-				if (decodeRetVal < 0) {																							//fehler beim decode aufgetreten
+                if (decodeRetVal < 0){
+                    errorCounter++;
+                }else{
+                    errorCounter = 0;
+                }
+                
+				if (errorCounter > 2) {																							//fehler beim decode aufgetreten
 					run = 0;
 				} else {					
 					mp3OutBuffer->isEmpty = 0;																			//der mp3OutBuffer wurde voll geschrieben, bereit fuer die ISR
@@ -199,8 +210,6 @@ void labor6(void) {
 	
 	MP3FreeDecoder(mp3dec);
 	
-	//forever
-	while(1);
 }
 
 void TIM8_UP_TIM13_IRQHandler(void) {
@@ -228,7 +237,7 @@ void TIM8_UP_TIM13_IRQHandler(void) {
   
 		idx_ISR += 2;
 		     
-		if(idx_ISR >= BUFFER_SIZE) {
+		if(idx_ISR >= BUF_SIZE) {
 					idx_ISR = 0;
 					irsInBuffer->isEmpty = 1;
             
@@ -245,15 +254,15 @@ void setup_TIM8_DAC_PWM(void) {
 	GPIO_InitTypeDef gpio;
 	RCC->APB2ENR |= RCC_APB2ENR_TIM8EN; // Takt fuer Timer 8 einschalten
  
-  // led 4 und 5 auf gpioi
-	gpio.GPIO_Mode = GPIO_Mode_AIN;
-  gpio.GPIO_OType = GPIO_OType_PP;
-  gpio.GPIO_PuPd = GPIO_PuPd_UP;
+    // led 4 und 5 auf gpioi
+    gpio.GPIO_Mode = GPIO_Mode_AIN;
+    gpio.GPIO_OType = GPIO_OType_PP;
+    gpio.GPIO_PuPd = GPIO_PuPd_UP;
 	gpio.GPIO_Speed = GPIO_Speed_100MHz;
-  gpio.GPIO_Pin = GPIO_Pin_4 | GPIO_Pin_5;
-  GPIO_Init(GPIOI, &gpio);
+    gpio.GPIO_Pin = GPIO_Pin_4 | GPIO_Pin_5;
+    GPIO_Init(GPIOI, &gpio);
     
-  // pin 1 und 2 unf gpiob
+    // pin 1 und 2 unf gpiob
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB, ENABLE);
 	gpio.GPIO_Mode = GPIO_Mode_AF;
 	gpio.GPIO_OType = GPIO_OType_PP;
@@ -265,15 +274,15 @@ void setup_TIM8_DAC_PWM(void) {
 	GPIOB->AFR[0] |= 0x03 << 0;
 	GPIOB->AFR[0] |= 0x03 << 1*4;
     
-  // timer enable
-  TIM8->CR1 = 0;	// Timer disabled
+    // timer enable
+    TIM8->CR1 = 0;	// Timer disabled
 	TIM8->CR2 = 0;	// Timer disabled
 	TIM8->PSC = 0; // Prescaler
 	TIM8->ARR = N_ARR; // Auto reload register
 	TIM8->DIER = TIM_DIER_UIE; // Interrupt einschalten
 	TIM8->CR1 = TIM_CR1_CEN | TIM_CR1_ARPE; // Enable Timer(Counter Enable) , enable preload
 
-  //Enable PWM
+    //Enable PWM
 	TIM8->CCMR1 |= TIM_CCMR1_OC2M_2 | TIM_CCMR1_OC2M_1 | TIM_CCMR1_OC2PE; //Channel 2
 	TIM8->CCMR2 |= TIM_CCMR2_OC3M_2 | TIM_CCMR2_OC3M_1 | TIM_CCMR2_OC3PE; //Channel 3
 	TIM8->CCER |= TIM_CCER_CC3NE | TIM_CCER_CC2NE;
@@ -287,46 +296,15 @@ void setup_TIM8_DAC_PWM(void) {
 	TIM8->CCR2 = 0;
 	TIM8->CCR3 = 0;	
     
-  //DAC_START
+    //DAC_START
 	DAC->CR = 0;
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_DAC, ENABLE); //Enabling Clock for DAC1
 	DAC->CR |= DAC_CR_EN1 | DAC_CR_EN2;
 } 
 
-
-//void pwm_Init(void){
-//	 
-//		//PORT B PIN 1&2 INITIALISIEREN
-//		RCC->AHB1ENR |= RCC_AHB1ENR_GPIOBEN;
-//		GPIOB->MODER |= (GPIO_Mode_AF << (GPIO_PinSource0 *2)) | (GPIO_Mode_AF << (GPIO_PinSource1 *2));
-//		GPIOB->OSPEEDR |= (GPIO_Speed_50MHz << (GPIO_PinSource0 * 2)) | (GPIO_Speed_50MHz << (GPIO_PinSource1 * 2));
-//		GPIOB->OTYPER |= (GPIO_OType_PP << (GPIO_PinSource0)) | (GPIO_OType_PP << (GPIO_PinSource1));
-//	  GPIOB->PUPDR |= (GPIO_PuPd_UP << (GPIO_PinSource0 * 2)) | (GPIO_PuPd_UP << (GPIO_PinSource1 * 2));
-//		GPIOB->AFR[0] |= (GPIO_AF_TIM8 << (GPIO_PinSource0 * 4)) | (GPIO_AF_TIM8 << (GPIO_PinSource1 * 4));
-//  
-//    //TIMER SETUP	 
-//    RCC->APB2ENR |= RCC_APB2ENR_TIM8EN; // Takt fuer Timer 8 einschalten
-//		TIM8->PSC = 0; // Prescaler, Timertakt: 1 MHz
-//		TIM8->ARR = N_ARR;
-//		TIM8->BDTR = TIM_BDTR_MOE;
-//		TIM8->CCMR1 = TIM_CCMR1_OC2M_2 | TIM_CCMR1_OC2M_1 | TIM_CCMR1_OC2PE;
-//		TIM8->CCMR1 = TIM_CCMR2_OC3M_2 | TIM_CCMR2_OC3M_1 | TIM_CCMR2_OC3PE;
-//	  TIM8->CCER = TIM_CCER_CC3NE | TIM_CCER_CC2NE;
-//		TIM8->DIER = TIM_DIER_UIE;
-//    TIM8->CR1 = TIM_CR1_CEN | TIM_CR1_ARPE; // CONTROL ENABLE & AUTO RELOAD PRELOAD ENABLE
-//    TIM8->CR2 = 0;
-//		
-//		NVIC_SetPriorityGrouping(2);
-//		NVIC_SetPriority(TIM8_UP_TIM13_IRQn, 0);
-//		NVIC_EnableIRQ(TIM8_UP_TIM13_IRQn);
-//		
-// }
- 
- 
 void SysTick_Handler(){
 	msec++;
 }
-
 
 
 void print_display(){
@@ -350,4 +328,28 @@ void print_display(){
 			TFT_puts(interupt_Buf);
 			ITM->PORT[8].u32 = 1;
 		}
+}
+
+void read_buttons(void){
+	if(B1 == 0){						//is S1 pressed ? 	
+		TFT_gotoxy(1,2);
+		TFT_puts("       replay");
+		spi_address = REPLAY_ADDRESS;
+		bytesLeft = 0;
+	}
+	
+	if(B2 == 0){				//is S2 pressed ? 
+		TFT_gotoxy(1,2);
+		TFT_puts("skip 0x200000");		
+        spi_address = SKIP_ADDRESS;
+        bytesLeft = 0;
+        while(B2==0){}
+	}
+
+	if(B7 == 0){						//is S7 pressed ? 		
+		srefresh = SREFRESH_ON;
+	}		
+	if(B8 == 0){						//is S8 pressed ? 		
+		srefresh = SREFRESH_OFF;
+	}
 }

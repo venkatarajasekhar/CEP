@@ -16,6 +16,6 @@
 #define WAITING_LED LED7
 
 void peripherals_test(void);
-void read_buttons(void);
+void read_buttons2(void);
 	
 #endif /* PERIPHERALS_H */

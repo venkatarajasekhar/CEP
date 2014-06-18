@@ -33,12 +33,14 @@ extern int srefresh;
 #define B7 (GPIOH->IDR & S6)
 #define B8 (GPIOH->IDR & S7)
 
-void read_buttons(void){
+void read_buttons2(void){
 	if(B1 == 0){						//is S1 pressed ? 	
 		TFT_gotoxy(1,2);
 		TFT_puts("       replay");
 		play_modus = REPLAY;
-	}
+	}else{
+        play_modus = 0;
+    }
 	
 	if(B2 == 0){				//is S2 pressed ? 
 		TFT_gotoxy(1,2);

@@ -7,9 +7,11 @@
 #include "tft.h"
 
 int main(void) {
-	
+    //INIT
+	initCEP_Board();
+	while(1){
 	labor6();
-		
+    }
 	return EXIT_SUCCESS;
 }
 

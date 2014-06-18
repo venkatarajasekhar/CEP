@@ -3,20 +3,23 @@
 <pre>
 <h1>µVision Build Log</h1>
 <h2>Project:</h2>
-C:\Users\Nana\Dropbox\UNI5\CE\Besnik&Burim\cep\labor6\CEPtemplate\Project.uvproj
-Project File Date:  06/14/2014
+C:\Documents and Settings\abd299.INFORMATIK\Desktop\cep\labor6\CEPtemplate\Project.uvproj
+Project File Date:  06/17/2014
 
 <h2>Output:</h2>
 Build target 'cep'
 compiling main.c...
-compiling functiongen.c...
-compiling peripherals.c...
+Project\main.c(15): warning:  #111-D: statement is unreachable
+        return EXIT_SUCCESS;
+Project\main.c: 1 warning, 0 errors
 compiling labor6.c...
-compiling spi.c...
-compiling spi_mem.c...
-compiling core_cm3.c...
-compiling misc.c...
-compiling stm32f4xx_gpio.c...
+linking...
+Program Size: Code=22096 RO-data=13696 RW-data=2160 ZI-data=46048  
+".\Build\cep.axf" - 0 Error(s), 1 Warning(s).
+</pre>
+</body>
+</html>
+ing stm32f4xx_gpio.c...
 compiling stm32f4xx_rcc.c...
 compiling stm32f4xx_usart.c...
 assembling startup_stm32f40_41xxx.s...
@@ -27,10 +30,72 @@ compiling Usart.c...
 compiling Retarget.c...
 compiling tft.c...
 linking...
-.\Build\cep.axf: error: L6047U: The size of this image (37852 bytes) exceeds the maximum allowed for this version of the linker
-Finished: 0 information, 0 warning, 0 error and 1 fatal error messages.
-".\Build\cep.axf" - 1 Error(s), 0 Warning(s).
+Program Size: Code=22096 RO-data=13696 RW-data=2160 ZI-data=46048  
+".\Build\cep.axf" - 0 Error(s), 1 Warning(s).
+t play_modus;
+Project\labor6.c(64): warning:  #177-D: variable "tabelle" was declared but never referenced
+  int *tabelle = sinus_table;
+Project\labor6.c(65): warning:  #550-D: variable "amplitude" was set but never used
+  unsigned int amplitude;
+Project\labor6.c(66): warning:  #177-D: variable "srefresh" was declared but never referenced
+  int srefresh = SREFRESH_OFF;
+Project\labor6.c(69): warning:  #177-D: variable "syncword_address" was declared but never referenced
+  int syncword_address =0;
+Project\labor6.c(71): warning:  #177-D: variable "pwmVal" was declared but never referenced
+  uint16_t pwmVal = 0;
+Project\labor6.c(74): warning:  #177-D: variable "SCALE_PWM" was declared but never referenced
+  float SCALE_PWM = (65536.0)/(N_ARR);
+Project\labor6.c(211): error:  #20: identifier "interrupt_Counter" is undefined
+        interrupt_Counter++;    //zaehle Interrupts     
+Project\labor6.c(220): error:  #20: identifier "amplitude" is undefined
+                DAC->DHR12L1 = ((a + amplitude * irsInBuffer->data[idx_ISR]) >> FIXPOINT_ARITH);    //den aktuellen index an dem Data-Holding-Register
+Project\labor6.c(220): error:  #20: identifier "idx_ISR" is undefined
+                DAC->DHR12L1 = ((a + amplitude * irsInBuffer->data[idx_ISR]) >> FIXPOINT_ARITH);    //den aktuellen index an dem Data-Holding-Register
+Project\labor6.c(224): error:  #20: identifier "pwmVal" is undefined
+                pwmVal = (irsInBuffer->data[idx_ISR] + OFFSET)/SCALE_PWM;        //-> (buf->data + 32768)/17.0
+Project\labor6.c(224): error:  #20: identifier "SCALE_PWM" is undefined
+                pwmVal = (irsInBuffer->data[idx_ISR] + OFFSET)/SCALE_PWM;        //-> (buf->data + 32768)/17.0
+Project\labor6.c(237): error:  #20: identifier "buf1" is undefined
+                                        if(irsInBuffer == &buf1) { 
+Project\labor6.c(238): error:  #20: identifier "buf2" is undefined
+                                                                        irsInBuffer = &buf2;
+Project\labor6.c(329): error:  #20: identifier "msec" is undefined
+        msec++;
+Project\labor6.c(336): error:  #20: identifier "mseczaehlvar" is undefined
+                if(mseczaehlvar <= SCREEN_UPDATE_CYCLE){
+Project\labor6.c(342): error:  #20: identifier "srefresh" is undefined
+                if(srefresh == SREFRESH_ON && (mseczaehlvar == SCREEN_UPDATE_CYCLE)){
+Project\labor6.c(342): error:  #20: identifier "mseczaehlvar" is undefined
+                if(srefresh == SREFRESH_ON && (mseczaehlvar == SCREEN_UPDATE_CYCLE)){
+Project\labor6.c(346): error:  #20: identifier "msec" is undefined
+                        sprintf(msec_Buf, "%d" , msec);
+Project\labor6.c(351): error:  #20: identifier "interupt_Buf" is undefined
+                        sprintf(interupt_Buf, "%d" , interrupt_Counter);
+Project\labor6.c(351): error:  #20: identifier "interrupt_Counter" is undefined
+                        sprintf(interupt_Buf, "%d" , interrupt_Counter);
+Project\labor6.c(361): error:  #20: identifier "spi_address" is undefined
+                spi_address = REPLAY_ADDRESS;
+Project\labor6.c(362): error:  #20: identifier "bytesLeft" is undefined
+                bytesLeft = 0;
+Project\labor6.c(368): error:  #20: identifier "spi_address" is undefined
+          spi_address = SKIP_ADDRESS;
+Project\labor6.c(369): error:  #20: identifier "bytesLeft" is undefined
+          bytesLeft = 0;
+Project\labor6.c(374): error:  #20: identifier "srefresh" is undefined
+                srefresh = SREFRESH_ON;
+Project\labor6.c(377): error:  #20: identifier "srefresh" is undefined
+                srefresh = SREFRESH_OFF;
+Project\labor6.c: 12 warnings, 20 errors
+".\Build\cep.axf" - 20 Error(s), 12 Warning(s).
 Target not created
-</pre>
-</body>
-</html>
+resh = SREFRESH_ON;
+Project\labor6.c(376): error:  #20: identifier "srefresh" is undefined
+                srefresh = SREFRESH_OFF;
+Project\labor6.c: 13 warnings, 21 errors
+".\Build\cep.axf" - 21 Error(s), 13 Warning(s).
+Target not created
+ct\labor6.c(375): error:  #20: identifier "srefresh" is undefined
+                srefresh = SREFRESH_OFF;
+Project\labor6.c: 14 warnings, 22 errors
+".\Build\cep.axf" - 22 Error(s), 14 Warning(s).
+Target not created
