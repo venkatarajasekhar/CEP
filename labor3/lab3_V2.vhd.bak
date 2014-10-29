@@ -1,0 +1,284 @@
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.std_logic_signed.all;
+use IEEE.numeric_std.all; -- signal types signed and unsigned
+
+entity SQRT is
+port(
+	CLK, start_in: in std_logic;
+	d: in std_logic_vector (15 downto 0);
+	q: out std_logic_vector (15 downto 0);
+	RDY: out std_logic
+	);
+end SQRT;
+
+
+architecture VERHALTEN of SQRT is
+
+--SIGNALE------------------------------------------------------------------------------------------------------------------------------------
+--Zustaende
+type ZUSTAENDE is (IDLE, S1, S2, S3, S4, S5, S5_1, IF1, S6, S7, S7_1, IF2);
+signal ZUSTAND, FOLGE_Z: ZUSTAENDE;
+
+--Steuersignale
+signal PRESET, EN_R0, EN_R1, EN_R2, EN_R3, EN_R4, Select0, Select2,Select3, Select4: std_logic;
+signal Select1: std_logic_vector (1 downto 0);
+signal komplement: std_logic;
+
+--Operatoren
+signal comparbit: std_logic;
+signal differenz, summe: std_logic_vector(15 downto 0);
+signal shifterg: unsigned (15 downto 0);
+
+--FlipFlops
+signal qout, rout, nout, r3out, r4out: std_logic_vector(15 downto 0);
+
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+begin
+Z_SPEICHER: process (CLK)
+	begin
+		if CLK = '1' and CLK'event then
+			ZUSTAND <= FOLGE_Z after 1 ns;		--mit jeder Clockflanke, ist man im naechsten Zustand
+			end if;
+end process Z_SPEICHER;
+
+STEUERPFAD: process(ZUSTAND, start_in, comparbit)		
+		variable tmp_qout: std_logic_vector(15 downto 0);
+	begin	
+	  
+	  --Default
+	  PRESET <= '0' after 1 ns;
+	  EN_R0 <= '0' after 1 ns;
+	  EN_R1 <= '0' after 1 ns;
+	  EN_R2 <= '0' after 1 ns;
+	  EN_R3 <= '0' after 1 ns;
+	  EN_R4 <= '0' after 1 ns;
+	  Select0 <= '0' after 1 ns;
+	  Select1 <= "00" after 1 ns;
+	  Select2 <= '0' after 1 ns;
+	  Select3 <= '0' after 1 ns;
+	  Select4 <= '0' after 1 ns;
+	  
+	 
+	 case ZUSTAND is		
+		when IDLE =>	RDY <= '0' after 1 ns;
+					
+				if start_in = '1' then
+					FOLGE_Z <= S1 after 1 ns;
+					PRESET <= '1' after 1 ns;
+					EN_R1 <= '1' after 1 ns;
+				else
+					FOLGE_Z <= IDLE after 1 ns;
+				end if;
+					
+					
+					
+		
+		when S1 => 	FOLGE_Z <= S2 after 1 ns;
+				Select0 <= '0' after 1 ns;
+				EN_R2 <= '1' after 1 ns;
+										
+		
+		when S2 => 	FOLGE_Z <= S3 after 1 ns;
+				Select1 <= "00" after 1 ns;
+				Select3 <= '1' after 1 ns;
+				EN_R3 <= '1' after 1 ns;
+					
+		when S3 => 	FOLGE_Z <= S4 after 1 ns;
+				Select1 <= "01" after 1 ns;
+				EN_R4 <= '1' after 1 ns;
+					
+					
+		when S4 => 	FOLGE_Z <= S5 after 1 ns;
+				Select2 <= '0' after 1 ns;
+				Select3 <= '0' after 1 ns;
+				EN_R3 <= '1' after 1 ns;
+					
+		when S5 => 	FOLGE_Z <= S5_1 after 1 ns;
+				Select1 <= "10" after 1 ns;
+				EN_R4 <= '1' after 1 ns;
+					
+		when S5_1 => 	FOLGE_Z <= IF1 after 1 ns;
+				Select4 <= '0' after 1 ns;
+					
+		when IF1 => 	if comparbit = '1' then
+					FOLGE_Z <= S6 after 1 ns;
+				else 
+					FOLGE_Z <= S7_1 after 1 ns;
+				end if;
+		
+		when S6 => 	FOLGE_Z <= S7 after 1 ns;
+				Select0 <= '1' after 1 ns;
+				EN_R1 <= '1' after 1 ns;
+				Select1 <= "00" after 1 ns;
+				Select3 <= '1' after 1 ns;
+				EN_R3 <= '1' after 1 ns;
+		
+		when S7 => 	FOLGE_Z <= S7_1 after 1 ns;
+				Select2 <= '1' after 1 ns;
+				EN_R0 <= '1' after 1 ns;
+					
+		when S7_1 => 	FOLGE_Z <= IF2 after 1 ns;
+				Select4 <= '1' after 1 ns;
+		
+		when IF2 =>	if comparbit = '1' then
+					FOLGE_Z <= S1 after 1 ns;
+				else 
+					FOLGE_Z <= IDLE after 1 ns;
+					
+					if komplement = '1' then
+                  				q <= ((not qout) + 1);
+               				else
+						q <= qout after 1 ns;
+					end if;
+
+					RDY <= '1' after 1 ns;
+
+				end if;
+
+	 end case;
+	end process STEUERPFAD;
+	
+ADDITION: process(Select2, r4out, r3out, qout)
+variable smd1, smd2: std_logic_vector(15 downto 0);
+begin
+	if Select2 = '0' then
+		smd1 := r3out;
+		smd2 := r4out;
+	else 
+		smd1 := qout;
+		smd2 := r3out;
+	end if;
+	
+	summe <= smd1 + smd2 after 1 ns;
+end process ADDITION;
+
+SHIFTEN: process(Select1, nout, qout, r3out)
+variable shift1, shift2: std_logic_vector(15 downto 0);
+begin
+	if Select1 = "00" then
+	shift1 := "0000000000000001";
+	shift2 := nout;
+	elsif Select1 = "01" then
+	shift1 := qout;
+	shift2 := "0000000000000001";
+	else
+	shift1 := r3out;
+	shift2 := nout;
+	end if;
+	
+shifterg <= SHIFT_LEFT(UNSIGNED(shift1), TO_INTEGER(UNSIGNED(shift2))) after 1 ns;
+
+end process SHIFTEN;
+
+SUBTRAKTION: process(Select0, nout, rout, r4out)
+variable sub1, sub2: std_logic_vector(15 downto 0);
+begin
+	if Select0 = '0' then
+		sub1 := nout;
+		sub2 := "0000000000000001";
+	else 
+		sub1 := rout;
+		sub2 := r4out;
+	end if;
+	
+	differenz <= sub1 - sub2 after 1 ns;
+	
+end process SUBTRAKTION;
+
+VERGLEICH: process(Select4, r4out, rout, nout)
+variable comp1, comp2: std_logic_vector(15 downto 0);
+begin
+	if Select4 = '0' then
+		comp1 := r4out;
+		comp2 := rout; 
+	else 
+		comp1 := "0000000000000001";
+		comp2 := nout;
+	end if;
+	if (comp1 <= comp2) then
+		comparbit <= '1' after 1 ns;
+	else
+		comparbit <= '0' after 1 ns;
+	end if;
+end process VERGLEICH;
+
+Register_R0: process (CLK, PRESET)
+begin
+	if PRESET = '1' then
+		qout <= "0000000000000000" after 1 ns;
+	elsif CLK = '1' and CLK'event then
+		if EN_R0 = '1' then
+			qout <= summe after 1 ns;
+		end if;
+	end if;
+end process Register_R0;
+
+Register_R1: process(CLK)
+variable rin: std_logic_vector(15 downto 0);
+begin
+	if CLK = '1' and CLK'event then
+	
+	if PRESET = '1' then 
+		
+    komplement <= d(15) after 1 ns;
+      if d(15) = '1' then
+          rin := ((not d) + 1);
+      else  
+		rin := d;
+		end if;
+		
+	else 
+		rin := differenz;
+	end if;
+	
+		if EN_R1 = '1' then 
+			rout <= rin after 1 ns;
+end if;
+end if;
+end process Register_R1;
+
+Register_R2: process (CLK, PRESET)
+begin
+	if PRESET = '1' then
+		nout <= "0000000000001000" after 1 ns;
+	elsif CLK = '1' and CLK'event then
+		if EN_R2 = '1' then
+			nout <= differenz after 1 ns;
+		end if;
+	end if;
+end process Register_R2;
+
+Register_R3: process (CLK, PRESET)
+variable r3_in: std_logic_vector (15 downto 0);
+begin
+	if PRESET = '1' then
+		r3out <= "0000000000000000" after 1 ns;
+	elsif CLK = '1' and CLK'event then
+	
+		if Select3 = '1' then
+			r3_in := std_logic_vector(shifterg);
+		else 
+			r3_in := summe;
+		end if;
+	
+		if EN_R3 = '1' then
+			r3out <= r3_in after 1 ns;
+		end if;
+	end if;
+end process Register_R3;
+
+Register_R4: process (CLK, PRESET)
+begin
+	if PRESET = '1' then
+		r4out <= "0000000000000000" after 1 ns;
+	elsif CLK = '1' and CLK'event then
+		if EN_R4 = '1' then
+			r4out <= std_logic_vector(shifterg) after 1 ns;
+		end if;
+	end if;
+end process Register_R4;
+
+end VERHALTEN;
+	
